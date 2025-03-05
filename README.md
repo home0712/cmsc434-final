@@ -1,1 +1,1 @@
-# CMSC434 Final Project
+# CMSC434 Final Project: Budget App
