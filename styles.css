@@ -2,18 +2,30 @@ body {
     text-align: center;
     overflow: hidden;
     margin: 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .device {
     width: 640px;
     height: 960px;
     background-color: #2F2F2F;
-    padding: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-
+    padding: 0;
+    margin: 0;
     margin: auto; 
     position: relative;
+}
+
+.device h1 {
+    text-align: left;
+    font-size: 40px;
+    color: #689e80;
+    margin: 0;
+    padding: 84px 0px 0px 50px; /* top right bottom left */ 
+}
+
+span {
+    display: flex; 
+    justify-content: space-between;
 }
 
 .navbar {
@@ -29,7 +41,7 @@ body {
 
 .navbar a {
     color: #f2f2f2;
-    font-size: 17px;
+    font-size: 20px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     justify-content: center;
     align-items: center;
@@ -85,3 +97,12 @@ body {
 .navbar a:hover img {
     filter: contrast(100%)
 } */
+
+#headerBtn {
+    background-color: transparent;
+    border: none;
+    max-width: 50px;
+    max-height: 50px;
+    margin: 0 50px 0 0;
+    padding: 84px 0px 0px 0px;
+}
