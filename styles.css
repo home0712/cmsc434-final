@@ -50,12 +50,13 @@ body {
     color: #689e80;
 }
 
-/* change the icon color only */
+/* clicked navbar approach 1. change the icon color only */
 .navbar a.active img {
+    /* #689e80 */
     filter: invert(58%) sepia(18%) saturate(657%) hue-rotate(94deg) brightness(95%) contrast(84%);
 }
 
-/* change the icon background color 
+/* clicked navbar approach 2. change the icon background color 
 .navbar a.active {
     background-color: #689e80;
     color: white;
@@ -64,7 +65,18 @@ body {
 .navbar a.active img {
     filter: contrast(100%);
 } */
-  
+
+/* navbar hover approach 1. change both background color & icon color */
+.navbar a:hover {
+    background: #f2f2f257;
+    color: #28c956;
+}
+
+.navbar a:hover img {
+    filter: invert(28%) sepia(46%) saturate(476%) hue-rotate(94deg) brightness(90%) contrast(88%);
+}
+
+/* navbar hover approach 2. change background color brighter only
 .navbar a:hover {
     background: #f2f2f257;
     color: white;
@@ -72,4 +84,4 @@ body {
 
 .navbar a:hover img {
     filter: contrast(100%)
-}
+} */
