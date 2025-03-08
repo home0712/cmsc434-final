@@ -27,15 +27,6 @@ body {
     bottom: 0px;
 }
 
-.navbar a.active {
-    background-color: #689e80;
-    color: white;
-}
-
-.navbar a.active img {
-    filter: contrast(100%)
-}
-
 .navbar a {
     color: #f2f2f2;
     font-size: 17px;
@@ -54,6 +45,25 @@ body {
     max-width: 50px;
     max-height: 50px;
 }
+
+.navbar a.active {
+    color: #689e80;
+}
+
+/* change the icon color only */
+.navbar a.active img {
+    filter: invert(58%) sepia(18%) saturate(657%) hue-rotate(94deg) brightness(95%) contrast(84%);
+}
+
+/* change the icon background color 
+.navbar a.active {
+    background-color: #689e80;
+    color: white;
+}
+
+.navbar a.active img {
+    filter: contrast(100%);
+} */
   
 .navbar a:hover {
     background: #f2f2f257;
