@@ -23,11 +23,6 @@ body {
     padding: 83.5px 0px 0px 50px; /* top right bottom left */ 
 }
 
-span {
-    display: flex; 
-    justify-content: space-between;
-}
-
 .navbar {
     width: 640px;
     height: 130px;
@@ -97,6 +92,11 @@ span {
 .navbar a:hover img {
     filter: contrast(100%)
 } */
+
+#headerSpan {
+    display: flex; 
+    justify-content: space-between;
+}
 
 #headerBtn {
     background-color: transparent;
