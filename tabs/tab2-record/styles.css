@@ -1,0 +1,37 @@
+#subNavBar {
+    width: 450px;
+    height: 60px;
+    font-size: 32px;
+    color: white;
+    background-color: rgba(99, 99, 99, 0.5);
+    align-content: center;
+    border-radius: 30px;
+    padding: 0;
+    /* margin: auto; */
+
+    position: absolute; /* 그럼 margin auto 로 만든 center aligned 사라짐 */
+    bottom: 15%;
+    left: 17%; /* 다시 설정해주기 -> ratio 계산해서 */
+    /* 근데 화면 비율 바뀌면 위치 바뀌나? 그럼 계획한 위치랑 다를 수도 있잖아 
+       navbar 도 absolute 이어서 상관없나?
+    */
+
+    overflow: hidden; /* 자식 요소가 영역 벗어나지 않도록 해줌 */
+    display: flex;
+}
+
+#subNavBar a {
+    text-decoration: none;
+    color: white;
+    flex-grow: 1;
+    text-align: center; 
+    align-content: center;
+}
+
+#subNavBar a.active {
+    color: #689e80;
+}
+
+#subNavBar a:hover {
+    color: #689e80;
+}
