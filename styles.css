@@ -97,6 +97,29 @@ body {
     justify-content: space-between;
 }
 
+#dateSelect {
+    overflow: hidden;
+    display: flex;
+
+    padding: 0 0 0 24px;
+    margin: 0;
+}
+
+#dateSelect button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    height: 70px;
+}
+
+#dateSelect .text:nth-child(2) {
+    margin-right: 10px;
+}
+
 #headerBtn {
     background-color: transparent;
     border: none;
