@@ -8,12 +8,10 @@
     - notion account needed
 
 ## In Progress
-- import navbar to the subtabs in tab 2 (Record)
+- N/A
 
 ## Verification
-- navbar color (need to choose 1)
-    - change background color
-    - change icon color only
+- N/A
 
 ## Done
 - N/A
