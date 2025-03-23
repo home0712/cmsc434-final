@@ -19,7 +19,7 @@ body {
     font-size: 40px;
     color: #689e80;
     margin: 0;
-    padding: 83.5px 0px 0px 50px; /* top right bottom left */ 
+    padding: 40px 0px 0px 50px; /* top right bottom left */ 
 }
 
 .navbar {
@@ -126,5 +126,11 @@ body {
     max-width: 50px;
     max-height: 50px;
     margin: 0 50px 0 0;
-    padding: 80px 0px 0px 0px;
+    padding: 40px 0px 0px 0px;
+}
+
+.scrollBar {
+    overflow-y: auto;
+    width: 640px;
+    height: 830px;
 }

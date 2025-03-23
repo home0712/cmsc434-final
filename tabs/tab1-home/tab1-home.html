@@ -10,19 +10,113 @@
 <body>
     <!-- device -->
     <div class="device">
-        <span id="headerSpan">
-            <h1>Summary</h1>
-            <button id="headerBtn"><img src="../../assets/Settings.png"></button>
-        </span>
+        <div class="scrollBar">
 
-        <!-- date selector -->
-        <div id="dateSelect">
-            <button class="arrow"><img src="../../assets/Arrow-left.png"></button>
-            <button class="text">Month</button>
-            <button class="text">Year</button>
-            <button class="arrow"><img src="../../assets/Arrow-right.png"></button>
+            <span id="headerSpan">
+                <h1>Summary</h1>
+                <button id="headerBtn"><img src="../../assets/Settings.png"></button>
+            </span>
+
+            <!-- date selector -->
+            <div id="dateSelect">
+                <button class="arrow"><img src="../../assets/Arrow-left.png"></button>
+                <button class="text">March</button>
+                <button class="text">2025</button>
+                <button class="arrow"><img src="../../assets/Arrow-right.png"></button>
+            </div>
+            <div>
+                <button onclick="location.href='../tab2-record/transaction-list/transaction.html'" class="net_worth">      
+                    <div style="display: flex;">
+                        <div style="width: 82%;">
+                            <p >Total Income:</p>
+                        </div>
+                        <p class="positive">$5000</p>
+                    </div>
+                    
+                    <div style="display: flex;">
+                        <div style="width: 82%;">
+                            <p>Total Expenses:</p>
+                        </div>
+                        <p class="negative">$2500</p>
+                    </div>
+                    
+                    <hr width="100%" size="3" color="#f2f2f2">
+                    <div style="display: flex;">
+                        <div style="width: 82%;">
+                            <p>Net:</p>
+                        </div>
+                        <p class="positive">$2500</p>
+                    </div>
+                        
+                </button>
+            </div>
+
+            <div class="section_title">
+                <p>Account Overview</p>
+            </div>
+
+            <div>
+                <button onclick="location.href='../tab2-record/transaction-list/transaction.html'" class="section_block">
+                    <div style="display: flex;">
+                        <div style="width: 82%;">
+                            <p class="account_overview_sub_title">Total Checking Balance:</p>
+                        </div>
+                        <p class="account_overview_value">$20000</p>
+                    </div>
+                
+                    <div style="display: flex; margin-top:10px;">
+                        <div style="width: 82%;">
+                            <p class="account_overview_sub_title">Total Savings Balance:</p>
+                        </div>
+                        <p class="account_overview_value">$20000</p>
+                    </div>
+
+
+                    <div style="display: flex; margin-top:10px;">
+                        <div style="width: 82%;">
+                            <p class="account_overview_sub_title">Total Investments Balance:</p>
+                        </div>
+                        <p class="account_overview_value">$20000</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="section_title">
+                <p>Spending Overview</p>
+            </div>
+
+            <div>
+                <button onclick="location.href='../tab4-report/tab4-report.html'" class="section_block">
+                    <div style="display: flex;">
+                        <div class="bars">
+                            <div style="height: 25px; background-color: #689e80; width:68%"></div>
+                        </div>
+                        <p style="margin: 3px; font-size:23px;">68% Grocery</p>
+                    </div>
+
+                    <div style="display: flex;">
+                        <div class="bars">
+                            <div style="height: 25px; background-color: #689e80; width:27%"></div>
+                        </div>
+                        <p style="margin: 3px; font-size:23px;">27% Beverage</p>
+                    </div>
+
+                    <div style="display: flex;">
+                        <div class="bars">
+                            <div style="height: 25px; background-color: #689e80; width:4%"></div>
+                        </div>
+                        <p style="margin: 3px; font-size:23px;">4% Clothing</p>
+                    </div>
+
+                    <div style="display: flex;">
+                        <div class="bars">
+                            <div style="height: 25px; background-color: #689e80; width:1%"></div>
+                        </div>
+                        <p style="margin: 3px; font-size:23px;">1% Leisure</p>
+                    </div>
+                </button>
+            </div>
         </div>
-
         <!-- nav bar -->
         <div id="navbar"></div>
     </div>
