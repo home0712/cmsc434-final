@@ -11,15 +11,31 @@
     <!-- device -->
     <div class="device">
         
-        <h1>Goals List</h1>
+        <div class="header">
+            <h1>Goals</h1>
+            <img class="add-button" width="70" height="70"
+            src="images/add.png" alt="add button">
+        </div>
 
-        <label for="filter_button">Filter</label>
-        <img id='filter_button' width="50" src="images/filter.png" alt="fliter goals">
+        <div class="goal-type-display">
+            
+            <p class="budget-tab">Budget</p>
+            <p class="savings-tab">Saving<p>
+            <div id="toolbar">
+                <img class="filter-button" src="images/filter.png" alt="filter button" width="40" height="40">
+                <img class="search-button" src="images/search.png" alt="search button" width="40" height="40">
+            </div>
+        </div>
+        
 
         <div id='list-of-goals'>
-            <div class="incomplete-goal">
-                <h2>New Laptop</h2>
-                <progress id="file" value="600" max="1500"></progress>
+            <div class="saving-goal">
+                <div class="goal-header">
+                    <h2>New Laptop</h2>
+                    <img class="edit-button" src="images/edit.png" alt="edit-button" width="30" height="30">
+                </div>
+
+                <progress value="600" max="1500" ></progress>
                 <p class="percent">40%</p>
                 <div class="goal-amount">
                     <p>$0</p>
@@ -27,27 +43,17 @@
                     <p>$1500</p>
                 </div>
                 <div class="goal-info">
-                    <h3>Start: Jan 1st, 2025</h3>
-                    <h3>End: March 21st, 2025</h3>
-                </div>
-            </div>
-            <div class="incomplete-goal">
-                <h2>Summer Travel</h2>
-                <progress id="file" value="200" max="2000"></progress>
-                <p class="percent">10%</p>
-                <div class="goal-amount">
-                    <p>$0</p>
-                    <p>$200 of $2000 saved</p>
-                    <p>$2000</p>
-                </div>
-                <div class="goal-info">
-                    <h3>Start: Feb 15th, 2025</h3>
-                    <h3>End: June 10th, 2025</h3>
+                    <p>Start: Jan 1st, 2025</p>
+                    <p>End: March 21st, 2025</p>
+                    <img class="delete-button" src="images/trash.png" alt="Delete Button">
                 </div>
             </div>
 
-            <div class="incomplete-goal">
-                <h2>Summer Travel</h2>
+            <div class="saving-goal">
+                <div class="goal-header">
+                    <h2>Summer Travel</h2>
+                    <img class="edit-button" src="images/edit.png" alt="edit-button" width="30" height="30">
+                </div>
                 <progress id="file" value="200" max="2000"></progress>
                 <p class="percent">10%</p>
                 <div class="goal-amount">
@@ -56,8 +62,28 @@
                     <p>$2000</p>
                 </div>
                 <div class="goal-info">
-                    <h3>Start: Feb 15th, 2025</h3>
-                    <h3>End: June 10th, 2025</h3>
+                    <p>Start: Feb 15th, 2025</p>
+                    <p>End: June 10th, 2025</p>
+                    <img class="delete-button" src="images/trash.png" alt="Delete Button">
+                </div>
+            </div>
+
+            <div class="saving-goal">
+                <div class="goal-header">
+                    <h2>Summer Travel</h2>
+                    <img class="edit-button" src="images/edit.png" alt="edit-button" width="30" height="30">
+                </div>
+                <progress id="file" value="200" max="2000"></progress>
+                <p class="percent">10%</p>
+                <div class="goal-amount">
+                    <p>$0</p>
+                    <p>$200 of $2000 saved</p>
+                    <p>$2000</p>
+                </div>
+                <div class="goal-info">
+                    <p>Start: Feb 15th, 2025</p>
+                    <p>End: June 10th, 2025</p>
+                    <img class="delete-button" src="images/trash.png" alt="Delete Button">
                 </div>
             </div>
 
