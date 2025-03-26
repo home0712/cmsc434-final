@@ -1,0 +1,68 @@
+
+
+.incomplete-goal {
+    z-index: 0;
+    position: relative;
+    margin: 1em;
+    border-radius: 25px;
+    background-color: #A8F9FF;
+}
+
+.incomplete-goal h2 {
+    color: #000000;
+    text-align: left;
+    padding-left: 1em;
+    padding-top: 1em;
+}
+
+.incomplete-goal progress {
+    height: 50px;
+    border-radius: 0;
+    width: 90%;
+}
+
+.goal-amount {
+    color: #000000;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1.4em;
+    margin-right: 1.6em;
+    margin-top: -2em;
+    padding: 0em;
+    font-size: 1.2em;
+}
+
+.goal-info {
+    color: #000000;
+    text-align: center;
+    margin-top: 0em;
+    padding-left: 0em;
+    padding-bottom: 1em;
+    font-size: 1em;
+
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+}
+
+.goal-info h3 {
+    color: #000000;
+    margin: 0em;
+    font-size: 1.2em;
+}
+
+.percent {
+    z-index: 1;
+    margin-top: -1.35em;
+    margin-left: 14.3em;
+    font-size: 2em;
+}
+
+#list-of-goals {
+    height: 645px;
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #A8F9FF transparent;
+}
