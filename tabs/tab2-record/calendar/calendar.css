@@ -1,0 +1,109 @@
+/* monthly summary box */
+#month-summary-box {
+    background-color: #636363;
+    color: white;
+    font-size: 32px;
+    border-radius: 15px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    gap: 5px;
+}
+
+#month-summary-box div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 180px;
+}
+
+.summary-amount.income {
+    color: #4CAF50;
+}
+  
+.summary-amount.expense {
+    color: #FF4C4C; 
+}
+
+.dollar-sign {
+    width: 50px;
+}
+
+/* action bar */
+#action-bar {
+    font-size: 30px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: center;
+    margin-top: 8px;
+}
+
+.action-bar-icon img {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+/* calendar */
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto;
+}
+  
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 100px;
+    gap: 1px;
+
+    overflow-y: auto;
+    height: 350px;
+    padding-bottom: 80px;
+}
+
+.calendar-body::-webkit-scrollbar {
+    width: 10px;                     
+    background: transparent;
+}
+  
+.calendar-cell {
+    background-color: #2F2F2F;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #444;
+    color: white;
+    padding: 4px;
+    line-height: 1.2;
+    overflow: hidden;
+    position: relative;
+}
+
+.cell-income {
+    color: #4CAF50;
+}
+  
+.cell-expense {
+    color: #E53935;
+}
+
+.today {
+    border: 1.5px solid #dae811;
+}

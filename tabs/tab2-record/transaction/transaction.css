@@ -1,0 +1,81 @@
+body {
+    text-align: left;
+}
+
+/* action bar */
+#action-bar {
+    font-size: 30px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: center;
+    margin-top: 8px;
+}
+
+.action-bar-icon img {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+#logs-container {
+    margin-top: 15px;
+    padding-bottom: 80px;
+}
+
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    height: 600px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 10px;                     
+    background: transparent;
+}
+
+.date-group {
+    margin-top: 10px;
+}
+
+.log-date {
+    font-size: 17px;
+}
+
+.log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.log-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.log-left img {
+    width: 30px;
+    height: 30px;
+}
+
+.log-title {
+    font-size: 20px;
+}
+
+.log-amount {
+    font-size: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.log-amount.income {
+    color: #4CAF50; 
+}
+  
+.log-amount.expense {
+    color: #FF4C4C; 
+}

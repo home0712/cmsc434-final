@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding a Transaction</title>
+    <link rel="stylesheet" href="./popup-add-log.css">
+    <link rel="stylesheet" href="../../../styles.css">
+</head>
+<body>
+    <div class="device">
+        <div class="device-content">
+            <!-- Header -->
+            <span id="top-header">
+                <h1>Adding a Transaction</h1>
+                <img src="../../../assets/X.png" id="header-button">
+            </span>
+
+            <!-- Input Fields -->
+            <form id="add-form">
+                <div id="amount" class="field">
+                    <label for="amount-field" class="field-label">
+                        <span>AMOUNTS</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <input type="text" id="amount-field" placeholder="$1,000.00" required/>
+                </div>
+
+                <div id="title" class="field">
+                    <label for="title-field" class="field-label">
+                        <span>TITLE</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <input type="text" id="title-field" placeholder="Title" required/>
+                </div>
+
+                <div id="type" class="field">
+                    <label class="field-label">
+                        <span>TYPE</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <div class="type-button-field">
+                        <button class="type-button" type="button">INCOME</button>
+                        <button class="type-button" type="button">EXPENSE</button>
+                    </div>
+                    <input type="hidden" id="type-value">
+                </div>
+
+                <div id="date" class="field">
+                    <label for="date-field" class="field-label">
+                        <span>DATE</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <input type="date" id="date-field" placeholder="Mar/25/2025"/>
+                </div>
+
+                <div id="method" class="field">
+                    <label for="method-select" class="field-label">
+                        <span>METHOD</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <select id="method-select" name="method" required>
+                        <option value="">Choose...</option>
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="debit">Debit Card</option>
+                    </select>
+                </div>
+
+                <div id="category" class="field">
+                    <label for="category-select" class="field-label">
+                        <span>CATEGORY</span>
+                        <span class="required-text">(Optional)</span>
+                    </label>
+                    <select id="category-select" name="category">
+                        <option value="">Choose...</option>
+                        <option value="food">Food</option>
+                        <option value="transport">Transport</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                </div>
+
+                <div id="note" class="field">
+                    <label for="notes-field" class="field-label">
+                        <span>NOTES</span>
+                        <span class="required-text">(Optional)</span>
+                    </label>
+                    <textarea id="notes-field" placeholder="Any Notes..."></textarea>
+                </div>
+
+                <button type="submit" id="save-button">SAVE</button>
+            </form>        
+        </div>
+    </div>
+
+    <!-- import script -->
+    <script src="../log-data.js"></script>
+    <script src="../tab2-common.js"></script>
+    <script src="./popup-add-log.js"></script>
+</body>
+</html>

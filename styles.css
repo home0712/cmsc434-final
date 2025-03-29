@@ -2,16 +2,23 @@ body {
     text-align: center;
     overflow: hidden;
     margin: 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: system-ui; /* 수정하기 */ 
+    color: white;
 }
 
+/* device spec */
 .device {
     width: 640px;
     height: 960px;
     background-color: #2F2F2F;
-    padding: 0;
+    box-sizing: border-box;
     margin: 0 auto; 
     position: relative;
+}
+
+.device-content {
+    height: 800px;
+    padding: 75px 50px 30px 50px;
 }
 
 .device h1 {
@@ -19,9 +26,9 @@ body {
     font-size: 40px;
     color: #689e80;
     margin: 0;
-    padding: 83.5px 0px 0px 50px; /* top right bottom left */ 
 }
 
+/* navigation bar */
 .navbar {
     width: 640px;
     height: 130px;
@@ -31,17 +38,17 @@ body {
     display: flex;
     justify-content: space-between;
     bottom: 0px;
+    padding: 0;
+    margin: 0 auto; 
 }
 
 .navbar a {
     color: #f2f2f2;
     font-size: 20px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     justify-content: center;
     align-items: center;
     text-align: center;
     text-decoration: none;
-
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -56,23 +63,10 @@ body {
     color: #689e80;
 }
 
-/* clicked navbar approach 1. change the icon color only */
 .navbar a.active img {
-    /* #689e80 */
     filter: invert(58%) sepia(18%) saturate(657%) hue-rotate(94deg) brightness(95%) contrast(84%);
 }
 
-/* clicked navbar approach 2. change the icon background color 
-.navbar a.active {
-    background-color: #689e80;
-    color: white;
-}
-
-.navbar a.active img {
-    filter: contrast(100%);
-} */
-
-/* navbar hover approach 1. change both background color & icon color */
 .navbar a:hover {
     background: #f2f2f257;
     color: #28c956;
@@ -80,51 +74,46 @@ body {
 
 .navbar a:hover img {
     filter: invert(28%) sepia(46%) saturate(476%) hue-rotate(94deg) brightness(90%) contrast(88%);
+}  
+
+/* 
+    month selector 
+    - for home
+    - for transaction 
+    - for calendar
+*/
+#month-selector {
+    overflow: hidden;
+    display: flex;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
-/* navbar hover approach 2. change background color brighter only
-.navbar a:hover {
-    background: #f2f2f257;
-    color: white;
+.month-buttons {
+    width: 20px;
+    height: 25px;
+    padding: 10px 0px 10px 0px;
 }
 
-.navbar a:hover img {
-    filter: contrast(100%)
-} */
+#month-selector-text {
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    text-align: center;
+    min-width: 200px;
+}
 
-#headerSpan {
+/* device header */
+#top-header {
     display: flex; 
     justify-content: space-between;
 }
 
-#dateSelect {
-    overflow: hidden;
-    display: flex;
-
-    padding: 0 0 0 24px;
-    margin: 0;
-}
-
-#dateSelect button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    color: white;
-    font-size: 32px;
-    text-align: center;
-    height: 70px;
-}
-
-#dateSelect .text:nth-child(2) {
-    margin-right: 10px;
-}
-
-#headerBtn {
+#header-button {
     background-color: transparent;
     border: none;
-    max-width: 50px;
-    max-height: 50px;
-    margin: 0 50px 0 0;
-    padding: 80px 0px 0px 0px;
+    margin: 0 0 auto;
 }

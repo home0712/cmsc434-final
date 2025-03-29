@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Popup</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="../transaction/transaction.css">
+    <link rel="stylesheet" href="./popup-search-log.css">
+</head>
+<body>
+    <div class="device">
+      <div class="device-content">
+          <!-- Header -->
+          <span id="top-header">
+              <h1>Searching Transactions</h1>
+              <img src="../../../assets/X.png" id="header-button">
+          </span>
+
+          <form id="search-form">
+              <!-- Keyword Search -->
+              <div class="search-bar">
+                <input type="text" id="keyword-input" placeholder="Keyword"/>
+                <div class="search-buttons">
+                  <img src="../../../assets/Arrow-down.png" id="toggle-button">
+                  <img src="../../../assets/Search.png" id="search-button">
+                </div>
+              </div>
+            
+              <div id="optional-search" class="optional-fields">
+                <!-- Amounts -->
+                <div id="amount">
+                  <label class="field-label">
+                    <span>AMOUNTS</span>
+                    <span class="optional-text">(Optional)</span>
+                  </label>
+                  <div id="amount-inputs" class="range-inputs">
+                    <input type="number" id="amount-min" placeholder="Min"/>
+                    <span class="dash">–</span>
+                    <input type="number" id="amount-max" placeholder="Max"/>
+                  </div>
+                </div>
+              
+                <!-- Period -->
+                <div id="period">
+                  <label class="field-label">
+                    <span>PERIOD</span>
+                    <span class="optional-text">(Optional)</span>
+                  </label>
+                  <div id="period-inputs" class="range-inputs">
+                    <input type="date" id="date-start"/>
+                    <span class="dash">–</span>
+                    <input type="date" id="date-end"/>
+                  </div>
+                </div>
+              </div>
+          </form>
+
+          <div id="search-results" class="results-list scroll"></div>
+      </div>
+    </div>
+
+    <!-- import script -->
+    <script src="../log-data.js"></script>
+    <script src="../tab2-common.js"></script>
+    <script src="./popup-search-log.js"></script>
+</body>
+</html>

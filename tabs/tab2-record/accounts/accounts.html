@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="../tab2-common.css">
+    <link rel="stylesheet" href="./accounts.css">
+</head>
+<body>
+     <!-- device -->
+    <div class="device">
+        <div class="device-content">
+            <!-- Header -->
+            <span id="top-header">
+                <h1>Accounts</h1>
+                <img src="../../../assets/Plus-circle.png" id="header-button">
+            </span>
+
+            <div class="scroll">
+                <!-- Account Lists -->
+                <div id="checking">
+                    <h2>Checkings</h2>
+                    <div id="ac-test" class="account-card">
+                        <div class="account-header">
+                            <span class="account-title">
+                                Checking Account 1
+                                <span class="account-num"> 
+                                    (...1111)
+                                </span>
+                            </span>
+                            <img src="../../../assets/Edit.png" class="edit-button">
+                        </div>
+
+                        <div class="account-balance">
+                            $20,000.00
+                        </div>
+                        
+                        <div class="account-footer">
+                            <img src="../../../assets/Trash.png" class="delete-button">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="savings">
+                    <h2>Savings</h2>
+                </div>
+
+                <div id="investments">
+                    <h2>Investments</h2>
+                </div>
+            </div>
+
+            <!-- sub nav bar -->
+            <div id="sub-navbar">
+                <a href="../transaction/transaction.html">
+                    Logs
+                </a>
+                <a href="../calendar/calendar.html">
+                    Calendar
+                </a>
+                <a href="" class="active">
+                    Accounts
+                </a>
+            </div>
+        </div>
+
+        <!-- nav bar -->
+        <div id="navbar"></div>
+    </div>
+    
+    <!-- import script -->
+    <script src="../account-data.js"></script>
+    <script src="./accounts.js"></script>
+    <script src="../tab2-common.js"></script>
+    <script src="../../../script.js"></script>
+</body>
+</html>

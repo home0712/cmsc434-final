@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar</title>
+    <title>Transaction</title>
     <link rel="stylesheet" href="../../../styles.css">
     <link rel="stylesheet" href="../tab2-common.css">
-    <link rel="stylesheet" href="./calendar.css">
+    <link rel="stylesheet" href="./transaction.css">
 </head>
 <body>
-    <div class="device">
+     <!-- device -->
+     <div class="device">
         <div class="device-content">
+            <!-- Header -->
             <span id="top-header">
-                <h1>Calendar</h1>
+                <h1>Transaction</h1>
                 <img src="../../../assets/Settings.png" id="header-button">
             </span>
 
@@ -23,54 +25,46 @@
                 <img src="../../../assets/Arrow-right.png" id="right-arrow" class="month-buttons">
             </div>
 
-            <!-- Summary Text Area -->
-            <div id="month-summary-box">
-                <div class="summary-row">
-                    <span class="summary-label">INCOME</span>
-                    <span class="summary-amount income">
-                        <span class="dollar-sign">+ $</span>
-                        <span class="amount-value">5,000</span>
-                    </span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">EXPENSE</span>
-                    <span class="summary-amount expense">
-                        <span class="dollar-sign">- $</span>
-                        <span>1,000</span>
-                    </span>
-                </div>
-            </div>
-
             <!-- action bar & buttons -->
             <div id="action-bar">
                 <span>All</span>
                 <div class="action-bar-icon">
+                    <img src="../../../assets/Filter.png" id="filter" >
                     <img src="../../../assets/Plus.png" id="add">
                     <img src="../../../assets/Search.png" id="search">
                 </div>
             </div>
 
-            <!-- calendar grid -->
-            <div id="calendar-grid">
-                <div class="calendar-header">
-                    <span>S</span>
-                    <span>M</span>
-                    <span>T</span>
-                    <span>W</span>
-                    <span>T</span>
-                    <span>F</span>
-                    <span>S</span>
-                </div>
+            <!-- Transaction Logs Area -->
+            <div id="logs-container" class="scroll">
+                <div class="date-group">   
+                    <div class="log-date">March 21st 2025 FRI</div>
+                    <hr>
 
-                <div class="calendar-body"></div>
+                    <div class="log-item">
+                        <div class="log-left">
+                            <img src="../../../assets/Coffee.png">
+                            <span class="log-title">coffee at X cafe</span>
+                        </div>
+                        <span class="log-amount">- $5.00</span>
+                    </div>
+
+                    <div class="log-item">
+                        <div class="log-left">
+                            <img src="../../../assets/Book.png">
+                            <span class="log-title">book</span>
+                        </div>
+                        <span class="log-amount">- $15.00</span>
+                    </div>
+                </div>
             </div>
 
             <!-- sub nav bar -->
             <div id="sub-navbar">
-                <a href="../transaction/transaction.html">
+                <a href="" class="active">
                     Logs
                 </a>
-                <a href="" class="active">
+                <a href="../calendar/calendar.html">
                     Calendar
                 </a>
                 <a href="../accounts/accounts.html">
@@ -81,12 +75,12 @@
 
         <!-- nav bar -->
         <div id="navbar"></div>
-    </div>  
+    </div>
     
     <!-- import script -->
     <script src="../log-data.js"></script>
     <script src="../tab2-common.js"></script>
-    <script src="./calendar.js"></script>
+    <script src="./transaction.js"></script>
     <script src="../../../script.js"></script>
 </body>
 </html>
