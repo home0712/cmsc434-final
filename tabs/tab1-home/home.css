@@ -1,0 +1,132 @@
+body {
+    text-align: left;
+}
+
+hr {
+    border: 1px solid white;
+    width: 100%;
+}
+
+/* title */
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.title-button {
+    width: 30px;
+    height: 30px;
+}
+
+/* monthly summary */
+#month-summary-box {
+    background-color: #636363;
+    color: white;
+    font-size: 24px;
+    border-radius: 15px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 24px;
+    padding: 10px 30px;
+    gap: 5px;
+}
+
+.month-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-amount.income, 
+.summary-amount.net-worth {
+    color: #4CAF50;
+}
+  
+.summary-amount.expense {
+    color: #FF4C4C; 
+}
+
+/* account overview */
+.overview-card {
+    background-color: #636363;
+    margin-bottom: 24px;
+    height: 100%; 
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px 30px 20px 30px;
+}
+
+.account-header {
+    display: flex;
+    font-size: 23px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.account-balance {
+    display: flex;
+    font-size: 30px;
+    justify-content: center;
+}
+
+/* spending overview */
+.spending-overview-card {
+    background-color: #636363;
+    margin-bottom: 24px;
+    height: 100%; 
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px 30px;
+}
+
+/* progress */
+.progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 30px;
+    background-color: #f2f2f2;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #689E80;
+}
+
+.progress-text {
+    width: 170px;
+    font-size: 22px;
+    text-align: left;
+}
+
+/* scroll */
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    height: 700px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 10px;                     
+    background: transparent;
+}

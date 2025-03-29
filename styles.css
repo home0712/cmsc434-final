@@ -117,3 +117,10 @@ body {
     border: none;
     margin: 0 0 auto;
 }
+
+/* Home */
+.scrollBar {
+    overflow-y: auto;
+    width: 640px;
+    height: 830px;
+}
