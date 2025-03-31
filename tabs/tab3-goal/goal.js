@@ -16,7 +16,7 @@ if (!localStorage.getItem("goals")) {
 }
 
 /*
-    rendering
+    rendering the goal lists
 */
 function renderGoals() {
     const budgetGoals = [];
@@ -39,6 +39,9 @@ function renderGoals() {
     addGoalCard(budgetGoals, budgetDiv);
 };
 
+/* 
+    add goal div cards
+*/
 function addGoalCard(goalLists, parentDiv) {
     for (const goal of goalLists) {
         const groupDiv = document.createElement("div");
