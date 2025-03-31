@@ -24,6 +24,9 @@ function editGoal(event) {
         return;
     }
 
+    // editing data 가져오기
+    const goal = JSON.parse(sessionStorage.getItem("editingGoal")) || null;
+
     // 사용자가 입력한 데이터 가져오기
     const goalTitle =  document.getElementById("goal-name-field").value;
     const type = document.getElementById("type-select").value;
@@ -31,22 +34,33 @@ function editGoal(event) {
     const startDate = document.getElementById("start-date-field").value;
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
+
+    // compute percentage
     
 
     // 사용자 입력 데이터로 json 포맷으로 만들기
-    const newGoal = {
-        id: createId(type), 
+    const updated = {
+        id: goal.id, 
         title: goalTitle,
         type: type,
+        percent: goal.percent,
         goalAmount: Number(goalAmount),
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: startDate,
+        endDate: endDate,
         notes: notes
     };
 
-    // local storage 로그 리스트에 -> new log 추가하기
+    // 기존 데이터와 업데이트 값 비교해서 수정
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-    localGoals.push(newGoal);
+    localGoals = localGoals.map((goal) => {
+        if (goal.id === updated.id) {
+            return updated;
+        } else {
+            return goal;
+        }
+    });
+
+    // localStorage 에 업데이트
     localStorage.setItem("goals", JSON.stringify(localGoals));
 
     // 추가하고 나면 다시 accounts 페이지로 돌아가기
@@ -73,7 +87,6 @@ function renderGoalInfo() {
     // 수정할 데이터 가져오기 (sessionStorage)
     const goal = JSON.parse(sessionStorage.getItem("editingGoal")) || null;
 
-    console.log(goal.type);
     // 필드에 미리 채우기
     if (goal) {
         document.getElementById("goal-name-field").value = goal.title;
