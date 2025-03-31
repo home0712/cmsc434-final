@@ -37,7 +37,6 @@ function renderAccounts() {
         }
     });
 
-    // 유저 입력 데이터 가져오기
     const checkingDiv = document.getElementById("checking");
     const savingDiv = document.getElementById("savings");
     const investmentDiv = document.getElementById("investments");

@@ -40,7 +40,6 @@ body {
 .budget-card {
     background-color: #636363;
     margin-bottom: 24px;
-    height: 100%; 
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -126,4 +125,19 @@ body {
 .date-row {
     display: flex;
     justify-content: space-between;
+}
+
+/* scroll */
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding-bottom: 50px;
+    height: 680px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 10px;                     
+    background: transparent;
 }

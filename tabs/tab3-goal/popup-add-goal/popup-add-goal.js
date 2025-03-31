@@ -39,9 +39,10 @@ function addGoal(event) {
         id: createId(type), 
         title: goalTitle,
         type: type,
+        percent: Math.floor(Math.random() * 100),
         goalAmount: Number(goalAmount),
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: startDate,
+        endDate: endDate,
         notes: notes
     };
 
