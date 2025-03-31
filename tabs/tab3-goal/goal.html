@@ -19,8 +19,10 @@
 
             <!-- action bar & buttons -->
             <div id="action-bar">
-                <span>Budget</span>
-                <img src="../../assets/Arrow-down.png">
+                <div class="action-bar-title">
+                    <span>Budget</span>
+                    <img src="../../assets/Arrow-down.png">
+                </div>
                 <div class="action-bar-icon">
                     <img src="../../../assets/Filter.png">
                     <img src="../../../assets/Search.png">
@@ -31,17 +33,25 @@
             <div id="budget-container" class="scroll">
                 <div id="budget-001" class="budget-card">
                     <div class="budget-header">
-                        <span class="budget-title">
+                        <div class="budget-title">
                             Food Delivery
-                        </span>
-                        <div>
+                        </div>
+                        <div class="budget-icons">
                             <img src="../../../assets/Edit.png">
                             <img src="../../../assets/Trash.png">
                         </div>
                     </div>
 
                     <div class="budget-progress">
-                        <div class="progress-bar"></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>$900</span>
+                            <spam>LEFT</spam>
+                            <span>OUT OF</span>
+                            <span>$1,500</span>
+                        </div>
                     </div>
 
                     <div class="budget-date">
@@ -52,22 +62,36 @@
 
                 <div id="budget-002" class="budget-card">
                     <div class="budget-header">
-                        <span class="budget-title">
+                        <div class="budget-title">
                             Transportation
-                        </span>
-                        <div>
+                        </div>
+                        <div class="budget-icons">
                             <img src="../../../assets/Edit.png">
                             <img src="../../../assets/Trash.png">
                         </div>
                     </div>
 
                     <div class="budget-progress">
-                        <div class="progress-bar"></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>$200</span>
+                            <spam>LEFT</spam>
+                            <span>OUT OF</span>
+                            <span>$1,000</span>
+                        </div>
                     </div>
 
                     <div class="budget-date">
-                        <div>START</div>
-                        <div>END</div>
+                        <div>
+                            <span>START</span>
+                            <span>March 01 2025</span>
+                        </div>
+                        <div>
+                            <span>END</span>
+                            <span>April 01 2025</span>
+                        </div>
                     </div>
                 </div>
             </div>

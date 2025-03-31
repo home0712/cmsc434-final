@@ -5,9 +5,15 @@ body {
 /* action bar */
 #action-bar {
     font-size: 30px;
-    margin: 30px 0 10px 0;
+    margin: 30px 10px 10px 10px;
     display: flex;
     justify-content: space-between; 
+    align-items: center;
+}
+
+.action-bar-title {
+    display: flex;
+    gap: 7px;
     align-items: center;
 }
 
@@ -16,8 +22,14 @@ body {
     gap: 7px;
 }
 
-.action-bar-icon img, 
-.budget-card img {
+.action-bar-title img {
+    width: 25px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+}
+
+.action-bar-icon img {
     width: 30px;
     height: 30px;
     background-color: transparent;
@@ -36,6 +48,15 @@ body {
     padding: 7px 20px 10px 20px;
 }
 
+.budget-card div {
+    padding-bottom: 10px;
+}
+
+.budget-card img {
+    width: 25px;
+    height: 25px;
+}
+
 .budget-header {
     font-size: 24px;
     display: flex;
@@ -43,7 +64,31 @@ body {
     justify-content: space-between;
 }
 
+.budget-icons {
+    display: flex;
+    gap: 15px;
+}
+
 .budget-footer {
     display: flex;
     justify-content: right;
+}
+
+.budget-progress {
+    
+}
+
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #f2f2f2;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #689E80;
+}
+
+.budget-date {
+    font-size: 24px;
 }
