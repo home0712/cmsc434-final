@@ -12,9 +12,26 @@ body {
 }
 
 .action-bar-title {
+    position: relative;
     display: flex;
     gap: 7px;
     align-items: center;
+}
+
+#drop-down-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: row; 
+    gap: 10px;
+    z-index: 10;
+}
+
+.dropdown-option {
+    background-color: #666;
+    border-radius: 4px;
+    font-size: 24px;
 }
 
 .action-bar-icon {
