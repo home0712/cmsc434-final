@@ -25,7 +25,8 @@
     font-size: 13px;
 }
 
-input[type="text"], textarea, select {
+input[type="text"], input[type="number"], input[type="date"],
+textarea, select {
     background-color: #444;
     border: none;
     border-radius: 10px;
