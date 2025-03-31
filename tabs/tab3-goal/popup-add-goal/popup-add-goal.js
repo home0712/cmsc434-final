@@ -10,7 +10,7 @@ function returnToPage() {
     window.location.href = "../goal.html";
 }
 
-// click save button & add an account
+/* click save button & add an account
 const saveButton = document.getElementById("save-button");
 const accountForm = document.getElementById("account-add-form");
 
@@ -50,7 +50,7 @@ function addAccount(event) {
 
     // 추가하고 나면 다시 accounts 페이지로 돌아가기
     window.location.href = "../accounts/accounts.html"; 
-}
+} */
 
 /* util functions */
 function createId(type) {
@@ -66,3 +66,7 @@ function createId(type) {
     id += Date.now().toString();
     return id;
 }
+
+/*
+    set the start date field as today
+*/

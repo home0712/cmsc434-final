@@ -1,5 +1,5 @@
 /* field general css */
-#account-add-form {
+#goal-edit-form {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -7,12 +7,12 @@
     margin: 40px auto;
 }
 
-#account-add-form .field {
+#goal-edit-form .field {
     display: flex;
     width: 100%;  
 }
 
-#account-add-form .field-label {
+#goal-edit-form .field-label {
     display: flex;
     align-items: baseline;
     gap: 8px;
@@ -21,7 +21,7 @@
     font-size: 21px;
 }
 
-#account-add-form .required-text {
+#goal-edit-form .required-text {
     font-size: 13px;
 }
 

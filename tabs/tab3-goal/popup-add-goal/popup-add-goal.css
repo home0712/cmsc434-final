@@ -1,5 +1,5 @@
 /* field general css */
-#account-add-form {
+#goal-add-form {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -7,25 +7,26 @@
     margin: 40px auto;
 }
 
-#account-add-form .field {
+#goal-add-form .field {
     display: flex;
     width: 100%;  
 }
 
-#account-add-form .field-label {
+#goal-add-form .field-label {
     display: flex;
     align-items: baseline;
     gap: 8px;
     width: 265px;
     margin-right: 10px;
-    font-size: 21px;
+    font-size: 24px;
 }
 
-#account-add-form .required-text {
+#goal-add-form .required-text {
     font-size: 13px;
 }
 
-input[type="text"], textarea, select {
+input[type="text"], input[type="number"], input[type="date"],
+textarea, select {
     background-color: #444;
     border: none;
     border-radius: 10px;

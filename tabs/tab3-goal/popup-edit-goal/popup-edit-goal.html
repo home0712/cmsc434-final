@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adding a Goal</title>
+    <title>Editng a Goal</title>
     <link rel="stylesheet" href="../../../styles.css">
-    <link rel="stylesheet" href="./popup-add-goal.css">
+    <link rel="stylesheet" href="./popup-edit-goal.css">
 </head>
 <body>
     <div class="device">
         <div class="device-content">
             <!-- Header -->
             <span id="top-header">
-                <h1>Adding a Goal</h1>
+                <h1>Editng a Goal</h1>
                 <img src="../../../assets/X.png" id="header-button">
             </span>
 
             <!-- Input Fields -->
-            <form id="account-add-form">
-                <!-- Account Name -->
-                <div id="account-name" class="field">
-                    <label for="account-name-field" class="field-label">
-                        <span>ACCOUNT NAME</span>
+            <form id="goal-edit-form">
+                <!-- goal Name -->
+                <div id="goal-name" class="field">
+                    <label for="goal-name-field" class="field-label">
+                        <span>TITLE</span>
                         <span class="required-text">(Required)</span>
                     </label>
-                    <input type="text" id="account-name-field" placeholder="Account Name" required/>
+                    <input type="text" id="goal-name-field" placeholder="Goal Name" required/>
                 </div>
 
                 <!-- Initial Balance -->
@@ -36,27 +36,26 @@
                     <input type="text" id="balance-field" placeholder="$0.00" required/>
                 </div>
 
-                <!-- Account Type -->
+                <!-- Goal Type -->
                 <div id="type" class="field">
                     <label for="type-select" class="field-label">
-                        <span>ACCOUNT TYPE</span>
+                        <span>GOAL TYPE</span>
                         <span class="required-text">(Required)</span>
                     </label>
                     <select id="type-select" name="type" required>
                         <option value="">Choose...</option>
-                        <option value="Checking">Checking</option>
+                        <option value="Checking">Budget</option>
                         <option value="Saving">Saving</option>
-                        <option value="Investments">Investment</option>
                     </select>
                 </div>
 
-                <!-- Account Number -->
-                <div id="account-number" class="field">
-                    <label for="account-number-field" class="field-label">
-                        <span>ACCOUNT NUMBER</span>
+                <!-- goal Number -->
+                <div id="goal-number" class="field">
+                    <label for="goal-number-field" class="field-label">
+                        <span>goal NUMBER</span>
                         <span class="required-text">(Optional)</span>
                     </label>
-                    <input type="text" id="account-number-field" placeholder="e.g. 123-456-7890"/>
+                    <input type="text" id="goal-number-field" placeholder="e.g. 123-456-7890"/>
                 </div>
 
                 <!-- Bank Name -->
@@ -84,6 +83,6 @@
 
     <!-- import script -->
     <script src="../goal-data.js"></script>
-    <script src="./popup-add-goal.js"></script>
+    <script src="./popup-edit-goal.js"></script>
 </body>
 </html>

@@ -17,55 +17,54 @@
             </span>
 
             <!-- Input Fields -->
-            <form id="account-add-form">
-                <!-- Account Name -->
-                <div id="account-name" class="field">
-                    <label for="account-name-field" class="field-label">
-                        <span>ACCOUNT NAME</span>
+            <form id="goal-add-form">
+                <!-- goal Name -->
+                <div id="goal-name" class="field">
+                    <label for="goal-name-field" class="field-label">
+                        <span>TITLE</span>
                         <span class="required-text">(Required)</span>
                     </label>
-                    <input type="text" id="account-name-field" placeholder="Account Name" required/>
+                    <input type="text" id="goal-name-field" placeholder="Goal Name" required/>
                 </div>
 
-                <!-- Initial Balance -->
-                <div id="balance" class="field">
-                    <label for="balance-field" class="field-label">
-                        <span>BALANCE</span>
-                        <span class="required-text">(Required)</span>
-                    </label>
-                    <input type="text" id="balance-field" placeholder="$0.00" required/>
-                </div>
-
-                <!-- Account Type -->
+                <!-- Goal Type -->
                 <div id="type" class="field">
                     <label for="type-select" class="field-label">
-                        <span>ACCOUNT TYPE</span>
+                        <span>GOAL TYPE</span>
                         <span class="required-text">(Required)</span>
                     </label>
                     <select id="type-select" name="type" required>
                         <option value="">Choose...</option>
-                        <option value="Checking">Checking</option>
+                        <option value="Checking">Budget</option>
                         <option value="Saving">Saving</option>
-                        <option value="Investments">Investment</option>
                     </select>
                 </div>
 
-                <!-- Account Number -->
-                <div id="account-number" class="field">
-                    <label for="account-number-field" class="field-label">
-                        <span>ACCOUNT NUMBER</span>
-                        <span class="required-text">(Optional)</span>
+                <!-- Goal Amount -->
+                <div id="goal-amount" class="field">
+                    <label for="goal-amount-field" class="field-label">
+                        <span>GOAL AMOUNT</span>
+                        <span class="required-text">(Required)</span>
                     </label>
-                    <input type="text" id="account-number-field" placeholder="e.g. 123-456-7890"/>
+                    <input type="number" id="goal-amount-field" placeholder="$0.00" required/>
+                </div>
+                
+                <!-- Start Date -->
+                <div id="date" class="field">
+                    <label for="start-date-field" class="field-label">
+                        <span>START DATE</span>
+                        <span class="required-text">(Required)</span>
+                    </label>
+                    <input type="date" id="start-date-field" value="2025-03-25"/>
                 </div>
 
-                <!-- Bank Name -->
-                <div id="bank-name" class="field">
-                    <label for="bank-name-field" class="field-label">
-                        <span>BANK NAME</span>
-                        <span class="required-text">(Optional)</span>
+                <!-- END Date -->
+                <div id="date" class="field">
+                    <label for="end-date-field" class="field-label">
+                        <span>START DATE</span>
+                        <span class="required-text">(Required)</span>
                     </label>
-                    <input type="text" id="bank-name-field" placeholder="e.g. Chase, BoA"/>
+                    <input type="date" id="end-date-field" value="2025-03-25"/>
                 </div>
 
                 <!-- Notes -->
