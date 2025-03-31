@@ -80,7 +80,7 @@
 }
 
 .calendar-body::-webkit-scrollbar {
-    width: 10px;                     
+    width: 0px;                     
     background: transparent;
 }
   
