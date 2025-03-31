@@ -15,10 +15,10 @@
 #account-edit-form .field-label {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    flex-direction: row;
+    gap: 5px;
     width: 265px;
-    margin-right: 10px;
-    font-size: 21px;
+    font-size: 20px;
 }
 
 #account-edit-form .required-text {
