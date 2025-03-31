@@ -18,8 +18,37 @@
                 <img src="../../../assets/Settings.png" id="header-button">
             </div>
 
-            <!-- -->
+            <!-- date selector -->
+            <div id="month-selector">
+                <img src="../../../assets/Arrow-left.png" id="left-arrow" class="month-buttons">
+                <span id="month-selector-text">March 2025</span>
+                <img src="../../../assets/Arrow-right.png" id="right-arrow" class="month-buttons">
+            </div>
 
+            <div class="scroll">
+                <!-- pie chart -->
+                <div id="pie-chart-area">
+                    <canvas id="pie-chart" width="200" height="200"></canvas>
+                </div>
+
+                <!-- category rank -->
+                <div id="category-rank">
+                    <div id="category-rank-header">
+                        <h2>Top Categories</h2>
+                        <div>
+                            <img src="../../../assets/Arrow-down-two.png"/>
+                            <img src="../../../assets/Arrow-up-two.png"/>
+                        </div>
+                    </div>
+
+                    <div id="category-rank-body">
+                        <div class="category-row" data-id="rank-001">Grocery</div>
+                        <div class="category-row" data-id="rank-002">Vehicle</div>
+                        <div class="category-row" data-id="rank-003">Beverage</div>
+                        <div class="category-row" data-id="rank-003">Leisure</div>
+                    </div>
+                </div>
+            </div>
 
             <!-- sub nav bar  -->
             <div id="sub-navbar">

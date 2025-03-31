@@ -1,7 +1,17 @@
+body {
+    text-align: left;
+}
+
+/* month selector */
+#month-selector {
+    justify-content: center;
+}
+
+/* sub navbar */
 #sub-navbar {
     width: 320px;
     height: 60px;
-    bottom: 100px;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     background-color: #484646;
@@ -17,7 +27,7 @@
     
     padding: 0;
     margin: 0 auto;
-    overflow: hidden; /* 자식 요소가 영역 벗어나지 않도록 해줌 */
+    overflow: hidden; 
 }
 
 #sub-navbar a {

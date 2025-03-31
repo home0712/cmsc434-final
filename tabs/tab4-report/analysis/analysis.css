@@ -1,0 +1,47 @@
+/* pie chart */
+#pie-chart {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+/* category rank */
+#category-rank-area {
+    width: 100%;
+    height: 100%;
+}
+
+#category-rank-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#category-rank-header img {
+    width: 30px;
+    height: 30px;
+}
+
+#category-rank-body {
+    background-color: #636363;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-row {
+    border: 1px solid black;
+    height: 50px;
+}
+
+/* scroll */
+.scroll {
+    overflow-y: auto;
+    height: 570px;
+    padding-bottom: 80px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}

@@ -96,7 +96,6 @@ body {
     overflow: hidden;
     display: flex;
     box-sizing: border-box;
-    display: flex;
     align-items: center;
     margin: 0;
 }
@@ -129,11 +128,4 @@ body {
     margin: 0;
     width: 40px;
     height: 40px;
-}
-
-/* Home */
-.scrollBar {
-    overflow-y: auto;
-    width: 640px;
-    height: 830px;
 }
