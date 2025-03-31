@@ -24,8 +24,10 @@ body {
 }
 
 .device-content {
+    width: 540px;
     height: 800px;
     padding: 75px 50px 30px 50px;
+    position: relative;
 }
 
 .device h1 {

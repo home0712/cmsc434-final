@@ -1,15 +1,17 @@
 #sub-navbar {
     width: 462px;
     height: 60px;
-    position: absolute;
-    bottom: 140px;
-    left: 89px;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #484646;
     border-radius: 30px;
 
     font-size: 32px;
     color: white;
     
+    display: flex;
+    position: absolute;
     align-content: center;
     justify-content: center;
     
@@ -17,7 +19,6 @@
     margin: 0 auto;
 
     overflow: hidden; /* 자식 요소가 영역 벗어나지 않도록 해줌 */
-    display: flex;
 }
 
 #sub-navbar a {
