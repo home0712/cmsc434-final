@@ -1,5 +1,5 @@
 body {
-    text-align: left;
+    text-align: used;
 }
 
 /* action bar */
@@ -44,12 +44,9 @@ body {
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     box-sizing: border-box;
     padding: 7px 20px 10px 20px;
-}
-
-.budget-card div {
-    padding-bottom: 10px;
 }
 
 .budget-card img {
@@ -58,7 +55,7 @@ body {
 }
 
 .budget-header {
-    font-size: 24px;
+    font-size: 27px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,20 +72,58 @@ body {
 }
 
 .budget-progress {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 24px;
+}
+
+.budget-progress div {
+    border-radius: 20px;
 }
 
 .progress-bar {
     width: 100%;
-    height: 30px;
-    background-color: #f2f2f2;
+    height: 35px;
+    background-color: #cecece;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .progress-fill {
     height: 100%;
-    background-color: #689E80;
+    background-color: #c33f3f;
+}
+
+.progress-percent {
+    color: black;
+    margin-right: 5px;
+}
+
+.progress-text {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+}
+
+.used-text {
+    color: #c33f3f;
+}
+
+.out-of {
+    font-size: 15px;
 }
 
 .budget-date {
     font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-row {
+    display: flex;
+    justify-content: space-between;
 }
