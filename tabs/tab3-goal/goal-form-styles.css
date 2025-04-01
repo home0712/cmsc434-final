@@ -16,7 +16,11 @@ input[type="text"] {
     margin: 0.5em;
     border-radius: 10px;
     background-color: #636363;
+    padding: 0.0001em;
+    padding-left: 0.5em;
     height: 1.6em;
+    color: #ffffff;
+    font-size: 30px;
 }
 
 #title-area {
@@ -27,6 +31,24 @@ input[type="text"] {
     justify-self: center;
     margin-left: 2.5em;
     width: 97%;
+}
+
+#amounts-area {
+    color: #ffffff;
+    margin-top: 0em;
+    font-size: 2em;
+    text-align: start;
+    margin-left: 1.9em;
+}
+
+#amount-left {
+    margin-top: 0.2em;
+    margin-bottom: 0em;
+    width: 200px;
+}
+
+#amount-goal {
+    width: 200px;
 }
 
 .subtitle {
