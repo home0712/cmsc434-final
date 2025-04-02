@@ -1,4 +1,36 @@
 const transactions = [
+    // April 5th 2025
+    {
+      id: "t023",
+      amount: -15.00,
+      title: "bluebottle",
+      type: "EXPENSE",
+      date: "2025-04-05",
+      method: "credit",
+      category: ["beverage"],
+      notes: "morning coffee & sandwich"
+    },
+    {
+      id: "t024",
+      amount: -20.00,
+      title: "headphone",
+      type: "EXPENSE",
+      date: "2025-04-05",
+      method: "cash",
+      category: ["tech"],
+      notes: ""
+    },
+    {
+      id: "t025",
+      amount: 1000.00,
+      title: "paycheck",
+      type: "INCOME",
+      date: "2025-04-05",
+      method: "bank transfer",
+      category: ["salary"],
+      notes: ""
+    },
+
     // March 21st 2025
     {
       id: "t001",
