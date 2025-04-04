@@ -1,4 +1,19 @@
 /*
+    click the icon to open the category setting page
+*/
+const settingButton = document.getElementById("header-button");
+settingButton.addEventListener("click", navigateToPage);
+
+function navigateToPage(event) {
+    const clickedButtonId = event.target.id;
+
+    sessionStorage.setItem("returnTo", "category");
+    if (clickedButtonId === "header-button") {
+        window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
+    }
+}
+
+/*
     draw pie chart
 */
 const canvas = document.getElementById("pie-chart");

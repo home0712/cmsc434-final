@@ -1,5 +1,11 @@
 /* MAIN - CALENDAR TAB */
 
+/*
+    click the icon to open the category setting page
+*/
+const settingButton = document.getElementById("header-button");
+settingButton.addEventListener("click", navigateToPage);
+
 /* 
     click the icons to navigate to dedicated screens 
     (add, search)
@@ -18,6 +24,8 @@ function navigateToPage(event) {
         window.location.href = "../popup-add-log/popup-add-log.html";
     } else if (clickedButtonId === "search") {
         window.location.href = "../popup-search-log/popup-search-log.html";
+    } else if (clickedButtonId === "header-button") {
+        window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
     }
 }
 
