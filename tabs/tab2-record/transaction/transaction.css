@@ -4,7 +4,7 @@ body {
 
 /* action bar */
 #action-bar {
-    font-size: 30px;
+    font-size: 25px;
     margin: auto;
     display: flex;
     justify-content: space-between; /* 좌우 정렬 */
@@ -41,7 +41,7 @@ body {
 }
 
 .log-date {
-    font-size: 17px;
+    font-size: 25px;
 }
 
 .log-item {
@@ -63,11 +63,11 @@ body {
 }
 
 .log-title {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .log-amount {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     white-space: nowrap;
 }
