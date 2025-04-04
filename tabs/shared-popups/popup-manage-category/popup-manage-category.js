@@ -1,4 +1,4 @@
-/* ADD AN ACCOUNT */
+/* MANAGE CATEGORIES */
 
 /* 
     click x button to close 
@@ -8,7 +8,6 @@ closeButton.addEventListener("click", returnToPage);
 
 /*
     return to previous page
-    for (side) add a log, search logs
 */
 function returnToPage() {
     const returnPage = sessionStorage.getItem("returnTo");

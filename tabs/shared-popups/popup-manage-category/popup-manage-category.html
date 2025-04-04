@@ -16,69 +16,33 @@
                 <img src="../../../assets/X.png" id="header-button">
             </span>
 
-            <!-- Input Fields -->
-            <form id="account-add-form">
-                <!-- Account Name -->
-                <div id="account-name" class="field">
-                    <label for="account-name-field" class="field-label">
-                        <span>ACCOUNT NAME</span>
-                        <span class="required-text">(Required)</span>
-                    </label>
-                    <input type="text" id="account-name-field" placeholder="Account Name" required/>
-                </div>
+            <ul class="category-list">
+                <li class="main-category">
+                    <div class="category-header">
+                        <span>Food</span>
+                        <img src="../../../assets/Arrow-down.png">
+                    </div>
+                    <ul class="sub-category-list">
+                        <li>Groceries</li>
+                        <li>Delivery</li>
+                        <li>Cafe</li>
+                    </ul>
+                </li>
 
-                <!-- Initial Balance -->
-                <div id="balance" class="field">
-                    <label for="balance-field" class="field-label">
-                        <span>BALANCE</span>
-                        <span class="required-text">(Required)</span>
-                    </label>
-                    <input type="number" id="balance-field" placeholder="$0.00" required/>
-                </div>
+                <li class="main-category">
+                    <div class="category-header">
+                      <span>Transport</span>
+                      <img src="../../../assets/Arrow-down.png">
+                    </div>
+                    <ul class="sub-category-list">
+                      <li>Bus</li>
+                      <li>Subway</li>
+                      <li>Taxi</li>
+                    </ul>
+                </li>
+            </ul>
 
-                <!-- Account Type -->
-                <div id="type" class="field">
-                    <label for="type-select" class="field-label">
-                        <span>ACCOUNT TYPE</span>
-                        <span class="required-text">(Required)</span>
-                    </label>
-                    <select id="type-select" name="type" required>
-                        <option value="">Choose...</option>
-                        <option value="Checking">Checking</option>
-                        <option value="Saving">Saving</option>
-                        <option value="Investments">Investment</option>
-                    </select>
-                </div>
-
-                <!-- Account Number -->
-                <div id="account-number" class="field">
-                    <label for="account-number-field" class="field-label">
-                        <span>ACCOUNT NUMBER</span>
-                        <span class="required-text">(Optional)</span>
-                    </label>
-                    <input type="text" id="account-number-field" placeholder="e.g. 123-456-7890"/>
-                </div>
-
-                <!-- Bank Name -->
-                <div id="bank-name" class="field">
-                    <label for="bank-name-field" class="field-label">
-                        <span>BANK NAME</span>
-                        <span class="required-text">(Optional)</span>
-                    </label>
-                    <input type="text" id="bank-name-field" placeholder="e.g. Chase, BoA"/>
-                </div>
-
-                <!-- Notes -->
-                <div id="note" class="field">
-                    <label for="notes-field" class="field-label">
-                        <span>NOTES</span>
-                        <span class="required-text">(Optional)</span>
-                    </label>
-                    <textarea id="notes-field" placeholder="Any Notes..."></textarea>
-                </div>
-
-                <button type="submit" id="save-button">SAVE</button>
-            </form>        
+            <button type="submit" id="save-button">SAVE</button>    
         </div>
     </div>
 
