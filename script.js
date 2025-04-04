@@ -17,7 +17,7 @@ function importNavBar() {
         navbarContainer.innerHTML = `
         <div class="navbar">
             <a href="${pathPrefix}tab1-home/home.html"><img src="${pathPrefix}../assets/Home.png" alt="Tab1-Home" /><span>Home</span></a>
-            <a href="${pathPrefix}tab2-record/transaction/transaction.html"><img src="${pathPrefix}../assets/Calendar.png" alt="Tab2-Record" /><span>Record</span></a>
+            <a href="${pathPrefix}tab2-record/transaction/transaction.html"><img src="${pathPrefix}../assets/Calendar.png" alt="Tab2-Logs" /><span>Logs</span></a>
             <a href="${pathPrefix}tab3-goal/goal.html"><img src="${pathPrefix}../assets/Check-square.png" alt="Tab3-Goal" /><span>Goal</span></a>    
             <a href="${pathPrefix}tab4-report/category/category.html"><img src="${pathPrefix}../assets/Clipboard.png" alt="Tab4-Report" /><span>Report</span></a>
             <a href="${pathPrefix}tab5-game/game.html"> <img src="${pathPrefix}../assets/Dribble.png" alt="Tab5-Game" /><span>Game</span></a>
