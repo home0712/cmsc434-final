@@ -18,3 +18,32 @@ for (const button of leftButtons) {
         }
     });
 }
+
+/*
+    show the current month
+ */
+const monthNames = [
+    "January", 
+    "February", 
+    "March", 
+    "April", 
+    "May", 
+    "June",
+    "July", 
+    "August", 
+    "September", 
+    "October", 
+    "November", 
+    "December"
+];
+
+function renderCurrentMonth() {
+    const titleText = document.getElementById("month-summary-title");
+    const today = new Date();
+    const currentMonth = monthNames[today.getMonth()];
+    const currentYear = today.getFullYear();
+
+    titleText.textContent = `${currentMonth} ${currentYear} Summary`;
+}
+
+renderCurrentMonth();
