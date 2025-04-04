@@ -109,7 +109,7 @@ body {
 
 .progress-fill {
     height: 100%;
-    background-color: #c33f3f;
+    background-color: #FF4136;
 }
 
 .progress-percent {
@@ -125,7 +125,7 @@ body {
 }
 
 .used-text {
-    color: #c33f3f;
+    color: #FF4136;
 }
 
 .out-of {
