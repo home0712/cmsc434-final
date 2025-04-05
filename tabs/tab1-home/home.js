@@ -4,7 +4,7 @@
     click the icons to navigate to dedicated screens 
     (filter, add, search)
 */
-const leftButtons = document.querySelectorAll(".left-button");
+const leftButtons = document.querySelectorAll(".title-button");
 
 for (const button of leftButtons) {
     button.addEventListener("click", () => {
@@ -14,7 +14,7 @@ for (const button of leftButtons) {
         } else if (id === "account-button") {
             window.location.href = "../tab2-record/accounts/accounts.html";
         } else if (id === "spending-button") {
-            window.location.href = "../tab4-report/report.html";
+            window.location.href = "../tab4-report/category/category.html";
         }
     });
 }
