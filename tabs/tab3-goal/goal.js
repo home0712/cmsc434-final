@@ -52,14 +52,15 @@ function activeToggleButton(event) {
 
     activeToggle();
 
-    const selectedId = option.dataset.id;
+    const selectedId = event.target.dataset.id;
+    renderGoals(selectedId);
 }
 
 
 /*
     rendering the goal lists
 */
-function renderGoals() {
+function renderGoals(selectedType = "all") {
     const budgetGoals = [];
     const savingGoals = [];
 
@@ -80,8 +81,20 @@ function renderGoals() {
         } 
     });
 
-    addBudgetCard(budgetGoals, budgetDiv);
-    addSavingCard(savingGoals, savingDiv);
+    if (selectedType === "all") {
+        addBudgetCard(budgetGoals, budgetDiv);
+        addSavingCard(savingGoals, savingDiv);
+    } else if (selectedType === "budget") {
+        addBudgetCard(budgetGoals, budgetDiv);
+    } else if (selectedType === "saving") {
+        addSavingCard(savingGoals, savingDiv);
+    }
+
+    // add event to the edit buttons
+    const editButtons = document.querySelectorAll(".edit-button");
+    for (const button of editButtons) {
+        button.addEventListener("click", navigateToEditPage);
+    }
 };
 
 /* 
@@ -275,11 +288,6 @@ renderGoals();
     navigate to the edit page
     with an account info to edit (sessionStorage)
 */
-const editButtons = document.querySelectorAll(".edit-button");
-for (const button of editButtons) {
-    button.addEventListener("click", navigateToEditPage);
-}
-
 function navigateToEditPage(event) {
     const card = event.target.closest(".budget-card") || event.target.closest(".saving-card");
     const goalId = card.dataset.id;
