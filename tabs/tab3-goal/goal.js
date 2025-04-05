@@ -1,5 +1,10 @@
 /* MAIN - GOAL TAB */
 
+// save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
+if (!localStorage.getItem("goals")) {
+    localStorage.setItem("goals", JSON.stringify(defaultGoals));
+}
+
 /* 
     click the icon to add
 */
@@ -10,10 +15,46 @@ function navigateToAddPage() {
     window.location.href = "./popup-add-goal/popup-add-goal.html";
 }
 
-// save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
-if (!localStorage.getItem("goals")) {
-    localStorage.setItem("goals", JSON.stringify(defaultGoals));
+/*
+    open/close toggle for all/budget/saving buttons
+ */
+const toggle = document.getElementById("dropdown-toggle");
+const icon = document.getElementById("dropdown-icon");
+const dropdown = document.getElementById("dropdown-list");
+toggle.addEventListener("click", activeToggle);
+
+function activeToggle() {
+    dropdown.classList.toggle("active");
+    
+    if (dropdown.classList.contains("active")) { // to close
+        icon.src = "../../assets/Arrow-up.png";
+    } else { // to open
+        icon.src = "../../assets/Arrow-down.png";
+    } 
 }
+
+/* 
+    active a button in toggle
+*/
+const options = document.querySelectorAll(".dropdown-option");
+const selectedText = document.getElementById("dropdown-selected");
+for (const option of options) {
+    option.addEventListener("click", activeToggleButton);
+}
+
+function activeToggleButton(event) {
+    for (const option of options) {
+        option.classList.remove("selected");
+    }
+
+    event.target.classList.add("selected");
+    selectedText.textContent = event.target.textContent;
+
+    activeToggle();
+
+    const selectedId = option.dataset.id;
+}
+
 
 /*
     rendering the goal lists
@@ -240,7 +281,7 @@ for (const button of editButtons) {
 }
 
 function navigateToEditPage(event) {
-    const card = event.target.closest(".budget-card");
+    const card = event.target.closest(".budget-card") || event.target.closest(".saving-card");
     const goalId = card.dataset.id;
 
     // default + local data

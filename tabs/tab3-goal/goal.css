@@ -5,33 +5,17 @@ body {
 /* action bar */
 #action-bar {
     font-size: 30px;
-    margin: 30px 10px 10px 10px;
+    margin: 30px 5px 10px 5px;
     display: flex;
     justify-content: space-between; 
     align-items: center;
 }
 
 .action-bar-title {
-    position: relative;
     display: flex;
-    gap: 7px;
     align-items: center;
-}
-
-#drop-down-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    flex-direction: row; 
+    justify-content: baseline;
     gap: 10px;
-    z-index: 10;
-}
-
-.dropdown-option {
-    background-color: #666;
-    border-radius: 4px;
-    font-size: 24px;
 }
 
 .action-bar-icon {
@@ -53,7 +37,32 @@ body {
     border: none;
 }
 
-/* budget container */
+/* dropdown */
+#dropdown-list {
+    display: none;
+    flex-direction: row; 
+    gap: 10px;
+    width: 100px;
+    margin-left: 5px;
+}
+
+#dropdown-list.active {
+    display: flex;
+}
+
+.dropdown-option {
+    background-color: #666;
+    border: 1px solid black;
+    border-radius: 15px;
+    font-size: 24px;
+    padding: 5px 15px;
+}
+
+.dropdown-option.selected {
+    border: 4px solid #04AA6D;
+}
+
+/* budget/saving container */
 .budget-card,
 .saving-card {
     background-color: #636363;
