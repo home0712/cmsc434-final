@@ -1,5 +1,10 @@
 /* MAIN - GOAL TAB */
 
+// save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
+if (!localStorage.getItem("goals")) {
+    localStorage.setItem("goals", JSON.stringify(defaultGoals));
+}
+
 /* 
     click the icon to add
 */
@@ -10,20 +15,60 @@ function navigateToAddPage() {
     window.location.href = "./popup-add-goal/popup-add-goal.html";
 }
 
-// save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
-if (!localStorage.getItem("goals")) {
-    localStorage.setItem("goals", JSON.stringify(defaultGoals));
+/*
+    open/close toggle for all/budget/saving buttons
+ */
+const toggle = document.getElementById("dropdown-toggle");
+const icon = document.getElementById("dropdown-icon");
+const dropdown = document.getElementById("dropdown-list");
+toggle.addEventListener("click", activeToggle);
+
+function activeToggle() {
+    dropdown.classList.toggle("active");
+    
+    if (dropdown.classList.contains("active")) { // to close
+        icon.src = "../../assets/Arrow-up.png";
+    } else { // to open
+        icon.src = "../../assets/Arrow-down.png";
+    } 
 }
+
+/* 
+    active a button in toggle
+*/
+const options = document.querySelectorAll(".dropdown-option");
+const selectedText = document.getElementById("dropdown-selected");
+for (const option of options) {
+    option.addEventListener("click", activeToggleButton);
+}
+
+function activeToggleButton(event) {
+    for (const option of options) {
+        option.classList.remove("selected");
+    }
+
+    event.target.classList.add("selected");
+    selectedText.textContent = event.target.textContent;
+
+    activeToggle();
+
+    const selectedId = event.target.dataset.id;
+    renderGoals(selectedId);
+}
+
 
 /*
     rendering the goal lists
 */
-function renderGoals() {
+function renderGoals(selectedType = "all") {
     const budgetGoals = [];
     const savingGoals = [];
 
     const budgetDiv = document.getElementById("budget-container");
     budgetDiv.innerHTML = "";
+
+    const savingDiv = document.getElementById("saving-container");
+    savingDiv.innerHTML = "";
 
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
     localGoals.forEach(goal => {
@@ -36,22 +81,38 @@ function renderGoals() {
         } 
     });
 
-    addGoalCard(budgetGoals, budgetDiv);
+    if (selectedType === "all") {
+        addBudgetCard(budgetGoals, budgetDiv);
+        addSavingCard(savingGoals, savingDiv);
+    } else if (selectedType === "budget") {
+        addBudgetCard(budgetGoals, budgetDiv);
+    } else if (selectedType === "saving") {
+        addSavingCard(savingGoals, savingDiv);
+    }
+
+    // add event to the edit buttons
+    const editButtons = document.querySelectorAll(".edit-button");
+    for (const button of editButtons) {
+        button.addEventListener("click", navigateToEditPage);
+    }
 };
 
 /* 
-    add goal div cards
+    add budget goal div cards
 */
-function addGoalCard(goalLists, parentDiv) {
-    for (const goal of goalLists) {
+function addBudgetCard(budgetLists, parentDiv) {
+    for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
         groupDiv.className = "budget-card";
         groupDiv.dataset.id = `${goal.id}`;
+
+        const percent = computePercentage(goal);
 
         const goalCard = `
             <div class="budget-header">
                 <div class="budget-title">
                     ${goal.title} 
+                    ${getStatusIcon(goal.type, percent)}
                 </div>
                 <div class="budget-icons">
                     <img src="../../assets/Edit.png" class="edit-button">
@@ -61,11 +122,11 @@ function addGoalCard(goalLists, parentDiv) {
 
             <div class="budget-progress">
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${goal.percent}%;"></div>
-                    <span class="progress-percent">${goal.percent}%</span>
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                    <span class="progress-percent">${percent}%</span>
                 </div>
                 <div class="progress-text">
-                    <span class="used-amount">$200</span>
+                    <span class="used-amount">$${goal.usedAmount}</span>
                     <span class="used-text">USED</span>
                     <span class="out-of">OUT OF</span>
                     <span class="goal-amount">$${goal.goalAmount}</span>
@@ -88,9 +149,92 @@ function addGoalCard(goalLists, parentDiv) {
     }
 };
 
+/* 
+    add saving goal div cards
+*/
+function addSavingCard(savingLists, parentDiv) {
+    for (const goal of savingLists) {
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "saving-card";
+        groupDiv.dataset.id = `${goal.id}`;
+
+        const percent = computePercentage(goal);
+
+        const goalCard = `
+            <div class="saving-header">
+                <div class="saving-title">
+                    ${goal.title} 
+                    ${getStatusIcon(goal.type, percent)}
+                </div>
+                <div class="saving-icons">
+                    <img src="../../assets/Edit.png" class="edit-button">
+                    <img src="../../assets/Trash.png" class="delete-button">
+                </div>
+            </div>
+
+            <div class="saving-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                    <span class="progress-percent">${percent}%</span>
+                </div>
+                <div class="progress-text">
+                    <span class="used-amount">$${goal.savedAmount}</span>
+                    <span class="used-text">SAVED</span>
+                    <span class="out-of">OUT OF</span>
+                    <span class="goal-amount">$${goal.goalAmount}</span>
+                </div>
+            </div>
+
+            <div class="saving-date">
+                <div class="date-row">
+                    <span>START</span>
+                    <span class="start-date">${getDateString(goal.startDate)}</span>
+                </div>
+                <div class="date-row">
+                    <span>END</span>
+                    <span class="end-date">${getDateString(goal.endDate)}</span>
+                </div>
+            </div>
+        `;
+        groupDiv.innerHTML += goalCard;
+        parentDiv.appendChild(groupDiv);
+    }
+};
+
 /*
     compute the used/saved percentage
 */
+function computePercentage(goal) {
+    const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
+    const goalAmount = goal.goalAmount;
+
+    if (goalAmount > 0 && amount != null) {
+        if (goal.type === "Budget") {
+            return Math.floor((amount / goalAmount) * 100)
+        } else if (goal.type === "Saving") {
+            return Math.min(100, Math.floor((amount / goalAmount) * 100))
+        }
+    }
+
+    if (goalAmount === 0) {
+        return 0;
+    }
+}
+
+/*
+    add icon when
+    - budget goal is exceeded
+    - saving goal is completed
+*/
+function getStatusIcon(type, percent) {
+    if (type === "Budget" && percent >= 100) {
+        return '<img src="../../assets/Warning.png" class="status-icon" alt="Exceeded">';
+    } else if (type === "Saving" && percent >= 100) {
+        return '<img src="../../assets/Checked.png" class="status-icon" alt="Completed">';
+    } else {
+        return ''
+    }
+}
 
 /*
     compute the total used/saved amount based on the data
@@ -144,13 +288,8 @@ renderGoals();
     navigate to the edit page
     with an account info to edit (sessionStorage)
 */
-const editButtons = document.querySelectorAll(".edit-button");
-for (const button of editButtons) {
-    button.addEventListener("click", navigateToEditPage);
-}
-
 function navigateToEditPage(event) {
-    const card = event.target.closest(".budget-card");
+    const card = event.target.closest(".budget-card") || event.target.closest(".saving-card");
     const goalId = card.dataset.id;
 
     // default + local data

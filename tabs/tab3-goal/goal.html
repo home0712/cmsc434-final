@@ -19,15 +19,9 @@
 
             <!-- action bar & buttons -->
             <div id="action-bar">
-                <div class="action-bar-title">
-                    <span id="drop-down-selected">All</span>
-                    <img src="../../assets/Arrow-down.png">
-
-                    <div id="drop-down-list">
-                        <div class="dropdown-option" data-id="all">All</div>
-                        <div class="dropdown-option" data-id="budget">Budget</div>
-                        <div class="dropdown-option" data-id="saving">Saving</div>
-                    </div>
+                <div class="action-bar-title" id="dropdown-toggle">
+                    <span id="dropdown-selected">All</span>
+                    <img id="dropdown-icon" src="../../assets/Arrow-down.png">
                 </div>
                 <div class="action-bar-icon">
                     <img src="../../assets/Filter.png">
@@ -35,43 +29,18 @@
                 </div>
             </div>
 
-            <!-- budget container -->
-            <div id="budget-container" class="scroll">
-                <div data-id="budget-001" class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">
-                            Food Delivery
-                        </div>
-                        <div class="budget-icons">
-                            <img src="../../assets/Edit.png" class="edit-button">
-                            <img src="../../assets/Trash.png" class="delete-button">
-                        </div>
-                    </div>
+            <!-- dropdown list (open when toggle activated)-->
+            <div id="dropdown-list">
+                <div class="dropdown-option selected" data-id="all">All</div>
+                <div class="dropdown-option" data-id="budget">Budget</div>
+                <div class="dropdown-option" data-id="saving">Saving</div>
+            </div>
 
-                    <div class="budget-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 60%;"></div>
-                            <span class="progress-percent">60%</span>
-                        </div>
-                        <div class="progress-text">
-                            <span class="used-amount">$900</span>
-                            <span class="used-text">USED</span>
-                            <span class="out-of">OUT OF</span>
-                            <span class="goal-amount">$1,500</span>
-                        </div>
-                    </div>
-
-                    <div class="budget-date">
-                        <div class="date-row">
-                            <span>START</span>
-                            <span class="start-date">Feb 01 2025</span>
-                        </div>
-                        <div class="date-row">
-                            <span>END</span>
-                            <span class="end-date">May 01 2025</span>
-                        </div>
-                    </div>
-                </div>
+            <div id="goal-container" class="scroll">
+                <!-- budget container -->
+                <div id="budget-container"></div>
+                <!-- saving container -->
+                <div id="saving-container"></div>
             </div>
         </div>
 
