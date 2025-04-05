@@ -25,6 +25,9 @@ function renderGoals() {
     const budgetDiv = document.getElementById("budget-container");
     budgetDiv.innerHTML = "";
 
+    const savingDiv = document.getElementById("saving-container");
+    savingDiv.innerHTML = "";
+
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
     localGoals.forEach(goal => {
         const type = goal.type?.toLowerCase();
@@ -36,22 +39,26 @@ function renderGoals() {
         } 
     });
 
-    addGoalCard(budgetGoals, budgetDiv);
+    addBudgetCard(budgetGoals, budgetDiv);
+    addSavingCard(savingGoals, savingDiv);
 };
 
 /* 
-    add goal div cards
+    add budget goal div cards
 */
-function addGoalCard(goalLists, parentDiv) {
-    for (const goal of goalLists) {
+function addBudgetCard(budgetLists, parentDiv) {
+    for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
         groupDiv.className = "budget-card";
         groupDiv.dataset.id = `${goal.id}`;
+
+        const percent = computePercentage(goal);
 
         const goalCard = `
             <div class="budget-header">
                 <div class="budget-title">
                     ${goal.title} 
+                    ${getStatusIcon(goal.type, percent)}
                 </div>
                 <div class="budget-icons">
                     <img src="../../assets/Edit.png" class="edit-button">
@@ -61,11 +68,11 @@ function addGoalCard(goalLists, parentDiv) {
 
             <div class="budget-progress">
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${goal.percent}%;"></div>
-                    <span class="progress-percent">${goal.percent}%</span>
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                    <span class="progress-percent">${percent}%</span>
                 </div>
                 <div class="progress-text">
-                    <span class="used-amount">$200</span>
+                    <span class="used-amount">$${goal.usedAmount}</span>
                     <span class="used-text">USED</span>
                     <span class="out-of">OUT OF</span>
                     <span class="goal-amount">$${goal.goalAmount}</span>
@@ -88,9 +95,92 @@ function addGoalCard(goalLists, parentDiv) {
     }
 };
 
+/* 
+    add saving goal div cards
+*/
+function addSavingCard(savingLists, parentDiv) {
+    for (const goal of savingLists) {
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "saving-card";
+        groupDiv.dataset.id = `${goal.id}`;
+
+        const percent = computePercentage(goal);
+
+        const goalCard = `
+            <div class="saving-header">
+                <div class="saving-title">
+                    ${goal.title} 
+                    ${getStatusIcon(goal.type, percent)}
+                </div>
+                <div class="saving-icons">
+                    <img src="../../assets/Edit.png" class="edit-button">
+                    <img src="../../assets/Trash.png" class="delete-button">
+                </div>
+            </div>
+
+            <div class="saving-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                    <span class="progress-percent">${percent}%</span>
+                </div>
+                <div class="progress-text">
+                    <span class="used-amount">$${goal.savedAmount}</span>
+                    <span class="used-text">SAVED</span>
+                    <span class="out-of">OUT OF</span>
+                    <span class="goal-amount">$${goal.goalAmount}</span>
+                </div>
+            </div>
+
+            <div class="saving-date">
+                <div class="date-row">
+                    <span>START</span>
+                    <span class="start-date">${getDateString(goal.startDate)}</span>
+                </div>
+                <div class="date-row">
+                    <span>END</span>
+                    <span class="end-date">${getDateString(goal.endDate)}</span>
+                </div>
+            </div>
+        `;
+        groupDiv.innerHTML += goalCard;
+        parentDiv.appendChild(groupDiv);
+    }
+};
+
 /*
     compute the used/saved percentage
 */
+function computePercentage(goal) {
+    const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
+    const goalAmount = goal.goalAmount;
+
+    if (goalAmount > 0 && amount != null) {
+        if (goal.type === "Budget") {
+            return Math.floor((amount / goalAmount) * 100)
+        } else if (goal.type === "Saving") {
+            return Math.min(100, Math.floor((amount / goalAmount) * 100))
+        }
+    }
+
+    if (goalAmount === 0) {
+        return 0;
+    }
+}
+
+/*
+    add icon when
+    - budget goal is exceeded
+    - saving goal is completed
+*/
+function getStatusIcon(type, percent) {
+    if (type === "Budget" && percent >= 100) {
+        return '<img src="../../assets/Warning.png" class="status-icon" alt="Exceeded">';
+    } else if (type === "Saving" && percent >= 100) {
+        return '<img src="../../assets/Checked.png" class="status-icon" alt="Completed">';
+    } else {
+        return ''
+    }
+}
 
 /*
     compute the total used/saved amount based on the data
