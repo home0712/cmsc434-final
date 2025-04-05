@@ -88,16 +88,16 @@ body {
 
 /* 
     month selector 
-    - for home
-    - for transaction 
-    - for calendar
+    - for transaction (Tab 2)
+    - for calendar (Tab 2)
+    - for category (Tab 4)
 */
 #month-selector {
     overflow: hidden;
     display: flex;
     box-sizing: border-box;
     align-items: center;
-    margin: 0;
+    margin: 15px 0 0 0;
 }
 
 .month-buttons {
