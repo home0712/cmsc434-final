@@ -38,7 +38,7 @@ function importNavBar() {
                 }
         } else if (page.getAttribute("href").includes("tab4-report")) {
             if (currentPage === "category.html" ||
-                currentPage === "trends.html") {
+                currentPage === "trend.html") {
                 page.classList.add("active");
             }
         }
