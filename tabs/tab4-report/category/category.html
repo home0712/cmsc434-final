@@ -28,25 +28,21 @@
             <div class="scroll">
                 <!-- pie chart -->
                 <div id="pie-chart-area">
-                    <canvas id="pie-chart" width="200" height="200"></canvas>
+                    <canvas id="pie-chart" width="400" height="400"></canvas>
                 </div>
+                <div id="back-to-main" style="display: none;">⬅ Back</div>
 
                 <!-- category rank -->
                 <div id="category-rank">
                     <div id="category-rank-header">
                         <h2>Top Categories</h2>
                         <div>
-                            <img src="../../../assets/Arrow-down-two.png"/>
-                            <img src="../../../assets/Arrow-up-two.png"/>
+                            <img src="../../../assets/Arrow-down-two.png" id="sort-down"/>
+                            <img src="../../../assets/Arrow-up-two.png" id="sort-up"/>
                         </div>
                     </div>
 
-                    <div id="category-rank-body">
-                        <div class="category-row" data-id="rank-001">Grocery</div>
-                        <div class="category-row" data-id="rank-002">Vehicle</div>
-                        <div class="category-row" data-id="rank-003">Beverage</div>
-                        <div class="category-row" data-id="rank-003">Leisure</div>
-                    </div>
+                    <div id="category-rank-body"></div>
                 </div>
             </div>
 
@@ -66,6 +62,7 @@
     </div>
     
     <!-- import script -->
+    <script src="../tab4-charts.js"></script>
     <script src="./category.js"></script>
     <script src="../tab4-common.js"></script>
     <script src="../../../script.js"></script>
