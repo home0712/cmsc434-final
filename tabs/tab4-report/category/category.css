@@ -74,6 +74,14 @@
     width: 140px;
 }
 
+/* back button */
+#back-to-main {
+    height: 30px;
+    font-size: 25px;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
 /* scroll */
 .scroll {
     overflow-y: auto;

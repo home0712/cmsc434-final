@@ -177,6 +177,7 @@ function updateToSubPieChart(category) {
 
     const baseColor = getBaseColorForCategory(category); // main 카테고리 존재하지 않는 경우도 있나?
     const gradientColors = getGradientColors(baseColor, subData.length);
+    console.log(gradientColors);
 
     pieChart.data.labels = subLabels;
     pieChart.data.datasets[0].data = subAmounts;
@@ -230,6 +231,11 @@ function getBaseColorForCategory(category) {
 function getGradientColors(baseColor, count) {
     const rgb = hexToRgb(baseColor); 
     const result = [];
+    
+    if (count === 1) {
+        result.push(`rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+        return result;
+    }
   
     for (let i = 0; i < count; i++) {
       const factor = 0.2 + (0.8 * (1 - i / (count - 1))); 
