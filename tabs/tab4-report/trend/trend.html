@@ -16,6 +16,51 @@
                 <h1>Trend Report</h1>
             </span>
 
+            <div class="scroll" id="trend-container" >
+                <!-- Spending Trend -->
+                <h2>Monthly Expense Trend</h2>
+                <div class="trend-card" id="spending-card">
+                    <div class="trend-header" id="spending-header">
+                        <span class="trend-amount" id="spending-amount">$2,580.00 </span>
+                        <span class="trend-header-text" id="spending-header-text">Spent in (Selected Month)</span>
+                    </div>
+                    
+                    <div id="spending-chart-container">
+                        <canvas id="spending-chart" width="500px" height="300px"></canvas>
+                    </div>
+
+                    <div class="trend-footer" id="spending-footer">
+                        <div id="average-expense">
+                            <span>Average Expense in 6 months</span>
+                            <span>$2,500</span>
+                        </div>
+
+                        <div id="average-income">
+                            <span>Average Income in 6 months</span>
+                            <span>$2,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Net Income -->
+                <h2>Net Income</h2>
+                <div class="trend-card">
+                    <div class="trend-header" id="net-income-header">
+                        <span class="trend-amount" id="net-income-amount">$570.00</span>
+                        <span class="trend-header-text" id="net-income-header-text">in (Selected Month)</span>
+                    </div>
+
+                    <div id="net-income-chart-container">
+                        <canvas id="net-income-chart" width="500px" height="300px"></canvas>
+                    </div>
+            
+                    <div class="trend-footer" id="net-income-footer">
+                        <span>Average Net Income in 6 months</span>
+                        <span>$2,500</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- sub nav bar  -->
             <div id="sub-navbar">
                 <a href="../category/category.html">
@@ -32,6 +77,7 @@
     </div>
     
     <!-- import script -->
+    <script src="../tab4-charts.js"></script>
     <script src="./trend.js"></script>
     <script src="../tab4-common.js"></script>
     <script src="../../../script.js"></script>

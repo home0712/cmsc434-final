@@ -1,0 +1,59 @@
+/* trend container */
+#trend-container {
+    position: relative;
+    margin-top: 30px;
+}
+
+/* trend card */
+.trend-card {
+    background-color: #484848;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.trend-header {
+    
+}
+
+.trend-amount {
+    font-size: 22px;
+}
+
+.trend-header-text {
+    font-size: 18px;
+}
+
+.trend-footer {
+    font-size: 22px;
+}
+
+#average-expense,
+#average-income {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* spending chart container */
+#spending-chart-container {
+}
+
+#spending-chart {
+    
+}
+
+/* scroll */
+.scroll {
+    overflow-y: auto;
+    height: 560px;
+    padding-bottom: 80px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}

@@ -27,7 +27,7 @@ hr {
 
 /* monthly summary */
 #month-summary-box {
-    background-color: #636363;
+    background-color: #484848;
     color: white;
     font-size: 24px;
     border-radius: 15px;
@@ -47,7 +47,7 @@ hr {
 }
 
 .summary-amount.income, 
-.summary-amount.net-worth {
+.summary-amount.net-income {
     color: #4CAF50;
 }
   
@@ -57,7 +57,7 @@ hr {
 
 /* account overview */
 .overview-card {
-    background-color: #636363;
+    background-color: #484848;
     margin-bottom: 24px;
     height: 100%; 
     border-radius: 15px;
@@ -82,7 +82,7 @@ hr {
 
 /* spending overview */
 .spending-overview-card {
-    background-color: #636363;
+    background-color: #484848;
     margin-bottom: 24px;
     height: 100%; 
     border-radius: 15px;
