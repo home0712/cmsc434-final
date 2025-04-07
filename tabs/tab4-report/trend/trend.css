@@ -8,7 +8,7 @@
 .trend-card {
     background-color: #484848;
     box-sizing: border-box;
-    padding: 10px 15px;
+    padding: 15px 15px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,26 @@
 }
 
 .trend-header {
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.trend-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.trend-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.trend-header-right img {
+    width: 40px;
+    height: 40px;
 }
 
 .trend-amount {
@@ -31,20 +50,35 @@
     font-size: 22px;
 }
 
+.trend-footer div {
+    margin-top: 10px;
+}
+
 #average-expense,
-#average-income {
+#average-income,
+#average-net {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* spending chart container */
-#spending-chart-container {
+#expense-text {
+    color: rgb(255, 65, 54);
 }
 
-#spending-chart {
-    
+#income-text {
+    color: rgb(76, 175, 80);
 }
+
+#expense-amount {
+    color: rgb(255, 65, 54);
+}
+
+#income-amount {
+    color: rgb(76, 175, 80);
+}
+
+/* net */
 
 /* scroll */
 .scroll {

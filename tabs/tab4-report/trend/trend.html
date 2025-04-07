@@ -17,47 +17,43 @@
             </span>
 
             <div class="scroll" id="trend-container" >
-                <!-- Spending Trend -->
+                <!-- expense Trend -->
                 <h2>Monthly Expense Trend</h2>
-                <div class="trend-card" id="spending-card">
-                    <div class="trend-header" id="spending-header">
-                        <span class="trend-amount" id="spending-amount">$2,580.00 </span>
-                        <span class="trend-header-text" id="spending-header-text">Spent in (Selected Month)</span>
+                <div class="trend-card" id="expense-card">
+                    <div class="trend-header" id="expense-header">
+                        <div class="trend-header-left">
+                            <span class="trend-amount" id="expense-amount"></span>
+                            <span class="trend-header-text" id="expense-header-text"></span>
+                        </div>
+
+                        <div class="trend-header-right">
+                            <span>Income</span>
+                            <img src="../../../assets/Toggle-left.png" id="income-toggle"/>
+                        </div>
                     </div>
                     
-                    <div id="spending-chart-container">
-                        <canvas id="spending-chart" width="500px" height="300px"></canvas>
+                    <div id="expense-chart-container">
+                        <canvas id="expense-chart" width="500px" height="300px"></canvas>
                     </div>
 
-                    <div class="trend-footer" id="spending-footer">
-                        <div id="average-expense">
-                            <span>Average Expense in 6 months</span>
-                            <span>$2,500</span>
-                        </div>
-
-                        <div id="average-income">
-                            <span>Average Income in 6 months</span>
-                            <span>$2,500</span>
-                        </div>
-                    </div>
+                    <div class="trend-footer" id="expense-footer"></div>
                 </div>
 
                 <!-- Net Income -->
-                <h2>Net Income</h2>
+                <h2>Monthly Net Income</h2>
                 <div class="trend-card">
                     <div class="trend-header" id="net-income-header">
-                        <span class="trend-amount" id="net-income-amount">$570.00</span>
-                        <span class="trend-header-text" id="net-income-header-text">in (Selected Month)</span>
+                        <div class="trend-header-left">
+                            <span class="trend-amount" id="net-income-amount"></span>
+                            <span class="trend-header-text" id="net-income-header-text"></span>
+                        </div>
                     </div>
 
                     <div id="net-income-chart-container">
                         <canvas id="net-income-chart" width="500px" height="300px"></canvas>
                     </div>
             
-                    <div class="trend-footer" id="net-income-footer">
-                        <span>Average Net Income in 6 months</span>
-                        <span>$2,500</span>
-                    </div>
+                    <div class="trend-footer" id="net-income-footer"></div>
                 </div>
             </div>
 
