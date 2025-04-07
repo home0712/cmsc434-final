@@ -119,7 +119,6 @@ function navigateToEditPage(event) {
 
     // default + local data
     let localAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
-    console.log(localAccounts);
     
     // 해당 id를 가진 데이터 찾아서 보내기
     const editingAccount = localAccounts.find((account) => account.id === accountId);

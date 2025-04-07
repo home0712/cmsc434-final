@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adding a Transaction</title>
-    <link rel="stylesheet" href="./popup-add-log.css">
+    <title>Editing a Transaction Log</title>
+    <link rel="stylesheet" href="./popup-edit-log.css">
     <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
@@ -12,12 +12,12 @@
         <div class="device-content">
             <!-- Header -->
             <span id="top-header">
-                <h1>Adding a Transaction</h1>
+                <h1>Editing a Transaction Log</h1>
                 <img src="../../../assets/X.png" id="header-button">
             </span>
 
             <!-- Input Fields -->
-            <form id="add-form">
+            <form id="log-edit-form">
                 <div id="amount" class="field">
                     <label for="amount-field" class="field-label">
                         <span>AMOUNTS</span>
@@ -37,8 +37,8 @@
                         <span>TYPE</span>
                     </label>
                     <div class="type-button-field">
-                        <button class="type-button" type="button">INCOME</button>
-                        <button class="type-button" type="button">EXPENSE</button>
+                        <button class="type-button" type="button" id="income-button">INCOME</button>
+                        <button class="type-button" type="button" id="expense-button">EXPENSE</button>
                     </div>
                     <input type="hidden" id="type-value">
                 </div>
@@ -89,6 +89,6 @@
     <!-- import script -->
     <script src="../log-data.js"></script>
     <script src="../tab2-common.js"></script>
-    <script src="./popup-add-log.js"></script>
+    <script src="./popup-edit-log.js"></script>
 </body>
 </html>

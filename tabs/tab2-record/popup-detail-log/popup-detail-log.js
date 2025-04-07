@@ -5,21 +5,27 @@ closeButton.addEventListener("click", returnToPage);
 // edit button
 const editButton = document.getElementById("edit-button");
 editButton.addEventListener("click", () => {
-    sessionStorage.setItem("editingTransactionId", id);
+    // get data
+    let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+    
+    // 해당 id를 가진 데이터 찾아서 보내기
+    const editingLog = localLogs.find((log) => log.id === logId);
+    sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
+
     window.location.href = "../popup-edit-log/popup-edit-log.html";
 });
 
 /**
  *  render details
  */
-const id = sessionStorage.getItem("selectedTransactionId");
-const logs = JSON.parse(localStorage.getItem("transactions")) || [];
-const log = logs.find(l => l.id === id);
+const logId = sessionStorage.getItem("selectedTransactionId");
+const localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+const log = localLogs.find((log) => log.id === logId);
 
 if (log) {
     document.getElementById("detail-amount").textContent = `$ ${Math.abs(log.amount).toLocaleString()}`;
     document.getElementById("detail-title").textContent = log.title;
-    document.getElementById("detail-type").textContent = log.type;
+    document.getElementById("detail-type").textContent = log.type === "EXPENSE" ? "Expense" : "Income";
     document.getElementById("detail-date").textContent = log.date;
     document.getElementById("detail-method").textContent = log.method;
     document.getElementById("detail-category").textContent = log.category;

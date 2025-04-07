@@ -1,10 +1,12 @@
-/* SIDE SCREEN - ADD A LOG */
+/* SIDE SCREEN - EDIT A LOG */
 
 /* 
-    click x button to close 
+    click x button to go back to detail page
 */
 const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", returnToPage);
+closeButton.addEventListener("click", () => {
+    window.location.href = "../popup-detail-log/popup-detail-log.html";
+});
 
 /* 
     income/expense type button selector
@@ -23,22 +25,23 @@ function clickTypeButton(event) {
     document.getElementById("type-value").value = event.target.textContent;
 }
 
-/* 
-    click save button & add a log
+/*
+    click save button & edit an log
 */
 const saveButton = document.getElementById("save-button");
-const logForm = document.getElementById("add-form");
+const logForm = document.getElementById("log-edit-form");
+saveButton.addEventListener("click", editLog);
 
-saveButton.addEventListener("click", addTransaction);
-
-function addTransaction(event) {
+function editLog(event) {
     event.preventDefault();
 
     if (!logForm.checkValidity()) {
-        // (editing) -> 가장 첫번째 unfilled required field에 빨간색으로 표시 or popup?
         alert("Please fill in all required fields.");
         return;
     }
+
+    // 수정할 데이터 가져오기 (sessionStorage)
+    const log = JSON.parse(sessionStorage.getItem("editingLog")) || null;
 
     // 사용자가 입력한 데이터 가져오기
     const amount = document.getElementById("amount-field").value;
@@ -53,28 +56,56 @@ function addTransaction(event) {
     const amountNum = parseFloat(amount);
     const amountFinal = (type === "EXPENSE") ? -Math.abs(amountNum) : Math.abs(amountNum);
 
-    // 사용자 입력 데이터로 json 포맷으로 만들기
-    const newLog = {
-        id: Date.now(), 
+    const updated = {
+        id: log.id, 
         amount: amountFinal,
         title: title,
         type: type,
-        date: date,     // YYYY-MM-DD format
+        date: date,
         method: method,
-        category: category,
+        category: [category],
         notes: notes
     };
 
-    /* 
-        local storage: String
-        localLogs: [] (Array<Object>)
-        newLog: Object
-        local storage 로그 리스트에 -> new log 추가하기 
-     */
+    // 기존 데이터와 업데이트 값 비교해서 수정
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-    localLogs.push(newLog);
+    localLogs = localAccounts.map((lg) => {
+        if (lg.id === updated.id) {
+            return updated;
+        } else {
+            return lg;
+        }
+    });
+
     localStorage.setItem("transactions", JSON.stringify(localLogs));
 
-    // return to the prev page
-    returnToPage();
+    // 수정하고 나면 다시 detail 페이지로 돌아가기
+    window.location.href = "../popup-detail-log/popup-detail-log.html"; 
 }
+
+/*
+    render existing log info to the fields
+*/
+function renderAccountInfo() {
+    // 수정할 데이터 가져오기 (sessionStorage)
+    const log = JSON.parse(sessionStorage.getItem("editingLog")) || null;
+
+    // 필드에 미리 채우기
+    if (log) {
+        document.getElementById("amount-field").value = `${Math.abs(log.amount).toLocaleString()}`;
+        document.getElementById("title-field").value = log.title;
+        document.getElementById("type-value").value = log.type;
+        document.getElementById("date-field").value = log.date;
+        document.getElementById("method-select").value = log.method;
+        document.getElementById("category-select").value = log.category;
+        document.getElementById("notes-field").value = log.notes;
+
+        if (log.type === "EXPENSE") {
+            document.getElementById("expense-button").classList.add("selected");
+        } else if (log.type === "INCOME") {
+            document.getElementById("income-button").classList.add("selected");
+        }
+    }
+}
+
+renderAccountInfo();

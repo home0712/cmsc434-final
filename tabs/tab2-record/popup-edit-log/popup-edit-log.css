@@ -1,5 +1,5 @@
 /* field general css */
-#add-form {
+#log-edit-form {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -7,12 +7,12 @@
     margin: 40px auto;
 }
 
-#add-form .field {
+#log-edit-form .field {
     display: flex;
     width: 100%;  
 }
 
-#add-form .field-label {
+#log-edit-form .field-label {
     display: flex;
     align-items: baseline;
     gap: 8px;
