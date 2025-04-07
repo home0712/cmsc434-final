@@ -53,8 +53,26 @@
                     <span class="value" id="detail-note"></span>
                 </div>
 
-                <button type="button" id="edit-button">EDIT</button>
+                <div id="button-container">
+                    <button type="button" id="edit-button">
+                        <img src="../../../assets/Edit.png">
+                        <span>EDIT</span>
+                    </button>
+                    <button type="button" id="delete-button-main">
+                        <img src="../../../assets/Trash.png">
+                        <span>DELETE</span>
+                    </button>
+                </div>
             </form>        
+        </div>
+
+        <div class="delete-popup hidden">
+            <img src="../../../assets/Alert-circle.png" class="alert"> 
+            <div class="delete-text">Delete this transaction log?</div>
+            <div class="delete-buttons">
+                <button class="cancel-delete">Cancel</button>
+                <button class="confirm-delete">Delete</button>
+            </div>
         </div>
     </div>
 

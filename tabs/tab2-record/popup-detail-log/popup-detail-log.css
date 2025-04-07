@@ -48,14 +48,99 @@
     font-size: 22px;
 }
 
+#button-container {
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+/* button container */
+#button-container img {
+    width: 20px;
+    height: 20px;
+}
+
 /* edit button */
 #edit-button {
     align-self: center;
-    width: 100px;
+    width: 130px;
     padding: 12px;
     border: none;
     border-radius: 10px;
     background-color: #689e80;
     color: white;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* delete button */
+#delete-button-main {
+    align-self: center;
+    width: 130px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff7f7f;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* delete popup */
+.delete-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+    border-radius: 15px;
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+    color: white;
+    font-size: 18px;
+}
+  
+.delete-popup.hidden {
+    display: none;
+}
+
+.delete-text {
+    font-size: 30px;
+}
+
+.delete-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.delete-buttons button {
+    padding: 8px 20px;
+    font-size: 24px;
+    border-radius: 8px;
+    border: none;
+  }
+  
+.confirm-delete {
+    background-color: #ff7f7f;
+    color: black;
+}
+  
+.cancel-delete {
+    background-color: #aaa;
+    color: black;
 }
