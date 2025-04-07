@@ -52,8 +52,8 @@ function activeDeletePopup(event) {
     confirmButton.addEventListener("click", () => {
         const goalId = card.dataset.id;
         let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-        goals = localGoals.filter(goal => goal.id !== goalId);
-        localStorage.setItem("goals", JSON.stringify(goals));
+        localGoals = localGoals.filter(goal => goal.id !== goalId);
+        localStorage.setItem("goals", JSON.stringify(localGoals));
 
         const selectedType = sessionStorage.getItem("selectedType") || "all";
         renderGoals(selectedType);
