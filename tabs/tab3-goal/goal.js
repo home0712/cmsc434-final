@@ -1,18 +1,67 @@
 /* MAIN - GOAL TAB */
 
+// initially render the goal tab
+document.addEventListener("DOMContentLoaded", () => {
+    const addButton = document.getElementById("header-button");
+    addButton.addEventListener("click", () => {
+        window.location.href = "./popup-add-goal/popup-add-goal.html";
+    });
+
+    const selectedType = sessionStorage.getItem("selectedType") || "all";
+    renderGoals(selectedType);
+    restoreToggleUI(selectedType);
+});
+
 // save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
 if (!localStorage.getItem("goals")) {
     localStorage.setItem("goals", JSON.stringify(defaultGoals));
 }
 
-/* 
-    click the icon to add
-*/
-const addButton = document.getElementById("header-button");
-addButton.addEventListener("click", navigateToAddPage);
+// restore the toggle 
+function restoreToggleUI(selectedType) {
+    const options = document.querySelectorAll(".dropdown-option");
+    const selectedText = document.getElementById("dropdown-selected");
 
-function navigateToAddPage() {
-    window.location.href = "./popup-add-goal/popup-add-goal.html";
+    for (const option of options) {
+        option.classList.remove("selected");
+        if (selectedType === option.dataset.id) {
+            option.classList.add("selected");
+        }
+    }
+
+    if (selectedType === "budget") {
+        selectedText.textContent = "Budget";
+    } else if (selectedType === "saving") {
+        selectedText.textContent = "Saving";
+    } else {
+        selectedText.textContent = "All";
+    }
+}
+
+// active a popup to delete
+function activeDeletePopup(event) {
+    const card = event.target.closest(".budget-card") || 
+                 event.target.closest(".saving-card");
+    const popup = card.querySelector(".delete-popup");
+
+    popup.classList.remove("hidden");
+
+    const confirmButton = popup.querySelector(".confirm-delete");
+    const cancelButton = popup.querySelector(".cancel-delete");
+
+    confirmButton.addEventListener("click", () => {
+        const goalId = card.dataset.id;
+        let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+        goals = localGoals.filter(goal => goal.id !== goalId);
+        localStorage.setItem("goals", JSON.stringify(goals));
+
+        const selectedType = sessionStorage.getItem("selectedType") || "all";
+        renderGoals(selectedType);
+    });
+
+    cancelButton.addEventListener("click", () => {
+        popup.classList.add("hidden");
+    });
 }
 
 /*
@@ -34,7 +83,7 @@ function activeToggle() {
 }
 
 /* 
-    active a button in toggle
+    active a button in toggle and render the matched list
 */
 const options = document.querySelectorAll(".dropdown-option");
 const selectedText = document.getElementById("dropdown-selected");
@@ -98,6 +147,11 @@ function renderGoals(selectedType = "all") {
     for (const button of editButtons) {
         button.addEventListener("click", navigateToEditPage);
     }
+
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    for (const button of deleteButtons) {
+        button.addEventListener("click", activeDeletePopup);
+    }
 };
 
 /* 
@@ -120,6 +174,15 @@ function addBudgetCard(budgetLists, parentDiv) {
                 <div class="budget-icons">
                     <img src="../../assets/Edit.png" class="edit-button">
                     <img src="../../assets/Trash.png" class="delete-button">
+                </div>
+            </div>
+
+            <div class="delete-popup hidden">
+                <img src="../../assets/Alert-circle.png" class="alert"> 
+                <div class="delete-text">Delete this goal?</div>
+                <div class="delete-buttons">
+                    <button class="cancel-delete">Cancel</button>
+                    <button class="confirm-delete">Delete</button>
                 </div>
             </div>
 
@@ -172,6 +235,15 @@ function addSavingCard(savingLists, parentDiv) {
                 <div class="saving-icons">
                     <img src="../../assets/Edit.png" class="edit-button">
                     <img src="../../assets/Trash.png" class="delete-button">
+                </div>
+            </div>
+
+            <div class="delete-popup hidden">
+                <img src="../../assets/Alert-circle.png" class="alert"> 
+                <div class="delete-text">Delete this goal?</div>
+                <div class="delete-buttons">
+                    <button class="cancel-delete">Cancel</button>
+                    <button class="confirm-delete">Delete</button>
                 </div>
             </div>
 
@@ -246,18 +318,8 @@ function getStatusIcon(type, percent) {
 
 /* util variables */
 const monthNames = [
-    "Jan", 
-    "Feb", 
-    "Mar", 
-    "Apr", 
-    "May", 
-    "Jun",
-    "Jul", 
-    "Aug", 
-    "Sep", 
-    "Oct", 
-    "Nov", 
-    "Dec"
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
 function getDateString(goalDate) {
@@ -285,26 +347,6 @@ function getOrdinal(day) {
     }
 };
 
-
-// initially render the goal tab
-const selectedType = sessionStorage.getItem("selectedType") || "all";
-renderGoals(selectedType);
-
-for (const option of options) {
-    option.classList.remove("selected");
-
-    if (selectedType === option.dataset.id) {
-        option.classList.add("selected");
-    }
-}
-
-if (selectedType === "budget") {
-    selectedText.textContent = "Budget";
-} else if (selectedType === "saving") {
-    selectedText.textContent = "Saving";
-} else {
-    selectedText.textContent = "All";
-}
 
 /*
     navigate to the edit page

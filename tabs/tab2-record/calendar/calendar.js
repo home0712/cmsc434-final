@@ -199,7 +199,6 @@ monthRight.addEventListener("click", () => {
 });
 
 /* 
-    (editing)
     cell 클릭하면 디테일 팝업 띄우기
     여기서 삭제 버튼도 구현
 */
