@@ -34,8 +34,11 @@ function appendLogsByDate(dateGrouped, container, dateKey, dateString) {
     groupDiv.innerHTML = `<div class="log-date">${dateString}</div><hr>`;
 
     for (const log of dateGrouped[dateKey]) {
-        const logHTML = `
-            <div class="log-item">
+        const logItem = document.createElement("div");
+        logItem.className = "log-item";
+        logItem.dataset.id = log.id;
+
+        logItem.innerHTML = `
             <div class="log-left">
                 <img src="../../../assets/${getIconForCategory(log.category[0])}">
                 <span class="log-title">${log.title}</span>
@@ -43,9 +46,15 @@ function appendLogsByDate(dateGrouped, container, dateKey, dateString) {
             <span class="log-amount ${log.type === 'INCOME' ? 'income' : 'expense'}">
                 ${formatAmount(log.amount)}
             </span>
-            </div>
         `;
-        groupDiv.innerHTML += logHTML;
+
+        logItem.addEventListener("click", () => {
+            sessionStorage.setItem("selectedTransactionId", log.id);
+            sessionStorage.setItem("returnTo", "transaction");
+            window.location.href = "../popup-detail-log/popup-detail-log.html";
+        });
+
+        groupDiv.appendChild(logItem);
     }      
     container.appendChild(groupDiv);
 }

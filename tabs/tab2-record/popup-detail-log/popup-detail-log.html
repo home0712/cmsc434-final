@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Details</title>
+    <link rel="stylesheet" href="./popup-detail-log.css">
+    <link rel="stylesheet" href="../../../styles.css">
+</head>
+<body>
+    <div class="device">
+        <div class="device-content">
+            <!-- Header -->
+            <span id="top-header">
+                <h1>Log Details</h1>
+                <img src="../../../assets/X.png" id="header-button">
+            </span>
+
+            <!-- Input Fields -->
+            <form id="detail-form">
+                <div id="amount" class="field">
+                    <span class="label">AMOUNTS</span>
+                    <span class="value" id="detail-amount"></span>
+                </div>
+
+                <div id="title" class="field">
+                    <span class="label">TITLE</span>
+                    <span class="value" id="detail-title"></span>
+                </div>
+
+                <div id="type" class="field">
+                    <span class="label">TYPE</span>
+                    <span class="value" id="detail-type"></span>
+                </div>
+
+                <div id="date" class="field">
+                    <span class="label">DATE</span>
+                    <span class="value" id="detail-date"></span>
+                </div>
+
+                <div id="method" class="field">
+                    <span class="label">METHOD</span>
+                    <span class="value" id="detail-method"></span>
+                </div>
+
+                <div id="category" class="field">
+                    <span class="label">CATEGORY</span>
+                    <span class="value" id="detail-category"></span>
+                </div>
+
+                <div id="note" class="field">
+                    <span class="label">NOTES</span>
+                    <span class="value" id="detail-note"></span>
+                </div>
+
+                <button type="button" id="edit-button">EDIT</button>
+            </form>        
+        </div>
+    </div>
+
+    <!-- import script -->
+    <script src="../log-data.js"></script>
+    <script src="../tab2-common.js"></script>
+    <script src="./popup-detail-log.js"></script>
+</body>
+</html>
