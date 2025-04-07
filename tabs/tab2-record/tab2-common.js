@@ -102,7 +102,10 @@ function groupLogsByDate(logs) {
 function formatAmount(amount) {
     const sign = amount >= 0 ? "+ $ " : "- $ ";
 
-    return `${sign}${Math.abs(amount).toFixed(2)}`;
+    return `${sign}${Math.abs(amount).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })}`;
 }
 
 function getOrdinal(day) {

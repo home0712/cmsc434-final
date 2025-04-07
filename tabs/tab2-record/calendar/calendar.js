@@ -63,8 +63,14 @@ function updateSummary(date) {
         }
     }
 
-    const displayIncome = Math.abs(totalIncome).toFixed(2);
-    const displayExpense = Math.abs(totalExpense).toFixed(2);
+    const displayIncome = Math.abs(totalIncome).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+    const displayExpense = Math.abs(totalExpense).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 
     const summaryBox = document.getElementById("month-summary-box");
     summaryBox.id = "month-summary-box";
