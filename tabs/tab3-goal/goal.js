@@ -84,10 +84,13 @@ function renderGoals(selectedType = "all") {
     if (selectedType === "all") {
         addBudgetCard(budgetGoals, budgetDiv);
         addSavingCard(savingGoals, savingDiv);
+        sessionStorage.setItem("selectedType", "all");
     } else if (selectedType === "budget") {
         addBudgetCard(budgetGoals, budgetDiv);
+        sessionStorage.setItem("selectedType", "budget");
     } else if (selectedType === "saving") {
         addSavingCard(savingGoals, savingDiv);
+        sessionStorage.setItem("selectedType", "saving");
     }
 
     // add event to the edit buttons
@@ -282,7 +285,26 @@ function getOrdinal(day) {
     }
 };
 
-renderGoals();
+
+// initially render the goal tab
+const selectedType = sessionStorage.getItem("selectedType") || "all";
+renderGoals(selectedType);
+
+for (const option of options) {
+    option.classList.remove("selected");
+
+    if (selectedType === option.dataset.id) {
+        option.classList.add("selected");
+    }
+}
+
+if (selectedType === "budget") {
+    selectedText.textContent = "Budget";
+} else if (selectedType === "saving") {
+    selectedText.textContent = "Saving";
+} else {
+    selectedText.textContent = "All";
+}
 
 /*
     navigate to the edit page

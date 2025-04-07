@@ -7,7 +7,15 @@ const closeButton = document.getElementById("header-button");
 closeButton.addEventListener("click", returnToPage);
 
 function returnToPage() {
+    const returnTo = sessionStorage.getItem("selectedType");
     window.location.href = "../goal.html";
+    if (returnTo === "all") {
+        window.location.href = "../goal.html";
+    } else if (returnTo === "budget") {
+        window.location.href = "../goal.html";
+    } else if (returnTo === "saving") {
+        window.location.href = "../goal.html";
+    }
 }
 
 /* 
