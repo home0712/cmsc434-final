@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const returnPage = sessionStorage.getItem("returnTo");
         const returnPopup = sessionStorage.getItem("returnToPopup") || null;
 
-        if (returnPopup === "dayList") {
+        if (returnPopup === "dayList" && returnPage === "calendar") {
+            sessionStorage.setItem("returnToPopup", "");
             window.location.href = "../popup-detail-day/popup-detail-day.html";
         } else if (returnPage === "transaction") {
             window.location.href = "../transaction/transaction.html";
@@ -24,6 +25,7 @@ editButton.addEventListener("click", () => {
     // 해당 id를 가진 데이터 찾아서 보내기
     const editingLog = localLogs.find((log) => log.id === logId);
     sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
+
 
     window.location.href = "../popup-edit-log/popup-edit-log.html";
 });
@@ -44,7 +46,16 @@ function activeDeletePopup() {
         localLogs = localLogs.filter(log => log.id !== logId);
         localStorage.setItem("transactions", JSON.stringify(localLogs));
 
-        window.location.href = "../transaction/transaction.html";
+        const returnPage = sessionStorage.getItem("returnTo");
+        const returnPopup = sessionStorage.getItem("returnToPopup") || null;
+
+        if (returnPopup === "dayList" && returnPage === "calendar") {
+            window.location.href = "../popup-detail-day/popup-detail-day.html";
+        } else if (returnPage === "transaction") {
+            window.location.href = "../transaction/transaction.html";
+        } else if (returnPage === "calendar") {
+            window.location.href = "../calendar/calendar.html";
+        }
     });
 
     cancelButton.addEventListener("click", () => {
