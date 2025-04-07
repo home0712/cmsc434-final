@@ -16,9 +16,9 @@
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 265px;
+    width: 240px;
     margin-right: 10px;
-    font-size: 21px;
+    font-size: 30px;
 }
 
 #goal-edit-form .required-text {
@@ -32,7 +32,7 @@ textarea, select {
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 265px;
+    width: 290px;
     font-size: 20px;
     color: white;
     padding: 10px 12px;
@@ -58,7 +58,7 @@ textarea {
     width: 100%;
     margin-right: 10px;
     margin-bottom: 10px;
-    font-size: 21px;
+    font-size: 30px;
 }
 
 /* save button */

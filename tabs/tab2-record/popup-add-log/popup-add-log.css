@@ -16,13 +16,9 @@
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 265px;
+    width: 240px;
     margin-right: 10px;
     font-size: 30px;
-}
-
-#add-form .required-text {
-    font-size: 13px;
 }
 
 input[type="text"], input[type="date"], textarea, select {
@@ -31,7 +27,7 @@ input[type="text"], input[type="date"], textarea, select {
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 265px;
+    width: 290px;
     font-size: 20px;
     color: white;
     padding: 10px 12px;
@@ -47,7 +43,7 @@ textarea {
 /* type field */
 .type-button-field {
     display: flex;
-    width: 265px;
+    width: 290px;
     gap: 10px;
 }
 
@@ -57,6 +53,7 @@ textarea {
     color: white;
     border-radius: 10px;
     border: none;
+    font-size: 20px;
 }
 
 .type-button.selected {
