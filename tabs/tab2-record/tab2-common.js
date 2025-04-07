@@ -22,7 +22,7 @@ function returnToPage() {
         window.location.href = "../transaction/transaction.html";
     } else if (returnPage === "calendar") { 
         window.location.href = "../calendar/calendar.html";
-    }
+    } 
 }
 
 /* 

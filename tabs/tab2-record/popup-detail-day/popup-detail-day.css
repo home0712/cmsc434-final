@@ -1,41 +1,8 @@
-body {
-    text-align: left;
-}
-
-/* action bar */
-#action-bar {
-    font-size: 25px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between; /* 좌우 정렬 */
-    align-items: center;
-    margin-top: 8px;
-}
-
-.action-bar-icon img {
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-}
-
-/* scroll */
-.scroll {
-    flex-grow: 1;
-    overflow-y: auto;
-    box-sizing: border-box;
-    height: 600px;
-}
-
-.scroll::-webkit-scrollbar {
-    width: 0px;                     
-    background: transparent;
-}
-
 /* log container */
 #logs-container {
-    margin-top: 15px;
+    margin-top: 30px;
     padding-bottom: 100px;
+    text-align: left;
 }
 
 .date-group {
@@ -80,4 +47,24 @@ body {
   
 .log-amount.expense {
     color: #FF4136; 
+}
+
+.no-data {
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 22px;
+    padding: 20px;
+}
+
+/* scroll */
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    height: 600px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
 }

@@ -2,6 +2,7 @@
 
 // initially render the account tab
 document.addEventListener("DOMContentLoaded", () => {
+    sessionStorage.setItem("returnTo", "account");
     const addButton = document.getElementById("header-button");
     addButton.addEventListener("click", () => {
         window.location.href = "../popup-add-account/popup-add-account.html";

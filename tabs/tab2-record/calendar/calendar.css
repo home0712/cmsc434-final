@@ -8,8 +8,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0 30px;
     gap: 5px;
+    padding: 0 30px;
+    margin: 5px 0px;
 }
 
 #month-summary-box div {
@@ -49,8 +50,9 @@
     display: flex;
     justify-content: space-between; /* 좌우 정렬 */
     align-items: center;
-    margin-top: 8px;
-    padding: 0 20px;
+    margin: 10px 0px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .action-bar-icon img {

@@ -1,27 +1,22 @@
 /* MAIN - TRANSACTION TAB */
+// initially render the goal tab
+document.addEventListener("DOMContentLoaded", () => {
+    sessionStorage.setItem("returnTo", "transaction");
 
-/*
-    click the icon to open the category setting page
-*/
-const settingButton = document.getElementById("header-button");
-settingButton.addEventListener("click", navigateToPage);
+    const settingButton = document.getElementById("header-button");
+    const filterBtn = document.getElementById("filter");
+    const addBtn = document.getElementById("add");
+    const searchBtn = document.getElementById("search");
 
-/* 
-    click the icons to navigate to dedicated screens 
-    (filter, add, search)
-*/
-const filterBtn = document.getElementById("filter");
-const addBtn = document.getElementById("add");
-const searchBtn = document.getElementById("search");
-
-filterBtn.addEventListener("click", navigateToPage);
-addBtn.addEventListener("click", navigateToPage);
-searchBtn.addEventListener("click", navigateToPage);
+    settingButton.addEventListener("click", navigateToPage);
+    filterBtn.addEventListener("click", navigateToPage);
+    addBtn.addEventListener("click", navigateToPage);
+    searchBtn.addEventListener("click", navigateToPage);
+});
 
 function navigateToPage(event) {
     const clickedButtonId = event.target.id;
 
-    sessionStorage.setItem("returnTo", "transaction");
     if (clickedButtonId === "filter") {
         window.location.href = "../popup-filter-log/popup-filter-log.html";
     } else if (clickedButtonId === "add") {

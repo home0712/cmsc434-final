@@ -1,25 +1,26 @@
 /* MAIN - CALENDAR TAB */
 
-/*
-    click the icon to open the category setting page
-*/
-const settingButton = document.getElementById("header-button");
-settingButton.addEventListener("click", navigateToPage);
+// initially render the calendar tab
+document.addEventListener("DOMContentLoaded", () => {
+    updateSummary(currentDate);
+    updateMonthLabel();
+    generateCalendar(currentYear, currentMonth);
 
-/* 
-    click the icons to navigate to dedicated screens 
-    (add, search)
-*/
-const addBtn = document.getElementById("add");
-const searchBtn = document.getElementById("search");
+    sessionStorage.setItem("returnTo", "calendar");
 
-addBtn.addEventListener("click", navigateToPage);
-searchBtn.addEventListener("click", navigateToPage);
+    const settingButton = document.getElementById("header-button");
+    settingButton.addEventListener("click", navigateToPage);
+
+    const addButton = document.getElementById("add");
+    const searchButton = document.getElementById("search");
+
+    addButton.addEventListener("click", navigateToPage);
+    searchButton.addEventListener("click", navigateToPage);
+});
 
 function navigateToPage(event) {
     const clickedButtonId = event.target.id;
-
-    sessionStorage.setItem("returnTo", "calendar");
+    
     if (clickedButtonId === "add") {
         window.location.href = "../popup-add-log/popup-add-log.html";
     } else if (clickedButtonId === "search") {
@@ -34,14 +35,7 @@ if (!localStorage.getItem("transactions")) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
-/* 
-    load & pdate the summary
-    Summary 업데이트 함수
-    1. a month, year 가져와서 
-    2-1. default logs 에서 selected 월의 기록만 선별 -> 함수로 만드는 게 낫겠다
-    2-2. local logs 에서 selected 월의 기록만 선별
-    3. income/expense 따로 변수 만들어서 총합 계산
-*/
+// load & date the summary
 function updateSummary(date) {
     // selected 월/년 데이터 
     const month = date.getMonth();
@@ -94,12 +88,7 @@ function updateSummary(date) {
     `;
 }
 
-/*
-    generate calendar
-    1. month year 가져와서 해당 월의 일 설정
-    2. day의 수에 맞게 칸 생성하기
-    3. if a day 에 로그 있으면 income/expense 표시
-*/
+// generate calendar
 function generateCalendar(year, month) {
     const calendarBody = document.querySelector(".calendar-body");
     calendarBody.innerHTML = "";
@@ -199,17 +188,13 @@ monthRight.addEventListener("click", () => {
 });
 
 /* 
-    cell 클릭하면 디테일 팝업 띄우기
-    여기서 삭제 버튼도 구현
+    cell 클릭하면 해당 day의 로그 목록 팝업 열기
 */
 function openDayPopup(dateStr) {
-    console.log(dateStr);
+    sessionStorage.setItem("selectedDay", dateStr);
+    window.location.href = "../popup-detail-day/popup-detail-day.html";
 }
 
-// 페이지 첫 로딩 시 초기 표시
-updateSummary(currentDate);
-updateMonthLabel();
-generateCalendar(currentYear, currentMonth);
 
 /* util function */
 function setTotalCell(startDay, daysInMonth) {

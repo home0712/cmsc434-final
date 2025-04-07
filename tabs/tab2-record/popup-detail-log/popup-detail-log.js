@@ -1,7 +1,18 @@
 // initially render the detail log page
 document.addEventListener("DOMContentLoaded", () => {
     const closeButton = document.getElementById("header-button");
-    closeButton.addEventListener("click", returnToPage);
+    closeButton.addEventListener("click", () => {
+        const returnPage = sessionStorage.getItem("returnTo");
+        const returnPopup = sessionStorage.getItem("returnToPopup") || null;
+
+        if (returnPopup === "dayList") {
+            window.location.href = "../popup-detail-day/popup-detail-day.html";
+        } else if (returnPage === "transaction") {
+            window.location.href = "../transaction/transaction.html";
+        } else if (returnPage === "calendar") { 
+            window.location.href = "../calendar/calendar.html";
+        } 
+    });
 });
 
 // edit button
