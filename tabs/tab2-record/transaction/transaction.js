@@ -5,31 +5,30 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "transaction");
 
     bindButtons();
+    setupFilterPopup();
     setupToggle();
     monthSelector();
-
     updateMonthLabel();
+
+    isFilterActive = !!sessionStorage.getItem("logFilters"); // 상태 초기화
+    updateFilterUI(isFilterActive);
     renderTransactionLogs();
 });
 
 function bindButtons() {
     const settingButton = document.getElementById("header-button");
-    const filterBtn = document.getElementById("filter");
-    const addBtn = document.getElementById("add");
-    const searchBtn = document.getElementById("search");
+    const addButton = document.getElementById("add");
+    const searchButton = document.getElementById("search");
 
     settingButton.addEventListener("click", navigateToPage);
-    filterBtn.addEventListener("click", navigateToPage);
-    addBtn.addEventListener("click", navigateToPage);
-    searchBtn.addEventListener("click", navigateToPage);
+    addButton.addEventListener("click", navigateToPage);
+    searchButton.addEventListener("click", navigateToPage);
 }
 
 function navigateToPage(event) {
     const clickedButtonId = event.target.id;
 
-    if (clickedButtonId === "filter") {
-        window.location.href = "../popup-filter-log/popup-filter-log.html";
-    } else if (clickedButtonId === "add") {
+    if (clickedButtonId === "add") {
         window.location.href = "../popup-add-log/popup-add-log.html";
     } else if (clickedButtonId === "search") {
         window.location.href = "../popup-search-log/popup-search-log.html";
@@ -76,7 +75,7 @@ function setupToggle() {
     });
 }
 
-// 
+// apply the filters
 function applyFilters(logs) {
     const filters = JSON.parse(sessionStorage.getItem("logFilters"));
     if (!filters) {
@@ -106,6 +105,56 @@ function applyFilters(logs) {
         if (type && log.type !== type) return false;
 
         return true;
+    });
+}
+
+// filtering functions 
+function updateFilterUI(isActive) {
+    const filterButton = document.getElementById("filter");
+    if (isActive) {
+        filterButton.classList.add("active"); 
+    } else {
+        filterButton.classList.remove("active"); 
+    }
+}
+
+let isFilterActive = !!sessionStorage.getItem("logFilters");
+function onFilterIconClick() {
+    if (isFilterActive) {
+        showConfirmPopup();
+    } else {
+        window.location.href = "../popup-filter-log/popup-filter-log.html";
+    }
+}
+  
+function clearFiltersInTransactionPage() {
+    sessionStorage.removeItem("logFilters");
+    isFilterActive = false;
+    updateFilterUI(false);
+    renderTransactionLogs();
+}
+
+function setupFilterPopup() {
+    const filterButton = document.getElementById("filter");
+    const popup = document.getElementById("clear-filter-popup");
+    const confirmButton = document.getElementById("confirm-clear-filter");
+    const cancelButton = document.getElementById("cancel-clear-filter");
+  
+    filterButton.addEventListener("click", () => {
+      if (isFilterActive) {
+        popup.classList.remove("hidden"); 
+      } else {
+        window.location.href = "../popup-filter-log/popup-filter-log.html"; 
+      }
+    });
+  
+    confirmButton.addEventListener("click", () => {
+      clearFiltersInTransactionPage();
+      popup.classList.add("hidden");
+    });
+
+    cancelButton.addEventListener("click", () => {
+      popup.classList.add("hidden");
     });
 }
 

@@ -1,5 +1,6 @@
 body {
     text-align: left;
+    position: relative;
 }
 
 /* action bar */
@@ -111,4 +112,55 @@ body {
   
 .log-amount.expense {
     color: #FF4136; 
+}
+
+/* filter popup */
+.filter-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+    border-radius: 15px;
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+    color: white;
+    font-size: 30px;
+}
+  
+.filter-popup.hidden {
+    display: none;
+}
+  
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+}
+  
+.popup-buttons button {
+    padding: 8px 20px;
+    font-size: 24px;
+    border-radius: 8px;
+    border: none;
+}
+  
+#confirm-clear-filter {
+    background-color: #FF7F7F;
+    color: white;
+}
+  
+#cancel-clear-filter {
+    background-color: #aaa;
+    color: black;
+}
+
+#filter.active {
+    filter: invert(58%) sepia(18%) saturate(657%) hue-rotate(94deg) brightness(95%) contrast(84%);
 }
