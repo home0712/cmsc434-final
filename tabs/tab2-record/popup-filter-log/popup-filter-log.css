@@ -1,0 +1,141 @@
+/* field container */
+#log-filter-container {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 25px;
+    margin: 40px auto;
+}
+
+.filter-section.column {
+    font-size: 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-section.row {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+/* amount range field */
+.amount-range,
+.date-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.amount-range input,
+.date-range input {
+    flex: 1;
+    padding: 10px 12px;
+    width: 250px;
+    height: 42px;
+    font-size: 20px;
+    background-color: #444;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: white;
+}
+
+/* date preset buttons */
+.date-preset-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.date-preset-buttons .preset-button {
+    width: 130px;
+    height: 42px;
+    font-size: 20px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+/* date */
+#date-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+/* type button */
+.type-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 258px;
+    gap: 10px;
+}
+
+.type-button {
+    background-color: #444;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 22px;
+    width: 100%;
+    height: 42px;
+}
+
+.type-button.selected {
+    border-color: #5ca65c;
+    border: 2px solid #04AA6D;
+}
+
+/* select */
+select {
+    background-color: #444;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 42px; 
+    width: 258px;
+    font-size: 20px;
+    color: white;
+    padding: 10px 12px;
+}
+
+/* buttons */
+.filter-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#save-filter,
+#clear-filter {
+    align-self: center;
+    width: 150px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+}
+
+#save-filter {
+    background-color: #689e80;
+    color: white;
+}
+
+#clear-filter {
+    background-color: #aaa;
+    color: black;
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filtering Transactions</title>
+    <title>Filtering Transaction Logs</title>
     <link rel="stylesheet" href="./popup-filter-log.css">
     <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -12,14 +12,73 @@
         <div class="device-content">
             <!-- Header -->
             <span id="top-header">
-                <h1>Filtering Transactions</h1>
+                <h1>Filtering Transaction Logs</h1>
                 <img src="../../../assets/X.png" id="header-button">
             </span>
 
             <!-- Input Fields -->
-            <form id="filter-form">
+            <div id="log-filter-container">
+                <!-- amount -->
+                <div class="filter-section column">
+                    <label class="section-label">Amount Range</label>
+                    <div class="amount-range">
+                        <input type="number" id="min-amount" placeholder="Min" />
+                        <span>–</span>
+                        <input type="number" id="max-amount" placeholder="Max" />
+                    </div>
+                </div>
 
-            </form>
+                <!-- Date -->
+                <div class="filter-section column" id="date-section">
+                    <label class="section-label">Date Range</label>
+                    <div class="date-preset-buttons">
+                        <button class="preset-button" data-range="7">1 Week</button>
+                        <button class="preset-button" data-range="30">1 Month</button>
+                        <button class="preset-button" data-range="90">3 Months</button>
+                        <button class="preset-button" data-range="90">6 Months</button>
+                    </div>
+
+                    <div class="date-range row">
+                        <input type="date" id="start-date" />
+                        <span>–</span>
+                        <input type="date" id="end-date" />
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="filter-section row">
+                    <label class="section-label">Type</label>
+                    <div class="type-buttons">
+                        <button class="type-button" data-type="INCOME">Income</button>
+                        <button class="type-button" data-type="EXPENSE">Expense</button>
+                    </div>
+                </div>
+
+                <!-- Method -->
+                <div class="filter-section row">
+                    <label class="section-label">Method</label>
+                    <select id="method-select">
+                        <option value="">All</option>
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="bank">Debit Card</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+
+                <!-- Category -->
+                <div class="filter-section row">
+                    <label class="section-label">Category</label>
+                    <select id="category-select">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="filter-footer">
+                    <button id="save-filter">Save Filter</button>
+                    <button id="clear-filter" class="secondary">Clear</button>
+                </div>
+            </div>
         </div>
     </div>
 
