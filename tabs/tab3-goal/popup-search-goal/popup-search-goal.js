@@ -10,11 +10,19 @@ function bindButtons() {
     const closeButton = document.getElementById("header-button");
     const searchForm = document.getElementById("search-form");
     const searchButton = document.getElementById("search-button");
+    const keywordInput = document.getElementById("keyword-input");
 
     closeButton.addEventListener("click", () => {
       window.location.href = "../goal.html";
     });
     searchButton.addEventListener("click", keywordSearch);
+
+    keywordInput.addEventListener("input", () => {
+      clearKeywordError();
+    });
+    keywordInput.addEventListener("focus", () => {
+      clearKeywordError();
+    });
 }
 
 function keywordSearch() {
@@ -30,10 +38,11 @@ function keywordSearch() {
 
     // no keyword entered
     if (!keyword) {
-      alert("Please enter a keyword to search");
+      showKeywordError();
       return;
     }
 
+    clearKeywordError();
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
 
     const result = localGoals.filter(goal => {
@@ -193,6 +202,29 @@ function setupStatusOptionsByGoalType() {
             `;
         }
     });
+}
+
+// 
+function showKeywordError() {
+    const errorMessage = document.getElementById("keyword-error");
+    const keywordInput = document.getElementById("keyword-input");
+    keywordInput.classList.add("input-error");
+
+    if (!document.getElementById("keyword-error-content")) {
+        const message = document.createElement("div");
+        message.id = "keyword-error-content";
+        message.className = "error-message";
+        message.textContent = "Please enter a keyword";
+        errorMessage.appendChild(message);
+    }
+}
+
+function clearKeywordError() {
+    const keywordInput = document.getElementById("keyword-input");
+    const message = document.getElementById("keyword-error-content");
+
+    keywordInput.classList.remove("input-error");
+    message.remove();
 }
 
 

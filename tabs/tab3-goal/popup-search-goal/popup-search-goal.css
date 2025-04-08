@@ -141,3 +141,15 @@ select {
 .no-result {
     text-align: center;
 }
+
+/* error */
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
+}
+  
+.error-message {
+    color: #ff5c5c;
+    font-size: 17px;
+    margin-top: 0;
+}

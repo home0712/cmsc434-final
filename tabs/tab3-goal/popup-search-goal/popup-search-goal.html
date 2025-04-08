@@ -19,12 +19,15 @@
 
           <form id="search-form">
               <!-- Keyword Search -->
-              <div class="search-bar">
-                <input type="text" id="keyword-input" placeholder="Keyword"/>
-                <div class="search-buttons">
-                  <img src="../../../assets/Arrow-down.png" id="toggle-button">
-                  <img src="../../../assets/Search.png" id="search-button">
+              <div class="search-block">
+                <div class="search-bar" id="search-bar">
+                  <input type="text" id="keyword-input" placeholder="Keyword"/>
+                  <div class="search-buttons">
+                    <img src="../../../assets/Arrow-down.png" id="toggle-button">
+                    <img src="../../../assets/Search.png" id="search-button">
+                  </div>
                 </div>
+                <div id="keyword-error"></div>
               </div>
             
               <div id="optional-search" class="optional-fields">
