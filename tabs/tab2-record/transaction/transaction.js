@@ -76,6 +76,39 @@ function setupToggle() {
     });
 }
 
+// 
+function applyFilters(logs) {
+    const filters = JSON.parse(sessionStorage.getItem("logFilters"));
+    if (!filters) {
+        return logs; 
+    }
+
+    return logs.filter((log) => {
+        const {
+            minAmount,
+            maxAmount,
+            startDate,
+            endDate,
+            method,
+            category,
+            type
+        } = filters;
+
+        const amount = Math.abs(log.amount);
+        const date = log.date;
+
+        if (minAmount != null && amount < minAmount) return false;
+        if (maxAmount != null && amount > maxAmount) return false;
+        if (startDate && date < startDate) return false;
+        if (endDate && date > endDate) return false;
+        if (method && log.method !== method) return false;
+        if (category && log.category[0] !== category) return false;
+        if (type && log.type !== type) return false;
+
+        return true;
+    });
+}
+
 // render transaction lists based on the month selected
 function renderTransactionLogs() {
     const container = document.getElementById("logs-container");
@@ -87,6 +120,7 @@ function renderTransactionLogs() {
     // local data 에서 selected 월의 데이터만 선택
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     let filteredLocal = filterLogs(localLogs, year, month);
+    filteredLocal = applyFilters(filteredLocal);
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // 

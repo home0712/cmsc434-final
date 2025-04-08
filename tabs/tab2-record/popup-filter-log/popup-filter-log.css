@@ -66,6 +66,11 @@
     border-radius: 10px;
 }
 
+.preset-button.selected {
+    border-color: #5ca65c;
+    border: 2px solid #04AA6D;
+}
+
 /* date */
 #date-section {
     display: flex;
