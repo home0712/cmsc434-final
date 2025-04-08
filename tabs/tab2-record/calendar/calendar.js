@@ -2,21 +2,26 @@
 
 // initially render the calendar tab
 document.addEventListener("DOMContentLoaded", () => {
-    updateSummary(currentDate);
-    updateMonthLabel();
-    generateCalendar(currentYear, currentMonth);
-
     sessionStorage.setItem("returnTo", "calendar");
 
-    const settingButton = document.getElementById("header-button");
-    settingButton.addEventListener("click", navigateToPage);
+    bindButtons();
+    setupToggle();
+    monthSelector();
 
+    updateMonthLabel();
+    renderSummary();
+    generateCalendar();
+});
+
+function bindButtons() {
+    const settingButton = document.getElementById("header-button");
     const addButton = document.getElementById("add");
     const searchButton = document.getElementById("search");
 
+    settingButton.addEventListener("click", navigateToPage);
     addButton.addEventListener("click", navigateToPage);
     searchButton.addEventListener("click", navigateToPage);
-});
+}
 
 function navigateToPage(event) {
     const clickedButtonId = event.target.id;
@@ -35,17 +40,50 @@ if (!localStorage.getItem("transactions")) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
-// load & date the summary
-function updateSummary(date) {
-    // selected 월/년 데이터 
-    const month = date.getMonth();
-    const year = date.getFullYear();
+// toggle 
+function setupToggle() {
+    const toggleButton = document.getElementById("type-toggle");
+    const toggleIcon = document.getElementById("toggle-icon");
+    const dropdown = document.getElementById("dropdown-list");
+    const selectedText = document.getElementById("dropdown-selected");
 
-    // total income/expense 변수 생성, 0으로 설정
+    toggleButton.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+        toggleIcon.src = dropdown.classList.contains("hidden")
+          ? "../../../assets/Arrow-up.png"
+          : "../../../assets/Arrow-down.png";
+    });
+
+    const options = document.querySelectorAll(".dropdown-option");
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            currentTypeFilter = option.dataset.id;
+            selectedText.textContent = currentTypeFilter;
+            dropdown.classList.add("hidden");
+
+            options.forEach(option => {
+                option.classList.remove("selected");
+            });
+            option.classList.add("selected");
+
+            generateCalendar();
+        });
+    });
+}
+
+let currentDate = new Date();
+let currentYear = currentDate.getFullYear();
+let currentMonth = currentDate.getMonth();
+let currentTypeFilter = "All";
+
+// render the summary
+function renderSummary() {
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
     let totalIncome = 0.00;
     let totalExpense = 0.00;
 
-    // local data 에서 selected 월의 데이터만 선택
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     const filteredLocal = filterLogs(localLogs, year, month);
 
@@ -89,22 +127,25 @@ function updateSummary(date) {
 }
 
 // generate calendar
-function generateCalendar(year, month) {
+function generateCalendar() {
     const calendarBody = document.querySelector(".calendar-body");
     calendarBody.innerHTML = "";
 
-    const firstDay = new Date(year, month, 1);
+    currentYear = currentDate.getFullYear();
+    currentMonth = currentDate.getMonth();
+
+    const firstDay = new Date(currentYear, currentMonth, 1);
     const startDay = firstDay.getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
     const totalCells = setTotalCell(startDay, daysInMonth);
 
     const today = new Date();
-    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    const todayStr = `
+        ${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}
+    `;
 
-    
-    // create each cell
-    // add income/expense of the day
+    // create each cell & represent income/expense of the day cell
     for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement("div");
         cell.classList.add("calendar-cell");
@@ -112,8 +153,7 @@ function generateCalendar(year, month) {
         const dayNumber = i - startDay + 1;
     
         if (i >= startDay && dayNumber <= daysInMonth) {
-            const dateStr = 
-                `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
             cell.dataset.date = dateStr;
             
             // 오늘 날짜면 강조
@@ -148,7 +188,10 @@ function generateCalendar(year, month) {
                 const incomeEl = document.createElement("div");
                 incomeEl.className = "cell-income";
                 incomeEl.textContent = `+${Math.abs(totalIncome).toFixed(2)}`;
-                cell.appendChild(incomeEl);
+
+                if (currentTypeFilter === "All" || currentTypeFilter === "Income") {
+                    cell.appendChild(incomeEl);
+                }
             }
         
             // expense text
@@ -156,10 +199,13 @@ function generateCalendar(year, month) {
                 const expenseEl = document.createElement("div");
                 expenseEl.className = "cell-expense";
                 expenseEl.textContent = `−${Math.abs(totalExpense).toFixed(2)}`;
-                cell.appendChild(expenseEl);
+
+                if (currentTypeFilter === "All" || currentTypeFilter === "Expense") {
+                    cell.appendChild(expenseEl);
+                }
             }
         
-            // cell 클릭
+            // click a cell
             cell.addEventListener("click", () => openDayPopup(dateStr));
         }
     
@@ -167,29 +213,28 @@ function generateCalendar(year, month) {
     }
 }
 
-const monthLeft = document.getElementById("left-arrow");
-const monthRight = document.getElementById("right-arrow");
 
-let currentDate = new Date();
-let currentYear = currentDate.getFullYear();
-let currentMonth = currentDate.getMonth();
+// month selector
+function monthSelector() {
+    const monthLeft = document.getElementById("left-arrow");
+    const monthRight = document.getElementById("right-arrow");
 
-monthLeft.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    updateMonthLabel();
-    updateSummary(currentDate)
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth())
-});
-monthRight.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    updateMonthLabel();
-    updateSummary(currentDate)
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth())
-});
+    monthLeft.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateMonthLabel();
+        renderSummary();
+        generateCalendar();
+    });
 
-/* 
-    cell 클릭하면 해당 day의 로그 목록 팝업 열기
-*/
+    monthRight.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateMonthLabel();
+        renderSummary();
+        generateCalendar();
+    });
+}
+
+// cell 클릭하면 해당 day의 로그 목록 팝업 열기
 function openDayPopup(dateStr) {
     sessionStorage.setItem("selectedDay", dateStr);
     window.location.href = "../popup-detail-day/popup-detail-day.html";

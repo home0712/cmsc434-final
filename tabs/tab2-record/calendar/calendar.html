@@ -43,11 +43,22 @@
 
             <!-- action bar & buttons -->
             <div id="action-bar">
-                <span>All</span>
+                <div id="type-toggle" class="dropdown">
+                    <span id="dropdown-selected">All</span>
+                    <img src="../../../assets/Arrow-down.png" id="toggle-icon">
+                </div>
+                
                 <div class="action-bar-icon">
                     <img src="../../../assets/Plus.png" id="add">
                     <img src="../../../assets/Search.png" id="search">
                 </div>
+            </div>
+
+            <!-- dropdown list (open when toggle activated)-->
+            <div id="dropdown-list">
+                <div class="dropdown-option selected" data-id="All">All</div>
+                <div class="dropdown-option" data-id="Income">Income</div>
+                <div class="dropdown-option" data-id="Expense">Expense</div>
             </div>
 
             <!-- calendar grid -->

@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupToggle();
     monthSelector();
 
- 
     updateMonthLabel();
     renderTransactionLogs();
 });
@@ -46,6 +45,7 @@ if (!localStorage.getItem("transactions")) {
 
 let currentTypeFilter = "All";
 let currentDate = new Date(); 
+
 function setupToggle() {
     const toggleButton = document.getElementById("type-toggle");
     const toggleIcon = document.getElementById("toggle-icon");
@@ -124,12 +124,12 @@ function monthSelector() {
     monthLeft.addEventListener("click", () => {
         currentDate.setMonth(currentDate.getMonth() - 1);
         updateMonthLabel();
-        renderTransactionLogs(currentDate);
+        renderTransactionLogs();
     });
 
     monthRight.addEventListener("click", () => {
         currentDate.setMonth(currentDate.getMonth() + 1);
         updateMonthLabel();
-        renderTransactionLogs(currentDate);
+        renderTransactionLogs();
     });
 }
