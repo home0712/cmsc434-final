@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Searching Goals</title>
     <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="../goal.css">
     <link rel="stylesheet" href="./popup-search-goal.css">
 </head>
 <body>
@@ -28,27 +29,26 @@
             
               <div id="optional-search" class="optional-fields">
                 <!-- type -->
-                <div class="search-section" class="optional-fields">
-                  <label class="field-label">TYPE</label>
-                  <div class="type-buttons">
-                    <button class="type-button selected" data-type="ALL">All</button>
-                    <button class="type-button" data-type="Budget">Budget</button>
-                    <button class="type-button" data-type="Saving">Saving</button>
-                  </div>
+                <div id="goal-type">
+                  <label class="field-label">GOAL TYPE</label>
+                  <select id="type-select">
+                    <option value="All">All</option>
+                    <option value="Budget">Budget</option>
+                    <option value="Saving">Saving</option>
+                </select>
                 </div>
 
                 <!-- Status -->
-                <div class="search-section">
+                <div id="status">
                   <label class="field-label">STATUS</label>
-                  <div class="status-buttons">
-                    <button class="status-button selected" data-status="ALL">All</button>
-                    <button class="status-button" data-status="COMPLETED">Completed</button>
-                    <button class="status-button" data-status="EXCEEDED">Exceeded</button>
-                    <button class="status-button" data-status="INPROGRESS">In Progress</button>
-                  </div>
+                  <select id="status-select">
+                    <option value="ALL">All</option>
+                    <option value="ExceededCompleted">Exceeded/Completed</option>
+                    <option value="Inprogress">In Progress</option>
+                  </select>
                 </div>                
 
-                <!-- Amounts -->
+                <!-- Goal Amounts -->
                 <div id="goal-amount">
                   <label class="field-label">GOAL AMOUNT RANGE</label>
                   <div id="goal-amount-inputs" class="range-inputs">
@@ -58,6 +58,7 @@
                   </div>
                 </div>
 
+                <!-- Used/Saved Amounts -->
                 <div class="user-amount">
                   <label class="field-label">USED/SAVED AMOUNT RANGE</label>
                   <div id="user-amount-inputs" class="range-inputs">

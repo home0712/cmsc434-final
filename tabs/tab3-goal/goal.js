@@ -115,10 +115,7 @@ function selectedToggle() {
 }
 }
 
-
-/*
-    rendering the goal lists
-*/
+// rendering the goal lists
 function renderGoals(selectedType = "all") {
     const budgetGoals = [];
     const savingGoals = [];
@@ -289,9 +286,7 @@ function addSavingCard(savingLists, parentDiv) {
     }
 };
 
-/*
-    compute the used/saved percentage
-*/
+// compute the used/saved percentage
 function computePercentage(goal) {
     const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
     const goalAmount = goal.goalAmount;
