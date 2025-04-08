@@ -18,11 +18,7 @@
     flex-direction: row;
     gap: 5px;
     width: 265px;
-    font-size: 20px;
-}
-
-#account-add-form .required-text {
-    font-size: 13px;
+    font-size: 27px;
 }
 
 input[type="text"], input[type="number"],
@@ -58,7 +54,7 @@ textarea {
     width: 100%;
     margin-right: 10px;
     margin-bottom: 10px;
-    font-size: 21px;
+    font-size: 27px;
 }
 
 /* save button */

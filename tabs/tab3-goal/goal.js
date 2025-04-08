@@ -2,15 +2,29 @@
 
 // initially render the goal tab
 document.addEventListener("DOMContentLoaded", () => {
-    const addButton = document.getElementById("header-button");
-    addButton.addEventListener("click", () => {
-        window.location.href = "./popup-add-goal/popup-add-goal.html";
-    });
-
+    bindButtons();
     const selectedType = sessionStorage.getItem("selectedType") || "all";
     renderGoals(selectedType);
     restoreToggleUI(selectedType);
 });
+
+function bindButtons() {
+    const addButton = document.getElementById("header-button");
+    const searchButton = document.getElementById("search");
+    const filterButton = document.getElementById("filter");
+
+    addButton.addEventListener("click", () => {
+        window.location.href = "./popup-add-goal/popup-add-goal.html";
+    });
+
+    searchButton.addEventListener("click", () => {
+        window.location.href = "./popup-search-goal/popup-search-goal.html";
+    });
+
+    filterButton.addEventListener("click", () => {
+        window.location.href = "./popup-filter-goal/popup-filter-goal.html";
+    });
+}
 
 // save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
 if (!localStorage.getItem("goals")) {
