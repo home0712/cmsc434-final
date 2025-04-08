@@ -1,8 +1,19 @@
 /* MAIN - TRANSACTION TAB */
-// initially render the goal tab
+
+// initially render the transaction tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "transaction");
 
+    bindButtons();
+    setupToggle();
+    monthSelector();
+
+ 
+    updateMonthLabel();
+    renderTransactionLogs();
+});
+
+function bindButtons() {
     const settingButton = document.getElementById("header-button");
     const filterBtn = document.getElementById("filter");
     const addBtn = document.getElementById("add");
@@ -12,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filterBtn.addEventListener("click", navigateToPage);
     addBtn.addEventListener("click", navigateToPage);
     searchBtn.addEventListener("click", navigateToPage);
-});
+}
 
 function navigateToPage(event) {
     const clickedButtonId = event.target.id;
@@ -33,25 +44,59 @@ if (!localStorage.getItem("transactions")) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
-/*
-    update transaction lists based on the month selected
-*/
-function renderTransactionLogs(date) {
+let currentTypeFilter = "All";
+let currentDate = new Date(); 
+function setupToggle() {
+    const toggleButton = document.getElementById("type-toggle");
+    const toggleIcon = document.getElementById("toggle-icon");
+    const dropdown = document.getElementById("dropdown-list");
+    const selectedText = document.getElementById("dropdown-selected");
+
+    toggleButton.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+        toggleIcon.src = dropdown.classList.contains("hidden")
+          ? "../../../assets/Arrow-up.png"
+          : "../../../assets/Arrow-down.png";
+    });
+
+    const options = document.querySelectorAll(".dropdown-option");
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            currentTypeFilter = option.dataset.id;
+            selectedText.textContent = currentTypeFilter;
+            dropdown.classList.add("hidden");
+
+            options.forEach(option => {
+                option.classList.remove("selected");
+            });
+            option.classList.add("selected");
+
+            renderTransactionLogs();
+        });
+    });
+}
+
+// render transaction lists based on the month selected
+function renderTransactionLogs() {
     const container = document.getElementById("logs-container");
     container.innerHTML = "";
 
-    const month = date.getMonth();
-    const year = date.getFullYear();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
 
     // local data 에서 selected 월의 데이터만 선택
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-    const filteredLocal = filterLogs(localLogs, year, month);
-
-    // 날짜 내림차순으로 정렬
+    let filteredLocal = filterLogs(localLogs, year, month);
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+    // 
+    if (currentTypeFilter === "Income") {
+        filteredLocal = filteredLocal.filter((log) => log.type === "INCOME");
+    } else if (currentTypeFilter === "Expense") {
+        filteredLocal = filteredLocal.filter((log) => log.type === "EXPENSE");
+    }
+
     // 동일 날짜별로 여러개의 기록 있으면 -> 하나의 오브젝트(키: 날짜)로 묶어 그룹화
-    // const dateGrouped = groupLogsByDate(allLogs);
     const dateGrouped = groupLogsByDate(filteredLocal);
 
     // 최신 날짜부터 정렬해야 되니까 -> dateGroupedLogs의 키를 내림차순으로 정렬
@@ -71,25 +116,20 @@ function renderTransactionLogs(date) {
     }
 }
 
-/* 
-    month selector
-*/
-const monthLeft = document.getElementById("left-arrow");
-const monthRight = document.getElementById("right-arrow");
+// month selector
+function monthSelector() {
+    const monthLeft = document.getElementById("left-arrow");
+    const monthRight = document.getElementById("right-arrow");
 
-let currentDate = new Date(); // today's date
+    monthLeft.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateMonthLabel();
+        renderTransactionLogs(currentDate);
+    });
 
-monthLeft.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    updateMonthLabel();
-    renderTransactionLogs(currentDate);
-});
-monthRight.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    updateMonthLabel();
-    renderTransactionLogs(currentDate);
-});
-
-// initially load elements
-updateMonthLabel();
-renderTransactionLogs(currentDate);
+    monthRight.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateMonthLabel();
+        renderTransactionLogs(currentDate);
+    });
+}

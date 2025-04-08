@@ -64,45 +64,41 @@ function activeDeletePopup(event) {
     });
 }
 
-/*
-    open/close toggle for all/budget/saving buttons
- */
-const toggle = document.getElementById("dropdown-toggle");
-const icon = document.getElementById("dropdown-icon");
-const dropdown = document.getElementById("dropdown-list");
-toggle.addEventListener("click", activeToggle);
-
+// open/close toggle for all/budget/saving buttons
 function activeToggle() {
-    dropdown.classList.toggle("active");
+    const toggle = document.getElementById("dropdown-toggle");
+    const icon = document.getElementById("dropdown-icon");
+    const dropdown = document.getElementById("dropdown-list");
+    toggle.addEventListener("click", () => {
+        dropdown.classList.toggle("active");
     
-    if (dropdown.classList.contains("active")) { // to close
-        icon.src = "../../assets/Arrow-up.png";
-    } else { // to open
-        icon.src = "../../assets/Arrow-down.png";
-    } 
+        if (dropdown.classList.contains("active")) { // to close
+            icon.src = "../../assets/Arrow-up.png";
+        } else { // to open
+            icon.src = "../../assets/Arrow-down.png";
+        } 
+    });
 }
 
-/* 
-    active a button in toggle and render the matched list
-*/
-const options = document.querySelectorAll(".dropdown-option");
-const selectedText = document.getElementById("dropdown-selected");
-for (const option of options) {
-    option.addEventListener("click", activeToggleButton);
-}
-
-function activeToggleButton(event) {
+// activate a button in toggle and render the matched list
+function selectedToggle() {
+    const options = document.querySelectorAll(".dropdown-option");
+    const selectedText = document.getElementById("dropdown-selected");
     for (const option of options) {
-        option.classList.remove("selected");
-    }
-
-    event.target.classList.add("selected");
-    selectedText.textContent = event.target.textContent;
-
-    activeToggle();
-
-    const selectedId = event.target.dataset.id;
-    renderGoals(selectedId);
+        option.addEventListener("click", (event) => {
+            for (const option of options) {
+                option.classList.remove("selected");
+            }
+        
+            event.target.classList.add("selected");
+            selectedText.textContent = event.target.textContent;
+        
+            activeToggle();
+        
+            const selectedId = event.target.dataset.id;
+            renderGoals(selectedId);
+    });
+}
 }
 
 
@@ -152,6 +148,9 @@ function renderGoals(selectedType = "all") {
     for (const button of deleteButtons) {
         button.addEventListener("click", activeDeletePopup);
     }
+
+    activeToggle();
+    selectedToggle();
 };
 
 /* 
