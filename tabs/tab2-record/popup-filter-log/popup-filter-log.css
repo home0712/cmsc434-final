@@ -8,7 +8,7 @@
 }
 
 /* field container */
-#log-filter-container {
+.filter-container {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -33,6 +33,10 @@
     margin-bottom: 5px;
 }
 
+.filter-section.field {
+    width: 100%;
+}
+
 /* amount range field */
 .amount-range,
 .date-range {
@@ -45,10 +49,10 @@
 .amount-range input,
 .date-range input {
     flex: 1;
-    padding: 10px 12px;
+    padding: 5px 12px;
     width: 250px;
     height: 42px;
-    font-size: 20px;
+    font-size: 22px;
     background-color: #444;
     border: none;
     border-radius: 4px;
@@ -112,17 +116,38 @@
     border: 2px solid #04AA6D;
 }
 
-/* select */
-select {
+/* selector button */
+.selector-button {
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 258px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.selector-button button {
     background-color: #444;
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 258px;
-    font-size: 20px;
+    width: 70%;
+    font-size: 22px;
     color: white;
-    padding: 10px 12px;
+    padding: 5px 12px;
+}
+
+.selector-button span {
+    background-color: #444;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 42px; 
+    width: 20%;
+    font-size: 22px;
+    color: white;
+    padding: 5px 12px;
 }
 
 /* buttons */

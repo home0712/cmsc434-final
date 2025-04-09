@@ -1,0 +1,65 @@
+.option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 30px 0;
+    font-size: 22px;
+    overflow-y: auto;
+    height: 90%;
+}
+
+.option-list::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background-color: #484848;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+  
+/* buttons */
+.popup-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#save-type,
+#save-method,
+#save-category,
+#save-sub-category {
+    background-color: #689e80;
+    align-self: center;
+    width: 100px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 22px;
+}
+
+/* sub category */
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main-title {
+    font-size: 30px;
+    text-align: left;
+}
+
+/* scroll */
