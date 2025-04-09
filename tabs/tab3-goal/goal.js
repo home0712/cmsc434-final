@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     isFilterActive = !!sessionStorage.getItem("goalFilters"); 
     updateFilterUI(isFilterActive);
-    renderGoals(selectedType);
+    if (isFilterActive) {
+        applyTypeFilterToToggle(); 
+    } else {
+        renderGoals(selectedType);
+    }
 });
 
 // buttons
@@ -284,6 +288,15 @@ function applyFilters(goals) {
         if (startDate && goal.startDate < startDate) return false;
         if (endDate && goal.endDate > endDate) return false;
 
+        let typeMatch = true;
+        if (type === "Budget") {
+            typeMatch = goal.type === "Budget";
+        } else if (type === "Saving") {
+            typeMatch = goal.type === "Saving";
+        }
+
+        if (!typeMatch) return false;
+
         let statusMatch = true;
         if (status === "Completed") {
             statusMatch = goal.type === "Saving" && goal.savedAmount >= goal.goalAmount;
@@ -348,6 +361,25 @@ function setupFilterPopup() {
     cancelButton.addEventListener("click", () => {
       popup.classList.add("hidden");
     });
+}
+
+function applyTypeFilterToToggle() {
+    const filters = JSON.parse(sessionStorage.getItem("goalFilters"));
+    if (!filters || !filters.type) return;
+  
+    const selectedType = filters.type; 
+    const toggleOptions = document.querySelectorAll(".dropdown-option");
+    const selectedText = document.getElementById("dropdown-selected");
+  
+    toggleOptions.forEach(option => {
+      option.classList.remove("selected");
+      if (option.dataset.id === selectedType) {
+        option.classList.add("selected");
+        selectedText.textContent = option.dataset.id;
+      }
+    });
+  
+    renderGoals(selectedType.toLowerCase());
 }
 
 /* util variables & functions */
