@@ -1,3 +1,12 @@
+.device-content {
+    overflow-y: auto;
+}
+
+.device-content::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}
+
 /* field general css */
 #log-edit-form {
     display: flex;

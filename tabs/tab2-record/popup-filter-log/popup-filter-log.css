@@ -1,3 +1,12 @@
+.device-content {
+    overflow-y: auto;
+}
+
+.device-content::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}
+
 /* field container */
 #log-filter-container {
     display: flex;

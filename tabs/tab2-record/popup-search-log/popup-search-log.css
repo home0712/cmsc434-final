@@ -1,5 +1,14 @@
+.device-content {
+    overflow-y: auto;
+}
+
+.device-content::-webkit-scrollbar {
+    width: 0px;                     
+    background: transparent;
+}
+
 .device h1 {
-    font-size: 38px;
+    font-size: 36.5px;
 }
 
 #search-form {
@@ -96,7 +105,7 @@
     flex-grow: 1;
     overflow-y: auto;
     box-sizing: border-box;
-    height: 600px;
+    height: 500px;
 }
 
 .scroll::-webkit-scrollbar {

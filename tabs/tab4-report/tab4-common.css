@@ -11,7 +11,7 @@ body {
 #sub-navbar {
     width: 320px;
     height: 60px;
-    bottom: 10%;
+    bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #676767;
