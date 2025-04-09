@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     mainCategorySelector();
     subCategorySelector();
+    clearRequiredError();
 });
 
 function bindButtons() {
@@ -28,15 +29,16 @@ function bindButtons() {
 
 
 
-const logForm = document.getElementById("add-form");
+const logAddForm = document.getElementById("add-log-container");
 function addTransaction(event) {
     event.preventDefault();
 
-    if (!logForm.checkValidity()) {
-        // (editing) -> 가장 첫번째 unfilled required field에 빨간색으로 표시 or popup?
-        alert("Please fill in all required fields.");
+    if (!logAddForm.checkValidity()) {
+        showRequiredError();
         return;
     }
+
+    clearRequiredError();
 
     const amount = document.getElementById("amount-field").value;
     const title = document.getElementById("title-field").value;
@@ -109,5 +111,27 @@ function subCategorySelector() {
         } else {
             subCategorySelectBox.classList.add("hidden");
         }
+    });
+}
+
+// required field error
+function showRequiredError() {
+    const invalids = logAddForm.querySelectorAll(":invalid");
+    
+    invalids.forEach(item => {
+        item.classList.add("input-error");
+    });
+}
+
+function clearRequiredError() {
+    const inputs = logAddForm.querySelectorAll("input, select, textarea");
+    const eventList = ["input", "click", "focus"];
+
+    inputs.forEach(field => {
+        eventList.forEach(eventName => {
+            field.addEventListener(eventName, () => {
+                field.classList.remove("input-error");
+            })
+        });
     });
 }
