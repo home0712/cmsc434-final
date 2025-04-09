@@ -88,9 +88,10 @@ function applyFilters(logs) {
             maxAmount,
             startDate,
             endDate,
-            method,
-            category,
-            type
+            types,
+            methods,
+            categories,
+            subCategories
         } = filters;
 
         const amount = Math.abs(log.amount);
@@ -100,9 +101,10 @@ function applyFilters(logs) {
         if (maxAmount != null && amount > maxAmount) return false;
         if (startDate && date < startDate) return false;
         if (endDate && date > endDate) return false;
-        if (method && log.method !== method) return false;
-        if (category && log.category[0] !== category) return false;
-        if (type && log.type !== type) return false;
+        if (types && types.length > 0 && !types.includes(log.type)) return false;
+        if (methods && methods.length > 0 && !methods.includes(log.method)) return false;
+        if (categories && categories.length > 0 && !categories.includes(log.category.main)) return false;
+        if (subCategories && subCategories.length > 0 && !subCategories.includes(log.category.sub)) return false;
 
         return true;
     });
@@ -121,6 +123,7 @@ function updateFilterUI(isActive) {
 
 function clearFiltersInTransactionPage() {
     sessionStorage.removeItem("logFilters");
+    sessionStorage.setItem("filterWasCleared", "true");
     isFilterActive = false;
     updateFilterUI(false);
     renderTransactionLogs();
@@ -165,10 +168,12 @@ function renderTransactionLogs() {
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // 
-    if (currentTypeFilter === "Income") {
-        filteredLocal = filteredLocal.filter((log) => log.type === "INCOME");
-    } else if (currentTypeFilter === "Expense") {
-        filteredLocal = filteredLocal.filter((log) => log.type === "EXPENSE");
+    if (!isFilterActive) {
+        if (currentTypeFilter === "Income") {
+            filteredLocal = filteredLocal.filter((log) => log.type === "INCOME");
+        } else if (currentTypeFilter === "Expense") {
+            filteredLocal = filteredLocal.filter((log) => log.type === "EXPENSE");
+        }
     }
 
     // 동일 날짜별로 여러개의 기록 있으면 -> 하나의 오브젝트(키: 날짜)로 묶어 그룹화

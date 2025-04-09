@@ -2,7 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     setupPresetButtons();
     setupDateInputOverride();
-    updateFilterUIFromSession();
+
+    const filters = sessionStorage.getItem("logFilters");
+    const wasCleared = sessionStorage.getItem("filterWasCleared");
+    
+    if (wasCleared) {
+        clearFilter();
+        sessionStorage.removeItem("filterWasCleared");
+    } else {
+        updateFilterUIFromSession(); 
+    }
+    toggleSubCategoryField();
 });
 
 function bindButtons() {
@@ -115,6 +125,8 @@ function clearFilter() {
     sessionStorage.removeItem("filterMethods");
     sessionStorage.removeItem("filterCategories");
     sessionStorage.removeItem("filterSubcategories");
+
+    toggleSubCategoryField();
 }
   
 // de-select preset button when date input entered
@@ -138,6 +150,20 @@ function updateFilterUIFromSession() {
   
     document.getElementById("type-count").textContent = types.length > 0 ? `${types.length}` : "All";
     document.getElementById("method-count").textContent = methods.length > 0 ? `${methods.length}` : "All";
-    document.getElementById("category-count").textContent = mainCategories.length > 0 ? `${categories.length}` : "All";
-    document.getElementById("subcategory-count").textContent = subCategories.length > 0 ? `${categories.length}` : "All";
+    document.getElementById("category-count").textContent = mainCategories.length > 0 ? `${mainCategories.length}` : "All";
+    document.getElementById("subcategory-count").textContent = subCategories.length > 0 ? `${subCategories.length}` : "All";
+
+    toggleSubCategoryField();
+}
+
+//
+function toggleSubCategoryField() {
+    const categories = JSON.parse(sessionStorage.getItem("filterCategories")) || [];
+    const subField = document.getElementById("subcategory");
+  
+    if (categories.length === 0) {
+      subField.classList.add("hidden");
+    } else {
+      subField.classList.remove("hidden");
+    }
 }

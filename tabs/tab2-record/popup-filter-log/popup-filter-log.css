@@ -150,6 +150,10 @@
     padding: 5px 12px;
 }
 
+#subcategory.hidden {
+    display: none;
+}
+
 /* buttons */
 .filter-footer {
     display: flex;
