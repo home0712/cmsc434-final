@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", importNavBar);
+document.addEventListener("DOMContentLoaded", () => {
+    importNavBar();
+});
 
 function importNavBar() {
     const navbarContainer = document.getElementById("navbar");
@@ -42,4 +44,14 @@ function importNavBar() {
             }
         }
     }
+}
+
+// main-category data -> localStorage
+if (!localStorage.getItem("mainCategories")) {
+    localStorage.setItem("mainCategories", JSON.stringify(mainCategories));
+}
+
+// sub-category data -> localStorage 
+if (!localStorage.getItem("subCategories")) {
+    localStorage.setItem("subCategories", JSON.stringify(subCategories));
 }

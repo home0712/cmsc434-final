@@ -1,3 +1,4 @@
+/* device */
 .device-content {
     overflow-y: auto;
 }
@@ -7,8 +8,8 @@
     background: transparent;
 }
 
-/* field general css */
-#add-form {
+/* fields container */
+.add-log-field-container {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -16,27 +17,29 @@
     margin: 40px auto;
 }
 
-#add-form .field {
+.add-log-field-container .field {
     display: flex;
     width: 100%;  
 }
 
-#add-form .field-label {
+.add-log-field-container .field-label {
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 240px;
+    width: 265px;
     margin-right: 10px;
     font-size: 30px;
 }
 
-input[type="text"], input[type="date"], textarea, select {
+input[type="number"], 
+input[type="text"], 
+input[type="date"], textarea, select {
     background-color: #444;
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 290px;
+    width: 265px;
     font-size: 20px;
     color: white;
     padding: 10px 12px;
@@ -47,12 +50,14 @@ textarea {
     height: 80px;
     padding: 10px;
     resize: none;
+    margin-top: 10px;
+    box-sizing: border-box;
 }
 
 /* type field */
 .type-button-field {
     display: flex;
-    width: 290px;
+    width: 265px;
     gap: 10px;
 }
 
@@ -70,13 +75,22 @@ textarea {
     border: 2px solid #04AA6D;
 }
 
+/* subcategory */
+#sub-category {
+    display: flex;
+}
+
+#sub-category.hidden {
+    display: none;
+}
+
 /* note field */
 #note.field {
     display: block;
     width: 100%;  
 }
 
-#note .field-label {
+#note.field-label {
     display: flex;
     align-items: baseline;
     gap: 8px;

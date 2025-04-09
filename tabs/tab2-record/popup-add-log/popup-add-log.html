@@ -17,25 +17,19 @@
             </span>
 
             <!-- Input Fields -->
-            <form id="add-form">
+            <div class="add-log-field-container">
                 <div id="amount" class="field">
-                    <label for="amount-field" class="field-label">
-                        <span>AMOUNTS</span>
-                    </label>
-                    <input type="text" id="amount-field" placeholder="$1,000.00" required/>
+                    <label for="amount-field" class="field-label">AMOUNTS</label>
+                    <input type="number" id="amount-field" placeholder="$1,000.00" min=0 step=0.01 required/>
                 </div>
 
                 <div id="title" class="field">
-                    <label for="title-field" class="field-label">
-                        <span>TITLE</span>
-                    </label>
+                    <label for="title-field" class="field-label">TITLE</label>
                     <input type="text" id="title-field" placeholder="Title" required/>
                 </div>
 
                 <div id="type" class="field">
-                    <label class="field-label">
-                        <span>TYPE</span>
-                    </label>
+                    <label class="field-label">TYPE</label>
                     <div class="type-button-field">
                         <button class="type-button" type="button">INCOME</button>
                         <button class="type-button" type="button">EXPENSE</button>
@@ -44,16 +38,12 @@
                 </div>
 
                 <div id="date" class="field">
-                    <label for="date-field" class="field-label">
-                        <span>DATE</span>
-                    </label>
-                    <input type="date" id="date-field" placeholder="Mar/25/2025"/>
+                    <label for="date-field" class="field-label">DATE</label>
+                    <input type="date" id="date-field" placeholder="Mar/25/2025" required/>
                 </div>
 
                 <div id="method" class="field">
-                    <label for="method-select" class="field-label">
-                        <span>METHOD</span>
-                    </label>
+                    <label for="method-select" class="field-label">METHOD</label>
                     <select id="method-select" name="method" required>
                         <option value="">Choose...</option>
                         <option value="cash">Cash</option>
@@ -63,26 +53,26 @@
                 </div>
 
                 <div id="category" class="field">
-                    <label for="category-select" class="field-label">
-                        <span>CATEGORY</span>
-                    </label>
-                    <select id="category-select" name="category">
+                    <label for="category-select" class="field-label">CATEGORY</label>
+                    <select id="category-select" name="category" required>
                         <option value="">Choose...</option>
-                        <option value="food">Food</option>
-                        <option value="transport">Transport</option>
-                        <option value="entertainment">Entertainment</option>
+                    </select>
+                </div>
+
+                <div id="sub-category" class="field hidden">
+                    <label for="sub-category-select" class="field-label">SUBCATEGORY</label>
+                    <select id="sub-category-select" name="sub-category">
+                        <option value="">Choose...</option>
                     </select>
                 </div>
 
                 <div id="note" class="field">
-                    <label for="notes-field" class="field-label">
-                        <span>NOTES</span>
-                    </label>
+                    <label for="notes-field" class="field-label">NOTES</label>
                     <textarea id="notes-field" placeholder="Any Notes..."></textarea>
                 </div>
 
                 <button type="submit" id="save-button">SAVE</button>
-            </form>        
+            </div>        
         </div>
 
         <img src="../../../assets/keyboard.webp" id="keyboard">

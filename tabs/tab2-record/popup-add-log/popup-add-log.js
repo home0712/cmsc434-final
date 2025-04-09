@@ -1,36 +1,34 @@
 /* SIDE SCREEN - ADD A LOG */
 
-/* 
-    click x button to close 
-*/
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", returnToPage);
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+    mainCategorySelector();
+    subCategorySelector();
+});
 
-/* 
-    income/expense type button selector
-*/
-const typeButtons = document.querySelectorAll(".type-button");
-for (const button of typeButtons) {
-    button.addEventListener("click", clickTypeButton);
-}
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    const typeButtons = document.querySelectorAll(".type-button");
+    const saveButton = document.getElementById("save-button");
 
-function clickTypeButton(event) {
+    closeButton.addEventListener("click", returnToPage);
+
     for (const button of typeButtons) {
-        button.classList.remove("selected");
+        button.addEventListener("click", (event) => {
+            for (const button of typeButtons) {
+                button.classList.remove("selected");
+            }
+            event.target.classList.add("selected");
+            document.getElementById("type-value").value = event.target.textContent;
+        });
     }
 
-    event.target.classList.add("selected");
-    document.getElementById("type-value").value = event.target.textContent;
+    saveButton.addEventListener("click", addTransaction);
 }
 
-/* 
-    click save button & add a log
-*/
-const saveButton = document.getElementById("save-button");
+
+
 const logForm = document.getElementById("add-form");
-
-saveButton.addEventListener("click", addTransaction);
-
 function addTransaction(event) {
     event.preventDefault();
 
@@ -40,7 +38,6 @@ function addTransaction(event) {
         return;
     }
 
-    // 사용자가 입력한 데이터 가져오기
     const amount = document.getElementById("amount-field").value;
     const title = document.getElementById("title-field").value;
     const type = document.getElementById("type-value").value;
@@ -53,7 +50,6 @@ function addTransaction(event) {
     const amountNum = parseFloat(amount);
     const amountFinal = (type === "EXPENSE") ? -Math.abs(amountNum) : Math.abs(amountNum);
 
-    // 사용자 입력 데이터로 json 포맷으로 만들기
     const newLog = {
         id: Date.now(), 
         amount: amountFinal,
@@ -65,16 +61,49 @@ function addTransaction(event) {
         notes: notes
     };
 
-    /* 
-        local storage: String
-        localLogs: [] (Array<Object>)
-        newLog: Object
-        local storage 로그 리스트에 -> new log 추가하기 
-     */
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     localLogs.push(newLog);
     localStorage.setItem("transactions", JSON.stringify(localLogs));
 
     // return to the prev page
     returnToPage();
+}
+
+// render the main-category selector
+function mainCategorySelector() {
+    const mainCategorySelect = document.getElementById("category-select");
+    const localMainCategory = JSON.parse(localStorage.getItem("mainCategories"));
+
+    localMainCategory.forEach(main => {
+        const option = document.createElement("option");
+        option.value = main;
+        option.textContent = main;
+        mainCategorySelect.appendChild(option);
+    });
+}
+
+// render the sub-category selector
+function subCategorySelector() {
+    const mainCategorySelect = document.getElementById("category-select");
+    const subCategorySelect = document.getElementById("sub-category-select");
+    const subCategorySelectBox = document.getElementById("sub-category");
+    const localSubCategory = JSON.parse(localStorage.getItem("subCategories"));
+
+    mainCategorySelect.addEventListener("change", (event) => {
+        const selectedMain = event.target.value;
+
+        subCategorySelect.innerHTML = `<option value="">Choose...</option>`;
+
+        if (localSubCategory[selectedMain]) {
+            localSubCategory[selectedMain].forEach(sub => {
+                const option = document.createElement("option");
+                option.value = sub;
+                option.textContent = sub;
+                subCategorySelect.appendChild(option);
+            });
+            subCategorySelectBox.classList.remove("hidden");
+        } else {
+            subCategorySelectBox.classList.add("hidden");
+        }
+    });
 }
