@@ -26,17 +26,9 @@ function keywordSearch() {
     return;
   }
 
-  // 기존 transactions 데이터 + local 데이터
   let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-  const allTransactions = transactions.concat(localLogs);
 
-  /* 
-    if optional search 필드 입력 있으면 -> optional search 반영
-    1. (basic) keyword only 입력 (no optional input) 
-    2. keyword + amount
-    3. keyword + amount + period
-  */
-  const result = allTransactions.filter(log => {
+  const result = localLogs.filter(log => {
     const keywordMatch =
       keyword === "" ||
       (log.title?.toLowerCase().includes(keyword)) || 
@@ -53,7 +45,6 @@ function keywordSearch() {
     return keywordMatch && amountMatch && dateMatch;
   });
 
-  // 검색되면 optional search 박스 접기
   document.getElementById("optional-search").style.display = "none";
 
   // show the results
