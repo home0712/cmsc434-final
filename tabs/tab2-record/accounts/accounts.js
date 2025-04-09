@@ -31,8 +31,8 @@ function setupToggle() {
     toggleButton.addEventListener("click", () => {
         dropdown.classList.toggle("hidden");
         toggleIcon.src = dropdown.classList.contains("hidden")
-          ? "../../../assets/Arrow-up.png"
-          : "../../../assets/Arrow-down.png";
+          ? "../../../assets/Arrow-down.png"
+          : "../../../assets/Arrow-up.png";
     });
 
     const options = document.querySelectorAll(".dropdown-option");
@@ -41,6 +41,7 @@ function setupToggle() {
             currentTypeFilter = option.dataset.id;
             selectedText.textContent = currentTypeFilter;
             dropdown.classList.add("hidden");
+            toggleIcon.src = "../../../assets/Arrow-down.png";
 
             options.forEach(option => {
                 option.classList.remove("selected");

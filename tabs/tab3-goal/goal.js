@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isFilterActive) {
         applyTypeFilterToToggle(); 
     } else {
+        syncToggleToSelectedType();
         renderGoals(selectedType);
     }
 });
@@ -372,14 +373,31 @@ function applyTypeFilterToToggle() {
     const selectedText = document.getElementById("dropdown-selected");
   
     toggleOptions.forEach(option => {
-      option.classList.remove("selected");
-      if (option.dataset.id === selectedType) {
-        option.classList.add("selected");
-        selectedText.textContent = option.dataset.id;
-      }
+        option.classList.remove("selected");
+        if (option.dataset.id === selectedType) {
+            option.classList.add("selected");
+            selectedText.textContent = option.dataset.id;
+        }
     });
   
     renderGoals(selectedType.toLowerCase());
+}
+
+function syncToggleToSelectedType() {
+    const selectedType = sessionStorage.getItem("selectedType") || "all";
+    const toggleOptions = document.querySelectorAll(".dropdown-option");
+    const selectedText = document.getElementById("dropdown-selected");
+  
+    selectedText.textContent = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
+  
+    toggleOptions.forEach(option => {
+        option.classList.remove("selected");
+        if (option.dataset.id === selectedText.textContent) {
+            option.classList.add("selected");
+        }
+    });
+  
+    currentTypeFilter = selectedType;
 }
 
 /* util variables & functions */

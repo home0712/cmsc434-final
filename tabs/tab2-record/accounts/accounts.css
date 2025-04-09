@@ -187,7 +187,7 @@ body {
 }
 
 .dropdown-list {
-    display: none;
+    display: flex;
     flex-direction: row; 
     gap: 10px;
     width: 100px;
@@ -195,7 +195,7 @@ body {
 }
 
 .dropdown-list.hidden {
-    display: flex;
+    display: none;
 }
 
 .dropdown-option {
