@@ -1,23 +1,20 @@
-/*
-    click the icon to open the category setting page
-*/
-const settingButton = document.getElementById("header-button");
-settingButton.addEventListener("click", navigateToPage);
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+});
 
-function navigateToPage(event) {
-    const clickedButtonId = event.target.id;
+function bindButtons() {
+    const settingButton = document.getElementById("header-button");
+    settingButton.addEventListener("click", (event) => {
+        const clickedButtonId = event.target.id;
 
-    sessionStorage.setItem("returnTo", "category");
-    if (clickedButtonId === "header-button") {
-        window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
-    }
+        sessionStorage.setItem("returnTo", "category");
+        if (clickedButtonId === "header-button") {
+            window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
+        }
+    });
 }
 
-/*
-    draw pie chart
-*/
-const canvas = document.getElementById("pie-chart");
-const ctx = canvas.getContext("2d");
+
 
 /* sample data */ 
 const mainCategoryData = [
@@ -44,8 +41,10 @@ const subcategoryData = {
 
 const mainColors = ["#FF6384", "#36A2EB", "#FFCE56", "#66BB6A"];
 
-// sort in descending order
-const sortedMainData = mainCategoryData.sort((a, b) => b.amount - a.amount);
+// draw pie chart
+const canvas = document.getElementById("pie-chart");
+const ctx = canvas.getContext("2d");
+const sortedMainData = [...mainCategoryData].sort((a, b) => b.amount - a.amount);
 
 const pieData = {
     labels: sortedMainData.map(item => item.category),
@@ -100,8 +99,8 @@ const pieChart = new Chart(ctx, {
 /**
  * render ranked table (for both main and sub)
  */
-const sortedRankMap = {};
-const sortedColorMap = {};
+let sortedRankMap = {};
+let sortedColorMap = {};
 
 function renderRankedTable(categoryData, colors, order = "desc") {
     const tableContainer = document.getElementById("category-rank-body");
@@ -167,9 +166,7 @@ function renderRankedTable(categoryData, colors, order = "desc") {
 // initially render the page
 renderRankedTable(sortedMainData, mainColors);
 
-/**
- * update from main pie chart to sub pie chart
- */
+// update from main pie chart to sub pie chart
 function updateToSubPieChart(category) {
     const subData = subcategoryData[category];
     const subLabels = subData.map(item => item.category);
@@ -177,7 +174,6 @@ function updateToSubPieChart(category) {
 
     const baseColor = getBaseColorForCategory(category); // main 카테고리 존재하지 않는 경우도 있나?
     const gradientColors = getGradientColors(baseColor, subData.length);
-    console.log(gradientColors);
 
     pieChart.data.labels = subLabels;
     pieChart.data.datasets[0].data = subAmounts;
@@ -214,10 +210,11 @@ backButton.addEventListener("click", () => {
     sort the table
  */
 function sortRankedTable(categoryData, order = "desc") {
+    const copy = [...categoryData];
     if (order === "desc") {
-        return categoryData.sort((a, b) => b.amount - a.amount);
+        return copy.sort((a, b) => b.amount - a.amount);
     } else if (order === "asc") {
-        return categoryData.sort((a, b) => a.amount - b.amount);
+        return copy.sort((a, b) => a.amount - b.amount);
     }
 }
 
