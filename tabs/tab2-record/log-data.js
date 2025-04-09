@@ -32,7 +32,7 @@ const transactions = [
       title: "paycheck",
       type: "INCOME",
       date: "2025-04-05",
-      method: "bank transfer",
+      method: "Transfer",
       category: {
         main: "Income",
         sub: "Salary"
@@ -73,7 +73,7 @@ const transactions = [
       title: "paycheck",
       type: "INCOME",
       date: "2025-03-21",
-      method: "bank transfer",
+      method: "Transfer",
       category: {
         main: "Income",
         sub: "Salary"
@@ -114,7 +114,7 @@ const transactions = [
       title: "venmo",
       type: "INCOME",
       date: "2025-03-10",
-      method: "venmo",
+      method: "Transfer",
       category: {
         main: "Income",
         sub: "Transfer"
@@ -155,7 +155,7 @@ const transactions = [
       title: "venmo",
       type: "INCOME",
       date: "2025-03-05",
-      method: "venmo",
+      method: "Transfer",
       category: {
         main: "Income",
         sub: "Transfer"
@@ -196,7 +196,7 @@ const transactions = [
         title: "freelance payment",
         type: "INCOME",
         date: "2025-02-07",
-        method: "bank transfer",
+        method: "Transfer",
         category: {
           main: "Income",
           sub: "Freelance"
@@ -237,7 +237,7 @@ const transactions = [
         title: "salary",
         type: "INCOME",
         date: "2025-01-15",
-        method: "bank transfer",
+        method: "Transfer",
         category: {
           main: "Income",
           sub: "Salary"

@@ -1,5 +1,5 @@
 /* field general css */
-#detail-form {
+.detail-form {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -7,28 +7,30 @@
     margin: 40px auto;
 }
 
-#detail-form .field {
+.detail-form .field {
     display: flex;
     width: 100%;  
 }
 
-#detail-form .label {
+.detail-form .label {
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 240px;
+    width: 265px;
     margin-right: 10px;
     font-size: 30px;
 }
 
-#detail-form .value {
+.detail-form .value {
     display: flex;
     align-items: center;
     font-size: 22px;
-    width: 290px;
+    width: 265px;
+    height: 42px;
     background-color: #484848;
     box-sizing: border-box;
     padding-left: 10px;
+    border-radius: 10px;
 }
 
 

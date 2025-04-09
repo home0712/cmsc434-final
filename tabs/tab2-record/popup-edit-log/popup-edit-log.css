@@ -25,21 +25,28 @@
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 240px;
+    width: 265px;
     margin-right: 10px;
     font-size: 30px;
 }
 
-input[type="text"], input[type="date"], textarea, select {
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
+}
+
+input[type="number"], 
+input[type="text"], 
+input[type="date"], textarea, select {
     background-color: #444;
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 290px;
-    font-size: 20px;
+    width: 265px;
+    font-size: 22px;
     color: white;
-    padding: 10px 12px;
+    padding: 5px 12px;
 }
 
 textarea {
@@ -52,7 +59,8 @@ textarea {
 /* type field */
 .type-button-field {
     display: flex;
-    width: 290px;
+    width: 265px;
+    height: 42px;
     gap: 10px;
 }
 
