@@ -6,8 +6,11 @@ const transactions = [
       title: "bluebottle",
       type: "EXPENSE",
       date: "2025-04-05",
-      method: "credit",
-      category: ["Beverage"],
+      method: "Credit Card",
+      category: {
+        main: "Beverage",
+        sub: "Coffee"
+      },
       notes: "morning coffee & sandwich"
     },
     {
@@ -16,8 +19,11 @@ const transactions = [
       title: "headphone",
       type: "EXPENSE",
       date: "2025-04-05",
-      method: "cash",
-      category: ["Utilities"],
+      method: "Cash",
+      category: {
+        main: "Utilities",
+        sub: ""
+      },
       notes: ""
     },
     {
@@ -27,7 +33,10 @@ const transactions = [
       type: "INCOME",
       date: "2025-04-05",
       method: "bank transfer",
-      category: ["salary"],
+      category: {
+        main: "Income",
+        sub: "Salary"
+      },
       notes: ""
     },
 
@@ -38,8 +47,11 @@ const transactions = [
       title: "coffee at X cafe",
       type: "EXPENSE",
       date: "2025-03-21",
-      method: "credit",
-      category: ["Beverage"],
+      method: "Credit Card",
+      category: {
+        main: "Beverage",
+        sub: "Coffee"
+      },
       notes: "morning coffee"
     },
     {
@@ -48,8 +60,11 @@ const transactions = [
       title: "book",
       type: "EXPENSE",
       date: "2025-03-21",
-      method: "cash",
-      category: ["Education"],
+      method: "Cash",
+      category: {
+        main: "Education",
+        sub: ""
+      },
       notes: "design book"
     },
     {
@@ -59,7 +74,10 @@ const transactions = [
       type: "INCOME",
       date: "2025-03-21",
       method: "bank transfer",
-      category: ["salary"],
+      category: {
+        main: "Income",
+        sub: "Salary"
+      },
       notes: ""
     },
   
@@ -70,8 +88,11 @@ const transactions = [
       title: "theater",
       type: "EXPENSE",
       date: "2025-03-10",
-      method: "credit",
-      category: ["Entertainment"],
+      method: "Credit Card",
+      category: {
+        main: "Entertainment",
+        sub: "Movies"
+      },
       notes: ""
     },
     {
@@ -80,8 +101,11 @@ const transactions = [
       title: "jacket",
       type: "EXPENSE",
       date: "2025-03-10",
-      method: "cash",
-      category: ["Clothing"],
+      method: "Cash",
+      category: {
+        main: "Shopping",
+        sub: "Clothing"
+      },
       notes: "new spring jacket"
     },
     {
@@ -91,7 +115,10 @@ const transactions = [
       type: "INCOME",
       date: "2025-03-10",
       method: "venmo",
-      category: ["Transfer"],
+      category: {
+        main: "Income",
+        sub: "Transfer"
+      },
       notes: "from friend"
     },
   
@@ -102,8 +129,11 @@ const transactions = [
       title: "theater",
       type: "EXPENSE",
       date: "2025-03-05",
-      method: "credit",
-      category: ["Entertainment"],
+      method: "Credit Card",
+      category: {
+        main: "Entertainment",
+        sub: "Movies"
+      },
       notes: ""
     },
     {
@@ -112,8 +142,11 @@ const transactions = [
       title: "jacket",
       type: "EXPENSE",
       date: "2025-03-05",
-      method: "cash",
-      category: ["Clothing"],
+      method: "Cash",
+      category: {
+        main: "Shopping",
+        sub: "Clothing"
+      },
       notes: ""
     },
     {
@@ -123,7 +156,10 @@ const transactions = [
       type: "INCOME",
       date: "2025-03-05",
       method: "venmo",
-      category: ["Transfer"],
+      category: {
+        main: "Income",
+        sub: "Transfer"
+      },
       notes: "refund"
     },
 
@@ -134,8 +170,11 @@ const transactions = [
         title: "movie night",
         type: "EXPENSE",
         date: "2025-02-14",
-        method: "credit",
-        category: ["Entertainment"],
+        method: "Credit Card",
+        category: {
+          main: "Entertainment",
+          sub: "Movies"
+        },
         notes: "valentine"
     },
     {
@@ -144,8 +183,11 @@ const transactions = [
         title: "lunch at deli",
         type: "EXPENSE",
         date: "2025-02-14",
-        method: "cash",
-        category: ["Food"],
+        method: "Cash",
+        category: {
+          main: "Food",
+          sub: "Restaurants"
+        },
         notes: ""
     },
     {
@@ -155,7 +197,10 @@ const transactions = [
         type: "INCOME",
         date: "2025-02-07",
         method: "bank transfer",
-        category: ["salary"],
+        category: {
+          main: "Income",
+          sub: "Freelance"
+        },
         notes: "client work"
     },
 
@@ -166,8 +211,11 @@ const transactions = [
         title: "bus fare",
         type: "EXPENSE",
         date: "2025-01-22",
-        method: "cash",
-        category: ["Transportation"],
+        method: "Cash",
+        category: {
+          main: "Transport",
+          sub: "Bus"
+        },
         notes: ""
     },
     {
@@ -176,8 +224,11 @@ const transactions = [
         title: "hoodie",
         type: "EXPENSE",
         date: "2025-01-19",
-        method: "credit",
-        category: ["Clothing"],
+        method: "Credit Card",
+        category: {
+          main: "Shopping",
+          sub: "Clothing"
+        },
         notes: "gift for brother"
     },
     {
@@ -187,7 +238,10 @@ const transactions = [
         type: "INCOME",
         date: "2025-01-15",
         method: "bank transfer",
-        category: ["salary"],
+        category: {
+          main: "Income",
+          sub: "Salary"
+        },
         notes: ""
     }
   ];

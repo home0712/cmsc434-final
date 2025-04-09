@@ -6,7 +6,8 @@ const mainCategories = [
     "Shopping",
     "Health",
     "Utilities",
-    "Education"
+    "Education",
+    "Income",
 ];
 
 const subCategories = {
@@ -17,6 +18,6 @@ const subCategories = {
     Shopping: ["Clothing", "Electronics", "Gifts"],
     Health: ["Hospital", "Pharmacy", "Insurance"],
     Utilities: ["Electricity", "Water", "Internet"],
-
+    Income: ["Salary", "Freelance", "Bonus", "Refund", "Transfer"],
 };
 

@@ -43,7 +43,8 @@ function addTransaction(event) {
     const type = document.getElementById("type-value").value;
     const date = document.getElementById("date-field").value;
     const method = document.getElementById("method-select").value;
-    const category = document.getElementById("category-select").value;
+    const mainCategory = document.getElementById("category-select").value;
+    const subCategory = document.getElementById("sub-category-select").value;
     const notes = document.getElementById("notes-field").value;
 
     // type 에 따라 +/- 부호 붙이기
@@ -57,7 +58,10 @@ function addTransaction(event) {
         type: type,
         date: date,     // YYYY-MM-DD format
         method: method,
-        category: category,
+        category: {
+            main: mainCategory,
+            sub: subCategory
+        },
         notes: notes
     };
 
