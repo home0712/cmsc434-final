@@ -22,7 +22,7 @@
                 <div id="goal-type">
                   <label class="field-label">GOAL TYPE</label>
                   <select id="type-select">
-                    <option value="All">All</option>
+                    <option value="">All</option>
                     <option value="Budget">Budget</option>
                     <option value="Saving">Saving</option>
                 </select>
@@ -32,7 +32,7 @@
                 <div id="status">
                   <label class="field-label">STATUS</label>
                   <select id="status-select">
-                    <option value="ALL">All</option>
+                    <option value="">All</option>
                     <option value="ExceededCompleted">Exceeded/Completed</option>
                     <option value="Inprogress">In Progress</option>
                   </select>
@@ -50,7 +50,7 @@
 
                 <!-- Used/Saved Amounts -->
                 <div class="user-amount">
-                  <label class="field-label">USED/SAVED AMOUNT RANGE</label>
+                  <label class="field-label" id="current-amount">CURRENT AMOUNT RANGE</label>
                   <div id="user-amount-inputs" class="range-inputs">
                     <input type="number" id="min-progress" placeholder="Min" />
                     <span class="dash">–</span>
@@ -67,9 +67,12 @@
                     <input type="date" id="date-end"/>
                   </div>
                 </div>
-          </div>
 
-          <div id="filter-results" class="results-list scroll"></div>
+                <div class="filter-footer">
+                  <button id="save-filter">SAVE</button>
+                  <button id="clear-filter" class="secondary">CLEAR</button>
+                </div>
+          </div>
       </div>
     </div>
 

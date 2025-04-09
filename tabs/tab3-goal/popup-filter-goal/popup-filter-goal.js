@@ -1,4 +1,4 @@
-/* SIDE SCREEN - SEARCH GOALS */
+/* SIDE SCREEN - FILTER GOALS */
 
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
@@ -10,85 +10,58 @@ function bindButtons() {
     closeButton.addEventListener("click", () => {
       window.location.href = "../goal.html";
     });
+
+    document.getElementById("save-filter").addEventListener("click", saveFilter);
+    document.getElementById("clear-filter").addEventListener("click", clearFilter);
 }
 
-function keywordSearch() {
-    const keyword = document.getElementById("keyword-input").value.trim().toLowerCase();
-    const minAmount = parseFloat(document.getElementById("amount-min").value);
-    const maxAmount = parseFloat(document.getElementById("amount-max").value);
-    const startDate = document.getElementById("date-start").value;
-    const endDate = document.getElementById("date-end").value;
+function saveFilter() {
     const type = document.getElementById("type-select").value;
     const status = document.getElementById("status-select").value;
+    const minGoalAmount = parseFloat(document.getElementById("amount-min").value);
+    const maxGoalAmount = parseFloat(document.getElementById("amount-max").value);
     const minProgress = parseFloat(document.getElementById("min-progress").value);
     const maxProgress = parseFloat(document.getElementById("max-progress").value);
+    const startDate = document.getElementById("date-start").value;
+    const endDate = document.getElementById("date-end").value;
 
-    // no keyword entered
-    if (!keyword) {
-      showKeywordError();
-      return;
+    const filterData = {
+        type: type || null,
+        status: status || null,
+        minGoalAmount: minGoalAmount ? parseFloat(minGoalAmount) : null,
+        maxGoalAmount: maxGoalAmount ? parseFloat(maxGoalAmount) : null,
+        minProgress: minProgress ? parseFloat(minProgress) : null,
+        maxProgress: maxProgress ? parseFloat(maxProgress) : null,
+        startDate: startDate || null,
+        endDate: endDate || null,        
+    };
+
+    const allNull = Object.values(filterData).every(value => value === null);
+    if (!allNull) {
+        sessionStorage.setItem("goalFilters", JSON.stringify(filterData));
+        window.location.href = "../goal.html";
     }
+}
 
-    clearKeywordError();
-    let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+// clear filter 
+function clearFilter() {
+    document.getElementById("type-select").value = "";
+    document.getElementById("status-select").value = "";
+    document.getElementById("amount-min").value = "";
+    document.getElementById("amount-max").value = "";
+    document.getElementById("min-progress").value = "";
+    document.getElementById("max-progress").value = "";
+    document.getElementById("date-start").value = "";
+    document.getElementById("date-end").value = "";
 
-    const result = localGoals.filter(goal => {
-        const keywordMatch =
-          keyword === "" ||
-          (goal.title?.toLowerCase().includes(keyword)) || 
-          (goal.notes?.toLowerCase().includes(keyword));
-
-        const amountMatch =
-          (isNaN(minAmount) || goal.amount >= minAmount) &&
-          (isNaN(maxAmount) || goal.amount <= maxAmount);
-
-        const dateMatch =
-          (startDate === "" || goal.date >= startDate) &&
-          (endDate === "" || goal.date <= endDate);
-
-        const typeMatch = type === "All" || goal.type === type;
-        const progressAmount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
-
-        const progressMatch =
-          (isNaN(minProgress) || progressAmount >= minProgress) &&
-          (isNaN(maxProgress) || progressAmount <= maxProgress);
-
-        let statusMatch = true;
-        if (status === "Completed") {
-            statusMatch = goal.type === "Saving" && goal.savedAmount >= goal.goalAmount;
-        } else if (status === "Exceeded") {
-            statusMatch = goal.type === "Budget" && goal.usedAmount >= goal.goalAmount;
-        } else if (status === "Inprogress") {
-            const isDone = goal.type === "Saving" 
-            ? goal.savedAmount >= goal.goalAmount
-            : goal.usedAmount >= goal.goalAmount;
-            statusMatch = !isDone;
-        } else if (status === "ExceededCompleted") {
-            if (goal.type === "Saving") {
-                statusMatch = goal.savedAmount >= goal.goalAmount;
-            } else if (goal.type === "Budget") {
-                statusMatch = goal.usedAmount >= goal.goalAmount;
-            }
-        }
-
-      return (
-          keywordMatch &&
-          amountMatch &&
-          dateMatch &&
-          typeMatch &&
-          progressMatch &&
-          statusMatch);
-    });
-
-    document.getElementById("optional-filter").style.display = "none";
-
-    renderSearchResults(result);
+    sessionStorage.removeItem("goalFilters");
 }
 
 // status selector option
 function setupStatusOptionsByGoalType() {
     const goalTypeSelect = document.getElementById("type-select");
     const statusSelect = document.getElementById("status-select");
+    const label = document.getElementById("current-amount");
 
     goalTypeSelect.addEventListener("change", () => {
         const type = goalTypeSelect.value;
@@ -100,72 +73,21 @@ function setupStatusOptionsByGoalType() {
                 <option value="Exceeded">Exceeded</option>
                 <option value="Inprogress">In Progress</option>
             `;
+            label.textContent = "USED AMOUNT";
         } else if (type === "Saving") {
             statusSelect.innerHTML = `
                 <option value="All">All</option>
                 <option value="Completed">Completed</option>
                 <option value="Inprogress">In Progress</option>
             `;
+            label.textContent = "SAVED AMOUNT";
         } else {
             statusSelect.innerHTML = `
-                <option value="ALL">All</option>
+                <option value="">All</option>
                 <option value="ExceededCompleted">Exceeded/Completed</option>
                 <option value="Inprogress">In Progress</option>
             `;
-        }
-    });
-}
-
-// 
-function showKeywordError() {
-    const errorMessage = document.getElementById("keyword-error");
-    const keywordInput = document.getElementById("keyword-input");
-    keywordInput.classList.add("input-error");
-
-    if (!document.getElementById("keyword-error-content")) {
-        const message = document.createElement("div");
-        message.id = "keyword-error-content";
-        message.className = "error-message";
-        message.textContent = "Please enter a keyword";
-        errorMessage.appendChild(message);
-    }
-}
-
-function clearKeywordError() {
-    const keywordInput = document.getElementById("keyword-input");
-    const message = document.getElementById("keyword-error-content");
-
-    keywordInput.classList.remove("input-error");
-    message.remove();
-}
-
-// status selector option
-function setupStatusOptionsByGoalType() {
-    const goalTypeSelect = document.getElementById("type-select");
-    const statusSelect = document.getElementById("status-select");
-
-    goalTypeSelect.addEventListener("change", () => {
-        const type = goalTypeSelect.value;
-        statusSelect.innerHTML = "";
-
-        if (type === "Budget") {
-            statusSelect.innerHTML = `
-                <option value="All">All</option>
-                <option value="Exceeded">Exceeded</option>
-                <option value="Inprogress">In Progress</option>
-            `;
-        } else if (type === "Saving") {
-            statusSelect.innerHTML = `
-                <option value="All">All</option>
-                <option value="Completed">Completed</option>
-                <option value="Inprogress">In Progress</option>
-            `;
-        } else {
-            statusSelect.innerHTML = `
-                <option value="ALL">All</option>
-                <option value="ExceededCompleted">Exceeded/Completed</option>
-                <option value="Inprogress">In Progress</option>
-            `;
+            label.textContent = "CURRENT AMOUNT";
         }
     });
 }

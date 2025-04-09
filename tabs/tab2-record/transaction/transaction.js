@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     monthSelector();
     updateMonthLabel();
 
-    isFilterActive = !!sessionStorage.getItem("logFilters"); // 상태 초기화
+    isFilterActive = !!sessionStorage.getItem("logFilters"); 
     updateFilterUI(isFilterActive);
     renderTransactionLogs();
 });
@@ -109,6 +109,7 @@ function applyFilters(logs) {
 }
 
 // filtering functions 
+let isFilterActive = !!sessionStorage.getItem("logFilters");
 function updateFilterUI(isActive) {
     const filterButton = document.getElementById("filter");
     if (isActive) {
@@ -118,15 +119,6 @@ function updateFilterUI(isActive) {
     }
 }
 
-let isFilterActive = !!sessionStorage.getItem("logFilters");
-function onFilterIconClick() {
-    if (isFilterActive) {
-        showConfirmPopup();
-    } else {
-        window.location.href = "../popup-filter-log/popup-filter-log.html";
-    }
-}
-  
 function clearFiltersInTransactionPage() {
     sessionStorage.removeItem("logFilters");
     isFilterActive = false;

@@ -21,11 +21,11 @@ function bindButtons() {
     });
 
     keywordInput.addEventListener("input", () => {
-      clearKeywordError();
+        clearKeywordError();
     });
 
     keywordInput.addEventListener("focus", () => {
-      clearKeywordError();
+        clearKeywordError();
     });
 }
 

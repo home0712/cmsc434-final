@@ -2,16 +2,20 @@
 
 // initially render the goal tab
 document.addEventListener("DOMContentLoaded", () => {
-    bindButtons();
     const selectedType = sessionStorage.getItem("selectedType") || "all";
+    bindButtons();
+    setupToggle();
+    setupFilterPopup();
+
+    isFilterActive = !!sessionStorage.getItem("goalFilters"); 
+    updateFilterUI(isFilterActive);
     renderGoals(selectedType);
-    restoreToggleUI(selectedType);
 });
 
+// buttons
 function bindButtons() {
     const addButton = document.getElementById("header-button");
     const searchButton = document.getElementById("search");
-    const filterButton = document.getElementById("filter");
 
     addButton.addEventListener("click", () => {
         window.location.href = "./popup-add-goal/popup-add-goal.html";
@@ -20,36 +24,11 @@ function bindButtons() {
     searchButton.addEventListener("click", () => {
         window.location.href = "./popup-search-goal/popup-search-goal.html";
     });
-
-    filterButton.addEventListener("click", () => {
-        window.location.href = "./popup-filter-goal/popup-filter-goal.html";
-    });
 }
 
 // save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
 if (!localStorage.getItem("goals")) {
     localStorage.setItem("goals", JSON.stringify(defaultGoals));
-}
-
-// restore the toggle 
-function restoreToggleUI(selectedType) {
-    const options = document.querySelectorAll(".dropdown-option");
-    const selectedText = document.getElementById("dropdown-selected");
-
-    for (const option of options) {
-        option.classList.remove("selected");
-        if (selectedType === option.dataset.id) {
-            option.classList.add("selected");
-        }
-    }
-
-    if (selectedType === "budget") {
-        selectedText.textContent = "Budget";
-    } else if (selectedType === "saving") {
-        selectedText.textContent = "Saving";
-    } else {
-        selectedText.textContent = "All";
-    }
 }
 
 // active a popup to delete
@@ -78,41 +57,35 @@ function activeDeletePopup(event) {
     });
 }
 
-// open/close toggle for all/budget/saving buttons
-function activeToggle() {
-    const toggle = document.getElementById("dropdown-toggle");
-    const icon = document.getElementById("dropdown-icon");
+let currentTypeFilter = "All";
+function setupToggle() {
+    const toggleButton = document.getElementById("dropdown-toggle");
+    const toggleIcon = document.getElementById("dropdown-icon");
     const dropdown = document.getElementById("dropdown-list");
-    toggle.addEventListener("click", () => {
-        dropdown.classList.toggle("active");
-    
-        if (dropdown.classList.contains("active")) { // to close
-            icon.src = "../../assets/Arrow-up.png";
-        } else { // to open
-            icon.src = "../../assets/Arrow-down.png";
-        } 
-    });
-}
-
-// activate a button in toggle and render the matched list
-function selectedToggle() {
-    const options = document.querySelectorAll(".dropdown-option");
     const selectedText = document.getElementById("dropdown-selected");
-    for (const option of options) {
-        option.addEventListener("click", (event) => {
-            for (const option of options) {
-                option.classList.remove("selected");
-            }
-        
-            event.target.classList.add("selected");
-            selectedText.textContent = event.target.textContent;
-        
-            activeToggle();
-        
-            const selectedId = event.target.dataset.id;
-            renderGoals(selectedId);
+
+    toggleButton.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+        toggleIcon.src = dropdown.classList.contains("hidden")
+          ? "../../../assets/Arrow-up.png"
+          : "../../../assets/Arrow-down.png";
     });
-}
+
+    const options = document.querySelectorAll(".dropdown-option");
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            currentTypeFilter = option.dataset.id;
+            selectedText.textContent = currentTypeFilter;
+            dropdown.classList.add("hidden");
+
+            options.forEach(option => {
+                option.classList.remove("selected");
+            });
+            option.classList.add("selected");
+
+            renderGoals(currentTypeFilter.toLowerCase());
+        });
+    });
 }
 
 // rendering the goal lists
@@ -127,6 +100,7 @@ function renderGoals(selectedType = "all") {
     savingDiv.innerHTML = "";
 
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+    localGoals = applyFilters(localGoals);
     localGoals.forEach(goal => {
         const type = goal.type?.toLowerCase();
 
@@ -159,14 +133,9 @@ function renderGoals(selectedType = "all") {
     for (const button of deleteButtons) {
         button.addEventListener("click", activeDeletePopup);
     }
-
-    activeToggle();
-    selectedToggle();
 };
 
-/* 
-    add budget goal div cards
-*/
+// add budget goal div cards
 function addBudgetCard(budgetLists, parentDiv) {
     for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
@@ -225,9 +194,7 @@ function addBudgetCard(budgetLists, parentDiv) {
     }
 };
 
-/* 
-    add saving goal div cards
-*/
+// add saving goal div cards
 function addSavingCard(savingLists, parentDiv) {
     for (const goal of savingLists) {
         const groupDiv = document.createElement("div");
@@ -286,6 +253,104 @@ function addSavingCard(savingLists, parentDiv) {
     }
 };
 
+// apply the filters
+function applyFilters(goals) {
+    const filters = JSON.parse(sessionStorage.getItem("goalFilters"));
+    if (!filters) {
+        return goals; 
+    }
+
+    return goals.filter((goal) => {
+        const {
+            type,
+            status,
+            minGoalAmount,
+            maxGoalAmount,
+            minProgress,
+            maxProgress,
+            startDate,
+            endDate,    
+        } = filters;
+
+        const goalAmount = goal.goalAmount;
+        const progressAmount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
+
+        if (minGoalAmount != null && goalAmount < minGoalAmount) return false;
+        if (maxGoalAmount != null && goalAmount > maxGoalAmount) return false;
+
+        if (minProgress != null && progressAmount < minProgress) return false;
+        if (maxProgress != null && progressAmount > maxProgress) return false;
+
+        if (startDate && goal.startDate < startDate) return false;
+        if (endDate && goal.endDate > endDate) return false;
+
+        let statusMatch = true;
+        if (status === "Completed") {
+            statusMatch = goal.type === "Saving" && goal.savedAmount >= goal.goalAmount;
+        } else if (status === "Exceeded") {
+            statusMatch = goal.type === "Budget" && goal.usedAmount >= goal.goalAmount;
+        } else if (status === "Inprogress") {
+            const isDone = goal.type === "Saving"
+                ? goal.savedAmount >= goal.goalAmount
+                : goal.usedAmount >= goal.goalAmount;
+            statusMatch = !isDone;
+        } else if (status === "ExceededCompleted") {
+            if (goal.type === "Saving") {
+                statusMatch = goal.savedAmount >= goal.goalAmount;
+            } else if (goal.type === "Budget") {
+                statusMatch = goal.usedAmount >= goal.goalAmount;
+            }
+        }
+      
+        if (!statusMatch) return false;
+
+        return true;
+    });
+}
+
+// filtering functions 
+let isFilterActive = !!sessionStorage.getItem("goalFilters");
+function updateFilterUI(isActive) {
+    const filterButton = document.getElementById("filter");
+    if (isActive) {
+        filterButton.classList.add("active"); 
+    } else {
+        filterButton.classList.remove("active"); 
+    }
+}
+
+function clearGoalFilters() {
+    sessionStorage.removeItem("goalFilters");
+    isFilterActive = false;
+    updateFilterUI(false);
+    renderGoals(currentTypeFilter.toLowerCase());
+}
+
+function setupFilterPopup() {
+    const filterButton = document.getElementById("filter");
+    const popup = document.getElementById("clear-filter-popup");
+    const confirmButton = document.getElementById("confirm-clear-filter");
+    const cancelButton = document.getElementById("cancel-clear-filter");
+  
+    filterButton.addEventListener("click", () => {
+      if (isFilterActive) {
+        popup.classList.remove("hidden"); 
+      } else {
+        window.location.href = "./popup-filter-goal/popup-filter-goal.html"; 
+      }
+    });
+  
+    confirmButton.addEventListener("click", () => {
+      clearGoalFilters();
+      popup.classList.add("hidden");
+    });
+
+    cancelButton.addEventListener("click", () => {
+      popup.classList.add("hidden");
+    });
+}
+
+/* util variables & functions */
 // compute the used/saved percentage
 function computePercentage(goal) {
     const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
@@ -319,12 +384,6 @@ function getStatusIcon(type, percent) {
     }
 }
 
-/*
-    compute the total used/saved amount based on the data
-*/
-
-
-/* util variables */
 const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"

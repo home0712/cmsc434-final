@@ -47,8 +47,11 @@ function saveFilter() {
         type: type || null
     };
 
-    sessionStorage.setItem("logFilters", JSON.stringify(filterData));
-    window.location.href = "../transaction/transaction.html";
+    const allNull = Object.values(filterData).every(value => value === null);
+    if (!allNull) {
+        sessionStorage.setItem("logFilters", JSON.stringify(filterData));
+        window.location.href = "../transaction/transaction.html";
+    }
 }
 
 // preset button logic
