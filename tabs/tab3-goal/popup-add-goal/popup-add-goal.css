@@ -16,13 +16,9 @@
     display: flex;
     align-items: baseline;
     gap: 8px;
-    width: 240px;
+    width: 265px;
     margin-right: 10px;
-    font-size: 30px;
-}
-
-#goal-add-form .required-text {
-    font-size: 13px;
+    font-size: 28px;
 }
 
 input[type="text"], input[type="number"], input[type="date"],
@@ -32,7 +28,7 @@ textarea, select {
     border-radius: 10px;
     box-sizing: border-box;
     height: 42px; 
-    width: 290px;
+    width: 265px;
     font-size: 20px;
     color: white;
     padding: 10px 12px;

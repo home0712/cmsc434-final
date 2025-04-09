@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
+    setupStatusOptionsByGoalType();
 });
 
 function bindButtons() {
@@ -138,62 +139,33 @@ function clearKeywordError() {
     message.remove();
 }
 
+// status selector option
+function setupStatusOptionsByGoalType() {
+    const goalTypeSelect = document.getElementById("type-select");
+    const statusSelect = document.getElementById("status-select");
 
-/* util functions */
-// compute the used/saved percentage
-function computePercentage(goal) {
-  const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
-  const goalAmount = goal.goalAmount;
+    goalTypeSelect.addEventListener("change", () => {
+        const type = goalTypeSelect.value;
+        statusSelect.innerHTML = "";
 
-  if (goalAmount > 0 && amount != null) {
-      if (goal.type === "Budget") {
-          return Math.floor((amount / goalAmount) * 100)
-      } else if (goal.type === "Saving") {
-          return Math.min(100, Math.floor((amount / goalAmount) * 100))
-      }
-  }
-
-  if (goalAmount === 0) {
-      return 0;
-  }
+        if (type === "Budget") {
+            statusSelect.innerHTML = `
+                <option value="All">All</option>
+                <option value="Exceeded">Exceeded</option>
+                <option value="Inprogress">In Progress</option>
+            `;
+        } else if (type === "Saving") {
+            statusSelect.innerHTML = `
+                <option value="All">All</option>
+                <option value="Completed">Completed</option>
+                <option value="Inprogress">In Progress</option>
+            `;
+        } else {
+            statusSelect.innerHTML = `
+                <option value="ALL">All</option>
+                <option value="ExceededCompleted">Exceeded/Completed</option>
+                <option value="Inprogress">In Progress</option>
+            `;
+        }
+    });
 }
-
-function getStatusIcon(type, percent) {
-  if (type === "Budget" && percent >= 100) {
-      return '<img src="../../../assets/Warning.png" class="status-icon" alt="Exceeded">';
-  } else if (type === "Saving" && percent >= 100) {
-      return '<img src="../../../assets/Checked.png" class="status-icon" alt="Completed">';
-  } else {
-      return ''
-  }
-}
-
-const monthNames = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
-
-function getDateString(goalDate) {
-  const [year, month, day] = goalDate.split("-");
-  const date = new Date(year, month - 1, day);
-  const dateString = `
-          ${monthNames[date.getMonth()]} 
-          ${date.getDate()}${getOrdinal(date.getDate())} 
-          ${date.getFullYear()} 
-      `;
-
-  return dateString;
-};
-
-function getOrdinal(day) {
-  if (day > 3 && day < 21) {
-      return "th";
-  }
-
-  switch (day % 10) {
-    case 1: return "st";
-    case 2: return "nd";
-    case 3: return "rd";
-    default: return "th";
-  }
-};

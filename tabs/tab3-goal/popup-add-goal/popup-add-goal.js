@@ -1,20 +1,20 @@
-/* ADD AN ACCOUNT */
+/* ADD a GOAL */
 
-/* 
-    click x button to close 
-*/
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", () => {
-    window.location.href = "../goal.html";
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+    setupUserAmountByGoalType();
 });
 
-/* 
-    click save button & add a goal
-*/
-const saveButton = document.getElementById("save-button");
-const goalForm = document.getElementById("goal-add-form");
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    const saveButton = document.getElementById("save-button");
+    closeButton.addEventListener("click", () => {
+        window.location.href = "../goal.html";
+    });
+    saveButton.addEventListener("click", addGoal);
+}
 
-saveButton.addEventListener("click", addGoal);
+const goalForm = document.getElementById("goal-add-form");
 
 function addGoal(event) {
     event.preventDefault();
@@ -28,6 +28,7 @@ function addGoal(event) {
     const goalTitle =  document.getElementById("goal-name-field").value;
     const type = document.getElementById("type-select").value;
     const goalAmount = document.getElementById("goal-amount-field").value;
+    const currentAmount = document.getElementById("user-amount-field").value;
     const startDate = document.getElementById("start-date-field").value;
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
@@ -38,11 +39,17 @@ function addGoal(event) {
         title: goalTitle,
         type: type,
         percent: Math.floor(Math.random() * 100),
-        goalAmount: Number(goalAmount),
+        goalAmount: Number(goalAmount) || 0,
         startDate: startDate,
         endDate: endDate,
         notes: notes
     };
+
+    if (type === "Saving") {
+        newGoal.savedAmount = Number(currentAmount) || 0;;
+    } else if (type === "Budget") {
+        newGoal.usedAmount = Number(currentAmount) || 0;;
+    }
 
     // local storage 로그 리스트에 -> new log 추가하기
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
@@ -52,6 +59,23 @@ function addGoal(event) {
     // 추가하고 나면 다시 accounts 페이지로 돌아가기
     window.location.href = "../goal.html";  
 } 
+
+// 
+function setupUserAmountByGoalType() {
+    const goalTypeSelect = document.getElementById("type-select");
+    const label = document.querySelector("label[for='user-amount-field']");
+
+    goalTypeSelect.addEventListener("change", () => {
+        const type = goalTypeSelect.value;
+        if (type === "Budget") {
+            label.textContent = "USED AMOUNT";
+        } else if (type === "Saving") {
+            label.textContent = "SAVED AMOUNT";
+        } else {
+            label.textContent = "CURRENT AMOUNT";
+        }
+    });
+}
 
 /* util functions */
 function createId(type) {
@@ -65,7 +89,3 @@ function createId(type) {
     id += Date.now().toString();
     return id;
 }
-
-/*
-    set the start date field as today
-*/
