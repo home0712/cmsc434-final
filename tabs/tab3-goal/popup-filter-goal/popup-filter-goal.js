@@ -2,30 +2,12 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
-    setupStatusOptionsByGoalType();
-    toggleOption();
 });
 
 function bindButtons() {
     const closeButton = document.getElementById("header-button");
-    const searchForm = document.getElementById("search-form");
-    const searchButton = document.getElementById("search-button");
-    const keywordInput = document.getElementById("keyword-input");
-
     closeButton.addEventListener("click", () => {
       window.location.href = "../goal.html";
-    });
-
-    searchButton.addEventListener("click", () => {
-        keywordSearch();   
-    });
-
-    keywordInput.addEventListener("input", () => {
-      clearKeywordError();
-    });
-
-    keywordInput.addEventListener("focus", () => {
-      clearKeywordError();
     });
 }
 
@@ -97,85 +79,9 @@ function keywordSearch() {
           statusMatch);
     });
 
-    document.getElementById("optional-search").classList.remove("open");
-    document.getElementById("toggle-button").src = "../../../assets/Arrow-down.png";
+    document.getElementById("optional-filter").style.display = "none";
 
     renderSearchResults(result);
-}
-
-function toggleOption() {
-    const toggleButton = document.getElementById("toggle-button");
-    const optionalBox = document.getElementById("optional-search");
-
-    toggleButton.addEventListener("click", () => {
-        optionalBox.classList.toggle("open");
-
-        const isOpen = optionalBox.classList.contains("open");
-        toggleButton.src = isOpen
-          ? "../../../assets/Arrow-up.png"
-          : "../../../assets/Arrow-down.png";
-    });
-}
-
-function renderSearchResults(goals) {
-    const container = document.getElementById("search-results");
-    container.innerHTML = "";
-
-    // nothing searched 
-    if (goals.length === 0) {
-      container.innerHTML = `<p class="no-result">No results found.</p>`;
-      return;
-    }
-
-    goals.sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
-
-    for (const goal of goals) {
-        const percent = computePercentage(goal);
-
-        const card = document.createElement("div");
-        card.className = goal.type === "Budget" ? "budget-card" : "saving-card";
-        card.dataset.id = goal.id;
-
-        card.innerHTML = `
-            <div class="${goal.type.toLowerCase()}-header">
-                <div class="${goal.type.toLowerCase()}-title">
-                    ${goal.title} 
-                    ${getStatusIcon(goal.type, percent)}
-                </div>
-            </div>
-
-            <div class="${goal.type.toLowerCase()}-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${percent}%;"></div>
-                    <span class="progress-percent">${percent}%</span>
-                </div>
-                <div class="progress-text">
-                    <span class="used-amount">$${goal.type === "Budget" ? goal.usedAmount : goal.savedAmount}</span>
-                    <span class="used-text">${goal.type === "Budget" ? "USED" : "SAVED"}</span>
-                    <span class="out-of">OUT OF</span>
-                    <span class="goal-amount">$${goal.goalAmount}</span>
-                </div>
-            </div>
-
-            <div class="${goal.type.toLowerCase()}-date">
-                <div class="date-row">
-                    <span>START</span>
-                    <span class="start-date">${getDateString(goal.startDate)}</span>
-                </div>
-                <div class="date-row">
-                    <span>END</span>
-                    <span class="end-date">${getDateString(goal.endDate)}</span>
-                </div>
-            </div>
-        `;
-
-        card.addEventListener("click", () => {
-            sessionStorage.setItem("editingGoal", JSON.stringify(goal));
-            window.location.href = "../popup-edit-goal/popup-edit-goal.html";
-        });
-      
-        container.appendChild(card);
-    }
 }
 
 // status selector option
@@ -229,9 +135,7 @@ function clearKeywordError() {
     const message = document.getElementById("keyword-error-content");
 
     keywordInput.classList.remove("input-error");
-    if (message) {
-        message.remove();
-    }
+    message.remove();
 }
 
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtering Goals</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="../goal.css">
+    <link rel="stylesheet" href="./popup-filter-goal.css">
+</head>
+<body>
+    <div class="device">
+      <div class="device-content">
+          <!-- Header -->
+          <span id="top-header">
+              <h1>Filtering Goals</h1>
+              <img src="../../../assets/X.png" id="header-button">
+          </span>
+
+          <div id="goal-filter-container">       
+                <!-- type -->
+                <div id="goal-type">
+                  <label class="field-label">GOAL TYPE</label>
+                  <select id="type-select">
+                    <option value="All">All</option>
+                    <option value="Budget">Budget</option>
+                    <option value="Saving">Saving</option>
+                </select>
+                </div>
+
+                <!-- Status -->
+                <div id="status">
+                  <label class="field-label">STATUS</label>
+                  <select id="status-select">
+                    <option value="ALL">All</option>
+                    <option value="ExceededCompleted">Exceeded/Completed</option>
+                    <option value="Inprogress">In Progress</option>
+                  </select>
+                </div>                
+
+                <!-- Goal Amounts -->
+                <div id="goal-amount">
+                  <label class="field-label">GOAL AMOUNT RANGE</label>
+                  <div id="goal-amount-inputs" class="range-inputs">
+                    <input type="number" id="amount-min" placeholder="Min" min="0" step="0.01"/>
+                    <span class="dash">–</span>
+                    <input type="number" id="amount-max" placeholder="Max" min="0" step="0.01"/>
+                  </div>
+                </div>
+
+                <!-- Used/Saved Amounts -->
+                <div class="user-amount">
+                  <label class="field-label">USED/SAVED AMOUNT RANGE</label>
+                  <div id="user-amount-inputs" class="range-inputs">
+                    <input type="number" id="min-progress" placeholder="Min" />
+                    <span class="dash">–</span>
+                    <input type="number" id="max-progress" placeholder="Max" />
+                  </div>
+                </div>                
+              
+                <!-- Period -->
+                <div id="period">
+                  <label class="field-label">DATE RANGE</label>
+                  <div id="period-inputs" class="range-inputs">
+                    <input type="date" id="date-start"/>
+                    <span class="dash">–</span>
+                    <input type="date" id="date-end"/>
+                  </div>
+                </div>
+          </div>
+
+          <div id="filter-results" class="results-list scroll"></div>
+      </div>
+    </div>
+
+    <!-- import script -->
+    <script src="../goal-data.js"></script>
+    <script src="./popup-filter-goal.js"></script>
+</body>
+</html>

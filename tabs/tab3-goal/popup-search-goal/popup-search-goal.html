@@ -17,73 +17,75 @@
               <img src="../../../assets/X.png" id="header-button">
           </span>
 
-          <form id="search-form">
-              <!-- Keyword Search -->
-              <div class="search-block">
-                <div class="search-bar" id="search-bar">
-                  <input type="text" id="keyword-input" placeholder="Keyword"/>
-                  <div class="search-buttons">
-                    <img src="../../../assets/Arrow-down.png" id="toggle-button">
-                    <img src="../../../assets/Search.png" id="search-button">
-                  </div>
-                </div>
-                <div id="keyword-error"></div>
+          <!-- Keyword Search -->
+          <div class="search-block">
+            <div class="search-bar" id="search-bar">
+              <input type="text" id="keyword-input" placeholder="Keyword"/>
+              <div class="search-buttons">
+                <img src="../../../assets/Arrow-down.png" id="toggle-button">
+                <img src="../../../assets/Search.png" id="search-button">
               </div>
-            
-              <div id="optional-search" class="optional-fields">
-                <!-- type -->
-                <div id="goal-type">
-                  <label class="field-label">GOAL TYPE</label>
-                  <select id="type-select">
-                    <option value="All">All</option>
-                    <option value="Budget">Budget</option>
-                    <option value="Saving">Saving</option>
-                </select>
-                </div>
+            </div>
+            <div id="keyword-error"></div>
+          </div>
 
-                <!-- Status -->
-                <div id="status">
-                  <label class="field-label">STATUS</label>
-                  <select id="status-select">
-                    <option value="ALL">All</option>
-                    <option value="ExceededCompleted">Exceeded/Completed</option>
-                    <option value="Inprogress">In Progress</option>
+          <div class="scroll">
+            <form id="search-form">
+                <div id="optional-search" class="optional-fields">
+                  <!-- type -->
+                  <div id="goal-type">
+                    <label class="field-label">GOAL TYPE</label>
+                    <select id="type-select">
+                      <option value="All">All</option>
+                      <option value="Budget">Budget</option>
+                      <option value="Saving">Saving</option>
                   </select>
-                </div>                
+                  </div>
 
-                <!-- Goal Amounts -->
-                <div id="goal-amount">
-                  <label class="field-label">GOAL AMOUNT RANGE</label>
-                  <div id="goal-amount-inputs" class="range-inputs">
-                    <input type="number" id="amount-min" placeholder="Min" min="0" step="0.01"/>
-                    <span class="dash">–</span>
-                    <input type="number" id="amount-max" placeholder="Max" min="0" step="0.01"/>
+                  <!-- Status -->
+                  <div id="status">
+                    <label class="field-label">STATUS</label>
+                    <select id="status-select">
+                      <option value="ALL">All</option>
+                      <option value="ExceededCompleted">Exceeded/Completed</option>
+                      <option value="Inprogress">In Progress</option>
+                    </select>
+                  </div>                
+
+                  <!-- Goal Amounts -->
+                  <div id="goal-amount">
+                    <label class="field-label">GOAL AMOUNT RANGE</label>
+                    <div id="goal-amount-inputs" class="range-inputs">
+                      <input type="number" id="amount-min" placeholder="Min" min="0" step="0.01"/>
+                      <span class="dash">–</span>
+                      <input type="number" id="amount-max" placeholder="Max" min="0" step="0.01"/>
+                    </div>
+                  </div>
+
+                  <!-- Used/Saved Amounts -->
+                  <div class="user-amount">
+                    <label class="field-label">USED/SAVED AMOUNT RANGE</label>
+                    <div id="user-amount-inputs" class="range-inputs">
+                      <input type="number" id="min-progress" placeholder="Min" />
+                      <span class="dash">–</span>
+                      <input type="number" id="max-progress" placeholder="Max" />
+                    </div>
+                  </div>                
+                
+                  <!-- Period -->
+                  <div id="period">
+                    <label class="field-label">DATE RANGE</label>
+                    <div id="period-inputs" class="range-inputs">
+                      <input type="date" id="date-start"/>
+                      <span class="dash">–</span>
+                      <input type="date" id="date-end"/>
+                    </div>
                   </div>
                 </div>
+            </form>
 
-                <!-- Used/Saved Amounts -->
-                <div class="user-amount">
-                  <label class="field-label">USED/SAVED AMOUNT RANGE</label>
-                  <div id="user-amount-inputs" class="range-inputs">
-                    <input type="number" id="min-progress" placeholder="Min" />
-                    <span class="dash">–</span>
-                    <input type="number" id="max-progress" placeholder="Max" />
-                  </div>
-                </div>                
-              
-                <!-- Period -->
-                <div id="period">
-                  <label class="field-label">DATE RANGE</label>
-                  <div id="period-inputs" class="range-inputs">
-                    <input type="date" id="date-start"/>
-                    <span class="dash">–</span>
-                    <input type="date" id="date-end"/>
-                  </div>
-                </div>
-              </div>
-          </form>
-
-          <div id="search-results" class="results-list scroll"></div>
+            <div id="search-results" class="results-list"></div>
+          </div>
       </div>
     </div>
 
