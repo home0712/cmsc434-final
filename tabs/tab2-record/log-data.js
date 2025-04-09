@@ -7,7 +7,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-04-05",
       method: "credit",
-      category: ["beverage"],
+      category: ["Beverage"],
       notes: "morning coffee & sandwich"
     },
     {
@@ -17,7 +17,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-04-05",
       method: "cash",
-      category: ["tech"],
+      category: ["Utilities"],
       notes: ""
     },
     {
@@ -39,7 +39,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-21",
       method: "credit",
-      category: ["beverage"],
+      category: ["Beverage"],
       notes: "morning coffee"
     },
     {
@@ -49,7 +49,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-21",
       method: "cash",
-      category: ["education"],
+      category: ["Education"],
       notes: "design book"
     },
     {
@@ -71,7 +71,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-10",
       method: "credit",
-      category: ["entertainment"],
+      category: ["Entertainment"],
       notes: ""
     },
     {
@@ -81,7 +81,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-10",
       method: "cash",
-      category: ["clothing"],
+      category: ["Clothing"],
       notes: "new spring jacket"
     },
     {
@@ -91,7 +91,7 @@ const transactions = [
       type: "INCOME",
       date: "2025-03-10",
       method: "venmo",
-      category: ["transfer"],
+      category: ["Transfer"],
       notes: "from friend"
     },
   
@@ -103,7 +103,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-05",
       method: "credit",
-      category: ["entertainment"],
+      category: ["Entertainment"],
       notes: ""
     },
     {
@@ -113,7 +113,7 @@ const transactions = [
       type: "EXPENSE",
       date: "2025-03-05",
       method: "cash",
-      category: ["clothing"],
+      category: ["Clothing"],
       notes: ""
     },
     {
@@ -123,7 +123,7 @@ const transactions = [
       type: "INCOME",
       date: "2025-03-05",
       method: "venmo",
-      category: ["transfer"],
+      category: ["Transfer"],
       notes: "refund"
     },
 
@@ -135,7 +135,7 @@ const transactions = [
         type: "EXPENSE",
         date: "2025-02-14",
         method: "credit",
-        category: ["entertainment"],
+        category: ["Entertainment"],
         notes: "valentine"
     },
     {
@@ -145,7 +145,7 @@ const transactions = [
         type: "EXPENSE",
         date: "2025-02-14",
         method: "cash",
-        category: ["food"],
+        category: ["Food"],
         notes: ""
     },
     {
@@ -167,7 +167,7 @@ const transactions = [
         type: "EXPENSE",
         date: "2025-01-22",
         method: "cash",
-        category: ["transportation"],
+        category: ["Transportation"],
         notes: ""
     },
     {
@@ -177,7 +177,7 @@ const transactions = [
         type: "EXPENSE",
         date: "2025-01-19",
         method: "credit",
-        category: ["clothing"],
+        category: ["Clothing"],
         notes: "gift for brother"
     },
     {
