@@ -3,17 +3,53 @@
 // initially render the account tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "account");
+    bindButtons();
+    setupToggle();
+    renderAccounts();
+});
+
+function bindButtons() {
     const addButton = document.getElementById("header-button");
+
     addButton.addEventListener("click", () => {
         window.location.href = "../popup-add-account/popup-add-account.html";
     });
-
-    renderAccounts();
-});
+}
 
 // save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
 if (!localStorage.getItem("accounts")) {
     localStorage.setItem("accounts", JSON.stringify(defaultAccounts));
+}
+
+// toggle
+function setupToggle() {
+    const toggleButton = document.getElementById("dropdown-toggle");
+    const toggleIcon = document.getElementById("toggle-icon");
+    const dropdown = document.getElementById("dropdown-list");
+    const selectedText = document.getElementById("dropdown-selected");
+
+    toggleButton.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+        toggleIcon.src = dropdown.classList.contains("hidden")
+          ? "../../../assets/Arrow-up.png"
+          : "../../../assets/Arrow-down.png";
+    });
+
+    const options = document.querySelectorAll(".dropdown-option");
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            currentTypeFilter = option.dataset.id;
+            selectedText.textContent = currentTypeFilter;
+            dropdown.classList.add("hidden");
+
+            options.forEach(option => {
+                option.classList.remove("selected");
+            });
+            option.classList.add("selected");
+
+            renderAccounts();
+        });
+    });
 }
 
 // render accounts 
@@ -26,7 +62,6 @@ function renderAccounts() {
     let localAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
     localAccounts.forEach(account => {
         const type = account.type?.toLowerCase();
-
         if (type === "checking") {
             checkingAccounts.push(account);
         } else if (type === "saving") {
@@ -43,8 +78,6 @@ function renderAccounts() {
     checkingDiv.innerHTML = "<h2>Checkings</h2>";
     savingDiv.innerHTML = "<h2>Savings</h2>";
     investmentDiv.innerHTML = "<h2>Investments</h2>";
-
-    // (editing) 정렬은 어떤 순서로? sorting?
 
     // checking
     addAccountCard(checkingAccounts, checkingDiv);

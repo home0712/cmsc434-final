@@ -1,28 +1,31 @@
 /* SIDE SCREEN - EDIT A LOG */
 
-/* 
-    click x button to go back to detail page
-*/
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", () => {
-    window.location.href = "../popup-detail-log/popup-detail-log.html";
+// initially render
+document.addEventListener("DOMContentLoaded", () => {
+    sessionStorage.setItem("returnTo", "transaction");
+
+    bindButtons();
+    renderAccountInfo();
 });
 
-/* 
-    income/expense type button selector
-*/
-const typeButtons = document.querySelectorAll(".type-button");
-for (const button of typeButtons) {
-    button.addEventListener("click", clickTypeButton);
-}
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    const typeButtons = document.querySelectorAll(".type-button");
 
-function clickTypeButton(event) {
+    closeButton.addEventListener("click", () => {
+        window.location.href = "../popup-detail-log/popup-detail-log.html";
+    });
+
     for (const button of typeButtons) {
-        button.classList.remove("selected");
+        button.addEventListener("click", (event) => {
+            for (const button of typeButtons) {
+                button.classList.remove("selected");
+            }
+        
+            event.target.classList.add("selected");
+            document.getElementById("type-value").value = event.target.textContent;
+        });
     }
-
-    event.target.classList.add("selected");
-    document.getElementById("type-value").value = event.target.textContent;
 }
 
 /*
@@ -69,7 +72,7 @@ function editLog(event) {
 
     // 기존 데이터와 업데이트 값 비교해서 수정
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-    localLogs = localAccounts.map((lg) => {
+    localLogs = localLogs.map((lg) => {
         if (lg.id === updated.id) {
             return updated;
         } else {
@@ -83,14 +86,10 @@ function editLog(event) {
     window.location.href = "../popup-detail-log/popup-detail-log.html"; 
 }
 
-/*
-    render existing log info to the fields
-*/
+// render existing log info to the fields
 function renderAccountInfo() {
-    // 수정할 데이터 가져오기 (sessionStorage)
     const log = JSON.parse(sessionStorage.getItem("editingLog")) || null;
 
-    // 필드에 미리 채우기
     if (log) {
         document.getElementById("amount-field").value = `${Math.abs(log.amount).toLocaleString()}`;
         document.getElementById("title-field").value = log.title;
@@ -108,4 +107,3 @@ function renderAccountInfo() {
     }
 }
 
-renderAccountInfo();
