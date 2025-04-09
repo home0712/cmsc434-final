@@ -6,19 +6,16 @@
     margin-top: 40px;
 }
 
-#search-form {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    gap: 20px;
-}
-
 #optional-search {
     display: none;
 }
 
 #optional-search.open {
     display: block;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 10px;
 }
 
 /* keyword input window */
