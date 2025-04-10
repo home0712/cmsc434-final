@@ -1,9 +1,16 @@
 /* MAIN - TRANSACTION TAB */
 
+// global variables
+// 전역변수
+let currentTypeFilter = "All";
+let currentDate = new Date(); 
+let isFilterActive = !!sessionStorage.getItem("logFilters");
+
 // initially render the transaction tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "transaction");
-
+    
+    renderTransactionLogs();
     bindButtons();
     setupFilterPopup();
     setupToggle();
@@ -12,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     isFilterActive = !!sessionStorage.getItem("logFilters"); 
     updateFilterUI(isFilterActive);
-    renderTransactionLogs();
 });
 
 // collection of buttons
@@ -38,9 +44,6 @@ function bindButtons() {
 if (!localStorage.getItem("transactions")) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
 }
-
-let currentTypeFilter = "All";
-let currentDate = new Date(); 
 
 // all/income/expense toggle: click, type filtering, rendering
 // all/income/expense 토글
@@ -113,7 +116,6 @@ function applyFilters(logs) {
 }
 
 // filtering functions 
-let isFilterActive = !!sessionStorage.getItem("logFilters");
 function updateFilterUI(isActive) {
     const filterButton = document.getElementById("filter");
     if (isActive) {
@@ -155,21 +157,34 @@ function setupFilterPopup() {
     });
 }
 
-// render transaction lists based on the month selected
+// render transaction logs based on the month selected
+// 선택된 월을 기준으로 월별 렌더링
 function renderTransactionLogs() {
     const container = document.getElementById("logs-container");
     container.innerHTML = "";
 
+    if (sessionStorage.getItem("prevMonthView")) {
+        const [year, month, day] = sessionStorage.getItem("prevMonthView").split("-");
+        currentDate = new Date(year, month - 1, day);
+        sessionStorage.removeItem("prevMonthView");
+    }
+
+    console.log(currentDate);
+
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
 
-    // local data 에서 selected 월의 데이터만 선택
+    // select current month data from localLogs
+    // localLogs 에서 현재 선택된 월의 데이터만 가져오기
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     let filteredLocal = filterLogs(localLogs, year, month);
-    filteredLocal = applyFilters(filteredLocal);
+    if (sessionStorage.getItem("logFilters")) {
+        filteredLocal = applyFilters(filteredLocal);
+    }
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // 
+    // unset advanced filter (no filterLog) -> apply the simple filter (toggle buttons) only
+    // 심화 filter 설정되지 않은 경우 (filterLog 없음) -> 심플 필터 (토글 버튼)만 처리
     if (!isFilterActive) {
         if (currentTypeFilter === "Income") {
             filteredLocal = filteredLocal.filter((log) => log.type === "INCOME");

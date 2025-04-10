@@ -32,7 +32,7 @@ function bindButtons() {
     editButton.addEventListener("click", () => {
         const logId = sessionStorage.getItem("selectedTransactionId");
         let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-        
+
         // 해당 id를 가진 데이터 찾아서 보내기
         const editingLog = localLogs.find((log) => (log.id).toString() === logId);
         sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
@@ -57,7 +57,13 @@ function activeDeletePopup() {
     confirmButton.addEventListener("click", () => {
         const logId = sessionStorage.getItem("selectedTransactionId");
         let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+        selectedLog = localLogs.find(log => (log.id).toString() == logId);
         localLogs = localLogs.filter(log => (log.id).toString() !== logId);
+
+        // 세션에서 selectedTransactionId 삭제하기 -> 삭제하고도 이전 날짜로 돌아가려면 없애면 안될 듯...
+        // 디테일로 들어오기 전에 보던 month view
+        sessionStorage.setItem("prevMonthView", selectedLog.date);
+        
         localStorage.setItem("transactions", JSON.stringify(localLogs));
 
         const returnPage = sessionStorage.getItem("returnTo");
@@ -93,6 +99,9 @@ function renderLogDetail() {
         document.getElementById("detail-category").textContent = log.category.main;
         document.getElementById("detail-sub-category").textContent = log.category.sub;
         document.getElementById("detail-note").textContent = log.notes;
+
+        // 해당 데이터가 있는 month 로 돌아가기 위한 값 저장
+        sessionStorage.setItem("prevMonthView", log.date);
     }
 }
 
