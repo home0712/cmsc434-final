@@ -75,6 +75,7 @@ function setupToggle() {
             });
             option.classList.add("selected");
 
+            console.log(currentTypeFilter);
             // conditional rendering
             // 조건부 리스트 렌더링
             renderGoals(currentTypeFilter);
@@ -112,10 +113,10 @@ function renderGoals(selectedType = "All") {
         addBudgetCard(budgetGoals, budgetDiv);
         addSavingCard(savingGoals, savingDiv);
         sessionStorage.setItem("selectedType", "All");
-    } else if (selectedType === "budget") {
+    } else if (selectedType === "Budget") {
         addBudgetCard(budgetGoals, budgetDiv);
         sessionStorage.setItem("selectedType", "Budget");
-    } else if (selectedType === "saving") {
+    } else if (selectedType === "Saving") {
         addSavingCard(savingGoals, savingDiv);
         sessionStorage.setItem("selectedType", "Saving");
     }
@@ -137,7 +138,6 @@ function renderGoals(selectedType = "All") {
 
 // add budget goal div cards
 function addBudgetCard(budgetLists, parentDiv) {
-    console.log(budgetLists);
     for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
         groupDiv.className = "budget-card";
