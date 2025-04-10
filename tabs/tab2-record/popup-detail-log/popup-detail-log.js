@@ -57,7 +57,7 @@ function activeDeletePopup() {
     confirmButton.addEventListener("click", () => {
         const logId = sessionStorage.getItem("selectedTransactionId");
         let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-        localLogs = localLogs.filter(log => log.id !== logId);
+        localLogs = localLogs.filter(log => (log.id).toString() !== logId);
         localStorage.setItem("transactions", JSON.stringify(localLogs));
 
         const returnPage = sessionStorage.getItem("returnTo");
