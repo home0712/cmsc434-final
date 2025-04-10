@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searching Accounts</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="../accounts/accounts.css">
+    <link rel="stylesheet" href="./popup-search-account.css">
+</head>
+<body>
+    <div class="device">
+      <div class="device-content">
+          <!-- Header -->
+          <span id="top-header">
+              <h1>Searching Accounts</h1>
+              <img src="../../../assets/X.png" id="header-button">
+          </span>
+
+          <!-- Keyword Search -->
+          <div class="search-block">
+            <div class="search-bar" id="search-bar">
+              <input type="text" id="keyword-input" placeholder="Keyword"/>
+              <div class="search-buttons">
+                <img src="../../../assets/Arrow-down.png" id="toggle-button">
+                <img src="../../../assets/Search.png" id="search-button">
+              </div>
+            </div>
+            <div id="keyword-error"></div>
+          </div>
+
+          <div class="scroll">
+            <form id="search-form">
+                <div id="optional-search" class="optional-fields">
+                  <!-- type -->
+                  <div id="account-type">
+                    <label class="field-label">ACCOUNT TYPE</label>
+                    <select id="type-select">
+                      <option value="All">All</option>
+                      <option value="Checking">Checking</option>
+                      <option value="Saving">Saving</option>
+                      <option value="Saving">Investment</option>
+                  </select>
+                  </div>  
+
+                  <!-- Balance -->
+                  <div class="balance">
+                    <label class="field-label">BALANCE RANGE</label>
+                    <div id="balance-inputs" class="range-inputs">
+                      <input type="number" id="min-balance" placeholder="Min" />
+                      <span class="dash">–</span>
+                      <input type="number" id="max-balance" placeholder="Max" />
+                    </div>
+                  </div>                
+                </div>
+            </form>
+
+            <div id="search-results" class="results-list">
+              <div class="scroll" id="account-container"></div>
+            </div>
+          </div>
+      </div>
+
+      <img src="../../../assets/keyboard.webp" id="keyboard">
+    </div>
+
+    <!-- import script -->
+    <script src="../account-data.js"></script>
+    <script src="../tab2-common.js"></script>
+    <script src="./popup-search-account.js"></script>
+</body>
+</html>

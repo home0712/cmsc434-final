@@ -12,10 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function bindButtons() {
     const addButton = document.getElementById("header-button");
+    const searchButton = document.getElementById("search");
 
     addButton.addEventListener("click", () => {
         window.location.href = "../popup-add-account/popup-add-account.html";
     });
+
+    searchButton.addEventListener("click", () => {
+        window.location.href = "../popup-search-account/popup-search-account.html";
+    })
 }
 
 // save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
@@ -92,9 +97,17 @@ function renderAccounts() {
     savingDiv.innerHTML = "";
     investmentDiv.innerHTML = "";
 
-    addAccountCard(checkingAccounts, checkingDiv);
-    addAccountCard(savingAccounts, savingDiv);
-    addAccountCard(investAccounts, investmentDiv);
+    if (currentTypeFilter === "All" &&
+        checkingAccounts.length === 0 &&
+        savingAccounts.length === 0 &&
+        investAccounts.length === 0) {
+        const container = document.getElementById("account-container");
+        container.innerHTML = `<div class="no-data">No Data Existed</div>`;
+    }
+
+    addAccountCard(checkingAccounts, checkingDiv, "Checking");
+    addAccountCard(savingAccounts, savingDiv, "Saving");
+    addAccountCard(investAccounts, investmentDiv, "Investment");
 
     const editButtons = document.querySelectorAll(".edit-button");
     for (const button of editButtons) {
@@ -120,13 +133,15 @@ function renderAccounts() {
 }
 
 // add account cards (html) to the container
-function addAccountCard(accountLists, parentDiv) {
-    // accounts 없을 때
-    if (accountLists.length == 0) {
-        const groupDiv = document.createElement("div");
-        groupDiv.className = "no-data";
-        groupDiv.textContent = "No Data Existed";
-        parentDiv.appendChild(groupDiv);
+function addAccountCard(accountLists, parentDiv, type) {
+    if (accountLists.length === 0) {
+        if (currentTypeFilter !== "All" && currentTypeFilter === type) {
+            const groupDiv = document.createElement("div");
+            groupDiv.className = "no-data";
+            groupDiv.textContent = "No Data Found";
+            parentDiv.appendChild(groupDiv);
+        }
+        return;
     }
 
     for (const acc of accountLists) {

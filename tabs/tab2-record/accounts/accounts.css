@@ -168,7 +168,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between; 
-    margin: 30px 0;
+    margin: 10px 0;
 }
 
 .action-bar-icon img {
@@ -191,7 +191,7 @@ body {
     flex-direction: row; 
     gap: 10px;
     width: 100px;
-    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .dropdown-list.hidden {
