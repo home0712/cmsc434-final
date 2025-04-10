@@ -76,8 +76,8 @@ function setupToggle() {
     toggleButton.addEventListener("click", () => {
         dropdown.classList.toggle("hidden");
         toggleIcon.src = dropdown.classList.contains("hidden")
-          ? "../../../assets/Arrow-up.png"
-          : "../../../assets/Arrow-down.png";
+          ? "../../assets/Arrow-up.png"
+          : "../../assets/Arrow-down.png";
     });
 
     const options = document.querySelectorAll(".dropdown-option");
