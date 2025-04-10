@@ -24,6 +24,7 @@ function addGoal(event) {
         return;
     }
 
+    // user inputs (want to add)
     // 사용자가 입력한 데이터 가져오기
     const goalTitle =  document.getElementById("goal-name-field").value;
     const type = document.getElementById("type-select").value;
@@ -42,7 +43,6 @@ function addGoal(event) {
         id: createId(type), 
         title: goalTitle,
         type: type,
-        percent: percent,
         goalAmount: Number(goalAmount) || 0,
         startDate: startDate,
         endDate: endDate,
@@ -55,12 +55,14 @@ function addGoal(event) {
         newGoal.usedAmount = Number(currentAmount) || 0;;
     }
 
-    // local storage 로그 리스트에 -> new log 추가하기
+    // add the new to local storage
+    // 새 로그 -> local storage 에 추가
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
     localGoals.push(newGoal);
     localStorage.setItem("goals", JSON.stringify(localGoals));
 
-    // 추가하고 나면 다시 accounts 페이지로 돌아가기
+    // back to the account page
+    // 추가 완료 후 accounts 페이지로 돌아가기
     window.location.href = "../goal.html";  
 } 
 

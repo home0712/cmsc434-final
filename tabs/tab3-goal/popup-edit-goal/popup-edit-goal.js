@@ -30,7 +30,7 @@ function editGoal(event) {
 
     // get "editingGoal" from the goal tab
     // 클릭한 editingGoal 데이터 세션에서 가져옴
-    const goal = JSON.parse(sessionStorage.getItem("editingGoal")) || null;
+    const selectedGoal = JSON.parse(sessionStorage.getItem("editingGoal")) || null;
 
     // user inputs (want to edit)
     // 사용자가 입력한 데이터 가져오기
@@ -42,15 +42,11 @@ function editGoal(event) {
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
-    // compute percentage
-    // 퍼센트 계산
-    const percent = goalAmount === 0 ? 0 : Math.floor(currentAmount / goalAmount * 100);
-
     console.log(percent);
     // create JSON Object with user inputs
     // 사용자 입력 데이터로 json object 만들기
     const updatedGoal = {
-        id: goal.id, 
+        id: selectedGoal.id, 
         title: goalTitle,
         type: type,
         goalAmount: Number(goalAmount) || 0,
@@ -75,9 +71,11 @@ function editGoal(event) {
         }
     });
 
-    // localStorage 업데이트
+    // update the updated to local storage
+    // 새로운 값 추가하여 localStorage 업데이트
     localStorage.setItem("goals", JSON.stringify(localGoals));
 
+    // back to the goal page
     // 수정 완료 후 goal 페이지로 돌아가기
     window.location.href = "../goal.html"; 
 }
