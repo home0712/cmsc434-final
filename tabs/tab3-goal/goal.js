@@ -17,7 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// buttons
+// save the default accounts data to local storage 
+// (처음 페이지 1회 방문했을 때만) goals -> local 
+if (!localStorage.getItem("goals")) {
+    localStorage.setItem("goals", JSON.stringify(defaultGoals));
+}
+
+// collection of buttons
+// 버튼 모음
 function bindButtons() {
     const addButton = document.getElementById("header-button");
     const searchButton = document.getElementById("search");
@@ -31,10 +38,7 @@ function bindButtons() {
     });
 }
 
-// save the default accounts data to local storage (처음 페이지 1회 방문했을 때만)
-if (!localStorage.getItem("goals")) {
-    localStorage.setItem("goals", JSON.stringify(defaultGoals));
-}
+
 
 // active a popup to delete
 function activeDeletePopup(event) {
@@ -105,7 +109,11 @@ function renderGoals(selectedType = "all") {
     savingDiv.innerHTML = "";
 
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-    localGoals = applyFilters(localGoals);
+
+    if (sessionStorage.getItem("goalFilters")) {
+        localGoals = applyFilters(localGoals);
+    }
+    
     localGoals.forEach(goal => {
         const type = goal.type?.toLowerCase();
 
@@ -142,6 +150,7 @@ function renderGoals(selectedType = "all") {
 
 // add budget goal div cards
 function addBudgetCard(budgetLists, parentDiv) {
+    console.log(budgetLists);
     for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
         groupDiv.className = "budget-card";

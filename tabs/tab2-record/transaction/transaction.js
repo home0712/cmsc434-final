@@ -15,29 +15,26 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTransactionLogs();
 });
 
+// collection of buttons
+// 버튼 모음
 function bindButtons() {
     const settingButton = document.getElementById("header-button");
     const addButton = document.getElementById("add");
     const searchButton = document.getElementById("search");
 
-    settingButton.addEventListener("click", navigateToPage);
-    addButton.addEventListener("click", navigateToPage);
-    searchButton.addEventListener("click", navigateToPage);
-}
-
-function navigateToPage(event) {
-    const clickedButtonId = event.target.id;
-
-    if (clickedButtonId === "add") {
-        window.location.href = "../popup-add-log/popup-add-log.html";
-    } else if (clickedButtonId === "search") {
-        window.location.href = "../popup-search-log/popup-search-log.html";
-    } else if (clickedButtonId === "header-button") {
+    settingButton.addEventListener("click", () => {
         window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
-    }
+    });
+    addButton.addEventListener("click", () => {
+        window.location.href = "../popup-add-log/popup-add-log.html";
+    });
+    searchButton.addEventListener("click", () => {
+        window.location.href = "../popup-search-log/popup-search-log.html";
+    });
 }
 
-// save the default transaction data to local storage (처음 페이지 1회 방문했을 때만)
+// save the default transaction data to local storage 
+// (처음 페이지 1회 방문했을 때만) 디폴트 로그 데이터 -> 로컬에 저장
 if (!localStorage.getItem("transactions")) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
 }
@@ -45,6 +42,8 @@ if (!localStorage.getItem("transactions")) {
 let currentTypeFilter = "All";
 let currentDate = new Date(); 
 
+// all/income/expense toggle: click, type filtering, rendering
+// all/income/expense 토글
 function setupToggle() {
     const toggleButton = document.getElementById("type-toggle");
     const toggleIcon = document.getElementById("toggle-icon");

@@ -1,10 +1,18 @@
-// initially render the detail log page
+/* SUB - DETAIL LOG */
+
+// initially render page
+// 초기화
 document.addEventListener("DOMContentLoaded", () => {
+    renderLogDetail();
     bindButtons();
 });
 
+// collection of buttons
+// 버튼 모음
 function bindButtons() {
     const closeButton = document.getElementById("header-button");
+    const editButton = document.getElementById("edit-button");
+
     closeButton.addEventListener("click", () => {
         const returnPage = sessionStorage.getItem("returnTo");
         const returnPopup = sessionStorage.getItem("returnToPopup") || null;
@@ -18,22 +26,27 @@ function bindButtons() {
             window.location.href = "../calendar/calendar.html";
         } 
     });
+
+    // edit button
+    // 수정 버튼    
+    editButton.addEventListener("click", () => {
+        const logId = sessionStorage.getItem("selectedTransactionId");
+        let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+        
+        // 해당 id를 가진 데이터 찾아서 보내기
+        const editingLog = localLogs.find((log) => (log.id).toString() === logId);
+        sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
+        window.location.href = "../popup-edit-log/popup-edit-log.html";
+    });
+
+    // delete button
+    // 삭제 버튼
+    const deleteButton = document.getElementById("delete-button-main");
+    deleteButton.addEventListener("click", activeDeletePopup);
 }
 
-// edit button
-const editButton = document.getElementById("edit-button");
-editButton.addEventListener("click", () => {
-    let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-    
-    // 해당 id를 가진 데이터 찾아서 보내기
-    const editingLog = localLogs.find((log) => (log.id).toString() === logId);
-    sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
-    window.location.href = "../popup-edit-log/popup-edit-log.html";
-});
-
-// delete button
-const deleteButton = document.getElementById("delete-button-main");
-deleteButton.addEventListener("click", activeDeletePopup);
+// delete popup
+// 삭제 팝업
 function activeDeletePopup() {
     const popup = document.querySelector(".delete-popup");
     popup.classList.remove("hidden");
@@ -65,17 +78,21 @@ function activeDeletePopup() {
 }
 
 // render details
-const logId = sessionStorage.getItem("selectedTransactionId");
-const localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
-const log = localLogs.find(log => (log.id).toString() === logId);
+function renderLogDetail() {
+    const logId = sessionStorage.getItem("selectedTransactionId");
+    const localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+    const log = localLogs.find(log => (log.id).toString() === logId);
 
-if (log) {
-    document.getElementById("detail-amount").textContent = `$ ${Math.abs(log.amount).toLocaleString()}`;
-    document.getElementById("detail-title").textContent = log.title;
-    document.getElementById("detail-type").textContent = log.type === "EXPENSE" ? "Expense" : "Income";
-    document.getElementById("detail-date").textContent = log.date;
-    document.getElementById("detail-method").textContent = log.method;
-    document.getElementById("detail-category").textContent = log.category.main;
-    document.getElementById("detail-sub-category").textContent = log.category.sub;
-    document.getElementById("detail-note").textContent = log.notes;
+    // render values to the screen
+    if (log) {
+        document.getElementById("detail-amount").textContent = `$ ${Math.abs(log.amount).toLocaleString()}`;
+        document.getElementById("detail-title").textContent = log.title;
+        document.getElementById("detail-type").textContent = log.type === "EXPENSE" ? "Expense" : "Income";
+        document.getElementById("detail-date").textContent = log.date;
+        document.getElementById("detail-method").textContent = log.method;
+        document.getElementById("detail-category").textContent = log.category.main;
+        document.getElementById("detail-sub-category").textContent = log.category.sub;
+        document.getElementById("detail-note").textContent = log.notes;
+    }
 }
+
