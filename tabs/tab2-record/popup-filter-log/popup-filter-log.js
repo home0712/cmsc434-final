@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleSubCategoryField();
 });
 
+// collection of buttons
+// 버튼 모음
 function bindButtons() {
     const closeButton = document.getElementById("header-button");
     closeButton.addEventListener("click", returnToPage);

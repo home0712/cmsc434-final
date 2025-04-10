@@ -77,6 +77,7 @@ function setupToggle() {
 // apply the filters
 function applyFilters(logs) {
     const filters = JSON.parse(sessionStorage.getItem("logFilters"));
+
     if (!filters) {
         return logs; 
     }
@@ -96,11 +97,13 @@ function applyFilters(logs) {
         const amount = Math.abs(log.amount);
         const date = log.date;
 
+        const logType = log.type === "EXPENSE" ? "Expense" : "Income";
+
         if (minAmount != null && amount < minAmount) return false;
         if (maxAmount != null && amount > maxAmount) return false;
         if (startDate && date < startDate) return false;
         if (endDate && date > endDate) return false;
-        if (types && types.length > 0 && !types.includes(log.type)) return false;
+        if (types && types.length > 0 && !types.includes(logType)) return false;
         if (methods && methods.length > 0 && !methods.includes(log.method)) return false;
         if (categories && categories.length > 0 && !categories.includes(log.category.main)) return false;
         if (subCategories && subCategories.length > 0 && !subCategories.includes(log.category.sub)) return false;
@@ -135,20 +138,20 @@ function setupFilterPopup() {
     const cancelButton = document.getElementById("cancel-clear-filter");
   
     filterButton.addEventListener("click", () => {
-      if (isFilterActive) {
-        popup.classList.remove("hidden"); 
-      } else {
-        window.location.href = "../popup-filter-log/popup-filter-log.html"; 
-      }
+        if (isFilterActive) {
+            popup.classList.remove("hidden"); 
+        } else {
+            window.location.href = "../popup-filter-log/popup-filter-log.html"; 
+        }
     });
   
     confirmButton.addEventListener("click", () => {
-      clearFiltersInTransactionPage();
-      popup.classList.add("hidden");
+        clearFiltersInTransactionPage();
+        popup.classList.add("hidden");
     });
 
     cancelButton.addEventListener("click", () => {
-      popup.classList.add("hidden");
+        apopup.classList.add("hidden");
     });
 }
 
@@ -164,6 +167,7 @@ function renderTransactionLogs() {
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     let filteredLocal = filterLogs(localLogs, year, month);
     filteredLocal = applyFilters(filteredLocal);
+    console.log(filteredLocal);
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // 

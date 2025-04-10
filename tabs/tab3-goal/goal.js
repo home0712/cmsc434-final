@@ -75,7 +75,6 @@ function setupToggle() {
             });
             option.classList.add("selected");
 
-            console.log(currentTypeFilter);
             // conditional rendering
             // 조건부 리스트 렌더링
             renderGoals(currentTypeFilter);
@@ -136,7 +135,8 @@ function renderGoals(selectedType = "All") {
     }
 };
 
-// add budget goal div cards
+// add each budget goal card
+// budget goal 카드 추가 (html element)
 function addBudgetCard(budgetLists, parentDiv) {
     for (const goal of budgetLists) {
         const groupDiv = document.createElement("div");
@@ -195,7 +195,8 @@ function addBudgetCard(budgetLists, parentDiv) {
     }
 };
 
-// add saving goal div cards
+// add each saving goal card
+// budget goal 카드 추가 (html element)
 function addSavingCard(savingLists, parentDiv) {
     for (const goal of savingLists) {
         const groupDiv = document.createElement("div");
@@ -441,15 +442,16 @@ function syncToggleToSelectedType() {
 
 /* util variables & functions */
 // compute the used/saved percentage
+// 퍼센트 계산
 function computePercentage(goal) {
-    const amount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
+    const currentAmount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
     const goalAmount = goal.goalAmount;
 
-    if (goalAmount > 0 && amount != null) {
+    if (goalAmount > 0 && currentAmount != null) {
         if (goal.type === "Budget") {
-            return Math.floor((amount / goalAmount) * 100)
+            return Math.floor((currentAmount / goalAmount) * 100)
         } else if (goal.type === "Saving") {
-            return Math.min(100, Math.floor((amount / goalAmount) * 100))
+            return Math.min(100, Math.floor((currentAmount / goalAmount) * 100))
         }
     }
 
