@@ -1,8 +1,13 @@
 /* MAIN - GOAL TAB */
 
+// global variables
+// 전역 변수
+let currentTypeFilter = "All";
+
 // initially render the goal tab
+// 초기화
 document.addEventListener("DOMContentLoaded", () => {
-    const selectedType = sessionStorage.getItem("selectedType") || "all";
+    const selectedType = sessionStorage.getItem("selectedType") || "All";
     bindButtons();
     setupToggle();
     setupFilterPopup();
@@ -18,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // save the default accounts data to local storage 
-// (처음 페이지 1회 방문했을 때만) goals -> local 
+// (처음 페이지 방문했을 때, 없다면) default goals -> local 
 if (!localStorage.getItem("goals")) {
     localStorage.setItem("goals", JSON.stringify(defaultGoals));
 }
@@ -26,7 +31,7 @@ if (!localStorage.getItem("goals")) {
 // collection of buttons
 // 버튼 모음
 function bindButtons() {
-    const addButton = document.getElementById("header-button");
+    const addButton = document.getElementById("add");
     const searchButton = document.getElementById("search");
 
     addButton.addEventListener("click", () => {
@@ -38,35 +43,8 @@ function bindButtons() {
     });
 }
 
-
-
-// active a popup to delete
-function activeDeletePopup(event) {
-    const card = event.target.closest(".budget-card") || 
-                 event.target.closest(".saving-card");
-    const popup = card.querySelector(".delete-popup");
-
-    popup.classList.remove("hidden");
-
-    const confirmButton = popup.querySelector(".confirm-delete");
-    const cancelButton = popup.querySelector(".cancel-delete");
-
-    confirmButton.addEventListener("click", () => {
-        const goalId = card.dataset.id;
-        let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-        localGoals = localGoals.filter(goal => goal.id !== goalId);
-        localStorage.setItem("goals", JSON.stringify(localGoals));
-
-        const selectedType = sessionStorage.getItem("selectedType") || "all";
-        renderGoals(selectedType);
-    });
-
-    cancelButton.addEventListener("click", () => {
-        popup.classList.add("hidden");
-    });
-}
-
-let currentTypeFilter = "All";
+// All/Budget/Saving toggle buttons
+// All/Budget/Saving 토글 버튼
 function setupToggle() {
     const toggleButton = document.getElementById("dropdown-toggle");
     const toggleIcon = document.getElementById("dropdown-icon");
@@ -74,74 +52,83 @@ function setupToggle() {
     const selectedText = document.getElementById("dropdown-selected");
 
     toggleButton.addEventListener("click", () => {
-        dropdown.classList.toggle("hidden");
-        toggleIcon.src = dropdown.classList.contains("hidden")
-          ? "../../assets/Arrow-up.png"
-          : "../../assets/Arrow-down.png";
+        dropdown.classList.toggle("active");
+        toggleIcon.src = dropdown.classList.contains("active")
+                        ? "../../assets/Arrow-up.png"
+                        : "../../assets/Arrow-down.png";
     });
 
     const options = document.querySelectorAll(".dropdown-option");
     options.forEach(option => {
         option.addEventListener("click", () => {
+            // text + arrow direction
+            // 텍스트 + 화살표 버튼 방향
             currentTypeFilter = option.dataset.id;
             selectedText.textContent = currentTypeFilter;
-            dropdown.classList.add("hidden");
+            dropdown.classList.remove("active");
+            toggleIcon.src = "../../assets/Arrow-down.png";
 
+            // selected button color
+            // 선택된 버튼 하나만 테두리 색상 바꾸기
             options.forEach(option => {
                 option.classList.remove("selected");
             });
             option.classList.add("selected");
 
-            renderGoals(currentTypeFilter.toLowerCase());
+            // conditional rendering
+            // 조건부 리스트 렌더링
+            renderGoals(currentTypeFilter);
         });
     });
 }
 
-// rendering the goal lists
-function renderGoals(selectedType = "all") {
-    const budgetGoals = [];
-    const savingGoals = [];
-
+// rendering goal lists 
+// 목표 리스트 렌더링
+function renderGoals(selectedType = "All") {
     const budgetDiv = document.getElementById("budget-container");
-    budgetDiv.innerHTML = "";
-
     const savingDiv = document.getElementById("saving-container");
+    budgetDiv.innerHTML = "";
     savingDiv.innerHTML = "";
 
+    // apply filter if "localGoals" exists
+    // 필터 조건 세션에 있으면 -> 필터 적용해서 localGoals 필터링
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-
     if (sessionStorage.getItem("goalFilters")) {
         localGoals = applyFilters(localGoals);
     }
     
+    const budgetGoals = [];
+    const savingGoals = [];
     localGoals.forEach(goal => {
-        const type = goal.type?.toLowerCase();
-
-        if (type === "budget") {
+        const type = goal.type;
+        if (type === "Budget") {
             budgetGoals.push(goal);
-        } else if (type === "saving") {
+        } else if (type === "Saving") {
             savingGoals.push(goal);
         } 
     });
 
-    if (selectedType === "all") {
+    if (selectedType === "All") {
         addBudgetCard(budgetGoals, budgetDiv);
         addSavingCard(savingGoals, savingDiv);
-        sessionStorage.setItem("selectedType", "all");
+        sessionStorage.setItem("selectedType", "All");
     } else if (selectedType === "budget") {
         addBudgetCard(budgetGoals, budgetDiv);
-        sessionStorage.setItem("selectedType", "budget");
+        sessionStorage.setItem("selectedType", "Budget");
     } else if (selectedType === "saving") {
         addSavingCard(savingGoals, savingDiv);
-        sessionStorage.setItem("selectedType", "saving");
+        sessionStorage.setItem("selectedType", "Saving");
     }
 
-    // add event to the edit buttons
+    // edit buttons for each card
+    // 모든 카드의 수정 버튼 이벤트 활성화
     const editButtons = document.querySelectorAll(".edit-button");
     for (const button of editButtons) {
-        button.addEventListener("click", navigateToEditPage);
+        button.addEventListener("click", navigateToEdit);
     }
 
+    // delete buttons for each card
+    // 모든 카드의 삭제 버튼 이벤트 활성화
     const deleteButtons = document.querySelectorAll(".delete-button");
     for (const button of deleteButtons) {
         button.addEventListener("click", activeDeletePopup);
@@ -266,6 +253,49 @@ function addSavingCard(savingLists, parentDiv) {
         parentDiv.appendChild(groupDiv);
     }
 };
+
+// edit 버튼 이벤트
+// event for edit buttons
+function navigateToEdit(event) {
+    const card = event.target.closest(".budget-card") || 
+                 event.target.closest(".saving-card");
+    const goalId = card.dataset.id;
+
+    let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+    
+    // find a matching goal in localGoals (with id) -> session 
+    // id와 매칭되는 목표 한 개 찾기 -> 세션에 저장
+    const editingGoal = localGoals.find((goal) => (goal.id).toString() === goalId);
+    sessionStorage.setItem("editingGoal", JSON.stringify(editingGoal));
+    window.location.href = "./popup-edit-goal/popup-edit-goal.html";
+}
+
+// delete popup
+// 삭제 팝업
+function activeDeletePopup(event) {
+    const card = event.target.closest(".budget-card") || 
+                 event.target.closest(".saving-card");
+    const popup = card.querySelector(".delete-popup");
+
+    popup.classList.remove("hidden");
+
+    const confirmButton = popup.querySelector(".confirm-delete");
+    const cancelButton = popup.querySelector(".cancel-delete");
+
+    confirmButton.addEventListener("click", () => {
+        const goalId = card.dataset.id;
+        let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+        localGoals = localGoals.filter(goal => goal.id !== goalId);
+        localStorage.setItem("goals", JSON.stringify(localGoals));
+
+        const selectedType = sessionStorage.getItem("selectedType") || "all";
+        renderGoals(selectedType);
+    });
+
+    cancelButton.addEventListener("click", () => {
+        popup.classList.add("hidden");
+    });
+}
 
 // apply the filters
 function applyFilters(goals) {
@@ -472,22 +502,3 @@ function getOrdinal(day) {
       default: return "th";
     }
 };
-
-
-/*
-    navigate to the edit page
-    with an account info to edit (sessionStorage)
-*/
-function navigateToEditPage(event) {
-    const card = event.target.closest(".budget-card") || event.target.closest(".saving-card");
-    const goalId = card.dataset.id;
-
-    // default + local data
-    let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-    
-    // 해당 id를 가진 데이터 찾아서 보내기
-    const editingGoal = localGoals.find((goal) => goal.id === goalId);
-    sessionStorage.setItem("editingGoal", JSON.stringify(editingGoal));
-
-    window.location.href = "./popup-edit-goal/popup-edit-goal.html";
-}

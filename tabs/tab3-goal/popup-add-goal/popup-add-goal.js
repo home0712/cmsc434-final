@@ -33,12 +33,16 @@ function addGoal(event) {
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
+    // compute percentage
+    // 퍼센트 계산
+    const percent = goalAmount === 0 ? 0 : Math.floor(currentAmount / goalAmount * 100);
+
     // 사용자 입력 데이터로 json 포맷으로 만들기
     const newGoal = {
         id: createId(type), 
         title: goalTitle,
         type: type,
-        percent: Math.floor(Math.random() * 100),
+        percent: percent,
         goalAmount: Number(goalAmount) || 0,
         startDate: startDate,
         endDate: endDate,

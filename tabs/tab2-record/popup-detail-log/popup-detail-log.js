@@ -1,6 +1,6 @@
 /* SUB - DETAIL LOG */
 
-// initially render page
+// initial
 // 초기화
 document.addEventListener("DOMContentLoaded", () => {
     renderLogDetail();

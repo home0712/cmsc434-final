@@ -1,21 +1,25 @@
-/* ADD AN ACCOUNT */
+/* SUB - EDIT A GOAL */
 
-/* 
-    click x button to close 
-*/
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", returnToPage);
+// initial
+// 초기화
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+    renderGoalInfo();
+});
 
-function returnToPage() {
-    window.location.href = "../goal.html";
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    const saveButton = document.getElementById("save-button");
+
+    closeButton.addEventListener("click", () => {
+        window.location.href = "../goal.html";
+    });
+
+    saveButton.addEventListener("click", editGoal);
 }
 
-// click save button & add an account
-const saveButton = document.getElementById("save-button");
+
 const goalForm = document.getElementById("goal-edit-form");
-
-saveButton.addEventListener("click", editGoal);
-
 function editGoal(event) {
     event.preventDefault();
 
@@ -24,46 +28,57 @@ function editGoal(event) {
         return;
     }
 
-    // editing data 가져오기
+    // get "editingGoal" from the goal tab
+    // 클릭한 editingGoal 데이터 세션에서 가져옴
     const goal = JSON.parse(sessionStorage.getItem("editingGoal")) || null;
 
+    // user inputs (want to edit)
     // 사용자가 입력한 데이터 가져오기
     const goalTitle =  document.getElementById("goal-name-field").value;
     const type = document.getElementById("type-select").value;
     const goalAmount = document.getElementById("goal-amount-field").value;
+    const currentAmount = document.getElementById("current-amount-field").value;
     const startDate = document.getElementById("start-date-field").value;
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
     // compute percentage
-    
+    // 퍼센트 계산
+    const percent = goalAmount === 0 ? 0 : Math.floor(currentAmount / goalAmount * 100);
 
-    // 사용자 입력 데이터로 json 포맷으로 만들기
-    const updated = {
+    console.log(percent);
+    // create JSON Object with user inputs
+    // 사용자 입력 데이터로 json object 만들기
+    const updatedGoal = {
         id: goal.id, 
         title: goalTitle,
         type: type,
-        percent: goal.percent,
-        goalAmount: Number(goalAmount),
+        goalAmount: Number(goalAmount) || 0,
         startDate: startDate,
         endDate: endDate,
         notes: notes
     };
 
+    if (type === "Saving") {
+        updatedGoal.savedAmount = Number(currentAmount) || 0;;
+    } else if (type === "Budget") {
+        updatedGoal.usedAmount = Number(currentAmount) || 0;;
+    }
+
     // 기존 데이터와 업데이트 값 비교해서 수정
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
     localGoals = localGoals.map((goal) => {
-        if (goal.id === updated.id) {
-            return updated;
+        if (goal.id === updatedGoal.id) {
+            return updatedGoal;
         } else {
             return goal;
         }
     });
 
-    // localStorage 에 업데이트
+    // localStorage 업데이트
     localStorage.setItem("goals", JSON.stringify(localGoals));
 
-    // 추가하고 나면 다시 accounts 페이지로 돌아가기
+    // 수정 완료 후 goal 페이지로 돌아가기
     window.location.href = "../goal.html"; 
 }
 
@@ -92,10 +107,11 @@ function renderGoalInfo() {
         document.getElementById("goal-name-field").value = goal.title;
         document.getElementById("type-select").value = goal.type;
         document.getElementById("goal-amount-field").value = goal.goalAmount.toFixed(2);
+        document.getElementById("current-amount-field").value = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
         document.getElementById("start-date-field").value = goal.startDate;
         document.getElementById("end-date-field").value = goal.endDate;
         document.getElementById("notes-field").value = goal.notes;
     }
 }
 
-renderGoalInfo();
+
