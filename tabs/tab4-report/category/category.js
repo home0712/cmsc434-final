@@ -20,18 +20,18 @@ function bindButtons() {
 
 // setup toggle
 function setupToggle() {
-    const expenseBtn = document.getElementById("show-expense");
-    const incomeBtn = document.getElementById("show-income");
+    const expenseButton = document.getElementById("show-expense");
+    const incomeButton = document.getElementById("show-income");
 
-    expenseBtn.addEventListener("click", () => {
-        expenseBtn.classList.add("active");
-        incomeBtn.classList.remove("active");
+    expenseButton.addEventListener("click", () => {
+        expenseButton.classList.add("active");
+        incomeButton.classList.remove("active");
         renderMainPieChart("EXPENSE");
     });
 
-    incomeBtn.addEventListener("click", () => {
-        incomeBtn.classList.add("active");
-        expenseBtn.classList.remove("active");
+    incomeButton.addEventListener("click", () => {
+        incomeButton.classList.add("active");
+        expenseButton.classList.remove("active");
         renderMainPieChart("INCOME");
     });
 }
@@ -276,7 +276,28 @@ function getAllSubcategories(mainCategory) {
 }
 
 function generateColorPalette(count) {
-    const baseColors = ["#FF6384", "#36A2EB", "#FFCE56", "#66BB6A", "#BA68C8", "#FF7043"];
+    const baseColors = [
+        "#FF6384", 
+        "#36A2EB", 
+        "#FFCE56",
+        "#66BB6A", 
+        "#BA68C8", 
+        "#FF7043",
+        "#26C6DA", 
+        "#9575CD",
+        "#D4E157", 
+        "#8D6E63", 
+        "#F06292",
+        "#4DB6AC", 
+        "#7986CB",
+        "#AED581", 
+        "#FFD54F", 
+        "#90A4AE", 
+        "#FF8A65", 
+        "#A1887F", 
+        "#81D4FA", 
+        "#CE93D8"  
+      ];
     const result = [];
     for (let i = 0; i < count; i++) {
       result.push(baseColors[i % baseColors.length]);
@@ -320,3 +341,6 @@ function hexToRgb(hex) {
   
     return [ r, g, b ];
 }
+
+// month selector
+
