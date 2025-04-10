@@ -26,7 +26,7 @@ editButton.addEventListener("click", () => {
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     
     // 해당 id를 가진 데이터 찾아서 보내기
-    const editingLog = localLogs.find((log) => log.id === logId);
+    const editingLog = localLogs.find((log) => (log.id).toString() === logId);
     sessionStorage.setItem("editingLog", JSON.stringify(editingLog));
     window.location.href = "../popup-edit-log/popup-edit-log.html";
 });
