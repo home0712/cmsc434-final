@@ -1,5 +1,7 @@
 /* MAIN - ACCOUNT TAB */
 
+let currentTypeFilter = "All";
+let currentSearchTerm = "";
 // initially render the account tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "account");
@@ -61,6 +63,16 @@ function renderAccounts() {
 
     // accounts data
     let localAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+
+    localAccounts = localAccounts.filter(account => {
+        const matchesType = currentTypeFilter === "All" || account.type === currentTypeFilter;
+        const matchesSearch = currentSearchTerm === "" ||
+                            account.name.toLowerCase().includes(currentSearchTerm) ||
+                            account.bank.toLowerCase().includes(currentSearchTerm) ||
+                            account.number.includes(currentSearchTerm);
+        return matchesType && matchesSearch;
+    });
+
     localAccounts.forEach(account => {
         const type = account.type?.toLowerCase();
         if (type === "checking") {
@@ -76,17 +88,12 @@ function renderAccounts() {
     const savingDiv = document.getElementById("savings");
     const investmentDiv = document.getElementById("investments");
 
-    checkingDiv.innerHTML = "<h2>Checkings</h2>";
-    savingDiv.innerHTML = "<h2>Savings</h2>";
-    investmentDiv.innerHTML = "<h2>Investments</h2>";
+    checkingDiv.innerHTML = "";
+    savingDiv.innerHTML = "";
+    investmentDiv.innerHTML = "";
 
-    // checking
     addAccountCard(checkingAccounts, checkingDiv);
-
-    // savings
     addAccountCard(savingAccounts, savingDiv);
-    
-    // investments
     addAccountCard(investAccounts, investmentDiv);
 
     const editButtons = document.querySelectorAll(".edit-button");
@@ -108,6 +115,8 @@ function renderAccounts() {
     for (const button of addBalanceButtons) {
         button.addEventListener("click", (event) => adjustPopup(event, "add"));
     }
+
+    updateVisibleSections();
 }
 
 // add account cards (html) to the container
@@ -267,4 +276,21 @@ function activeDeletePopup(event) {
     cancelButton.addEventListener("click", () => {
         popup.classList.add("hidden");
     });
+}
+
+//
+function updateVisibleSections() {
+    const sections = {
+      Checking: document.getElementById("section-checking"),
+      Saving: document.getElementById("section-saving"),
+      Investment: document.getElementById("section-investment")
+    };
+  
+    if (currentTypeFilter === "All") {
+      Object.values(sections).forEach(sec => sec.style.display = "block");
+    } else {
+      Object.entries(sections).forEach(([key, sec]) => {
+        sec.style.display = key === currentTypeFilter ? "block" : "none";
+      });
+    }
 }
