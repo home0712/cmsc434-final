@@ -52,9 +52,7 @@ function keywordSearch() {
 }
 
 
-/*
-  show the results
-*/
+// show the results
 const toggleButton = document.getElementById("toggle-button");
 const searchResults = document.getElementById("search-results");
 
@@ -73,11 +71,8 @@ function renderSearchResults(logs) {
     return;
   }
 
-  // sort logs in descending order 
   logs.sort((a, b) => new Date(b.date) - new Date(a.date));
   const dateGrouped = groupLogsByDate(logs);
-
-  // 최신 날짜부터 정렬해야 되니까 -> dateGroupedLogs의 키를 내림차순으로 정렬
   const dateGroupedKeys = Object.keys(dateGrouped).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   for (const dateKey of dateGroupedKeys) {

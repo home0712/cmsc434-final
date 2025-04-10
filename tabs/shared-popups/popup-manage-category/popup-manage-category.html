@@ -16,37 +16,32 @@
                 <img src="../../../assets/X.png" id="header-button">
             </span>
 
-            <ul class="category-list">
-                <li class="main-category">
-                    <div class="category-header">
-                        <span>Food</span>
-                        <div class="edit-buttons">
-                            <img src="../../../assets/Edit.png">
-                            <img src="../../../assets/Trash.png">
-                        </div>
-                    </div>
-                    <ul class="sub-category-list">
-                        <li>Groceries</li>
-                        <li>Delivery</li>
-                        <li>Cafe</li>
-                    </ul>
-                </li>
+            <div id="main-category-list" class="category-list"></div>
 
-                <li class="main-category">
-                    <div class="category-header">
-                        <span>Transport</span>
-                        <div class="edit-buttons">
-                            <img src="../../../assets/Edit.png">
-                            <img src="../../../assets/Trash.png">
-                        </div>
+            <div id="delete-popup" class="popup hidden">
+                <div class="popup-box">
+                    <img src="../../../assets/Alert-circle.png">
+                    <div class="popup-text">Delete</div>
+                    <div class="popup-buttons">
+                        <button class="secondary" id="cancel-delete">Cancel</button>
+                        <button id="confirm-delete">Delete</button>
                     </div>
-                    <ul class="sub-category-list">
-                        <li>Bus</li>
-                        <li>Subway</li>
-                        <li>Taxi</li>
-                    </ul>
-                </li>
-            </ul>   
+                </div>
+            </div>          
+
+            <div id="edit-popup" class="popup hidden">
+                <div class="popup-box">
+                    <img src="../../../assets/Alert-circle.png">
+                    <div class="popup-text">Edit</div>
+                    <input type="text" id="category-input" />
+                    <div class="popup-buttons">
+                        <button class="secondary" id="cancel-edit">Cancel</button>
+                        <button id="confirm-edit">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="add-main-category">+ Add Main Category</button>
         </div>
     </div>
 
