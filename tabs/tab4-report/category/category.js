@@ -1,104 +1,168 @@
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
+    setupToggle();
+    renderMainPieChart("EXPENSE");
 });
 
 function bindButtons() {
     const settingButton = document.getElementById("header-button");
-    settingButton.addEventListener("click", (event) => {
-        const clickedButtonId = event.target.id;
+    const backButton = document.getElementById("back-to-main");
 
+    settingButton.addEventListener("click", () => {
         sessionStorage.setItem("returnTo", "category");
-        if (clickedButtonId === "header-button") {
-            window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
-        }
+        window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
+    });
+
+    backButton.addEventListener("click", () => {
+        renderMainPieChart(getCurrentType());
     });
 }
 
+// setup toggle
+function setupToggle() {
+    const expenseBtn = document.getElementById("show-expense");
+    const incomeBtn = document.getElementById("show-income");
 
+    expenseBtn.addEventListener("click", () => {
+        expenseBtn.classList.add("active");
+        incomeBtn.classList.remove("active");
+        renderMainPieChart("EXPENSE");
+    });
 
-/* sample data */ 
-const mainCategoryData = [
-    { category: "Food", amount: 750 },
-    { category: "Transport", amount: 160 },
-    { category: "Entertainment", amount: 90 },
-    { category: "Beverage", amount: 150 }
-];
+    incomeBtn.addEventListener("click", () => {
+        incomeBtn.classList.add("active");
+        expenseBtn.classList.remove("active");
+        renderMainPieChart("INCOME");
+    });
+}
 
-const subcategoryData = {
-    Food: [
-        { category: "Groceries", amount: 400 },
-        { category: "Delivery", amount: 200 },
-        { category: "Restaurants", amount: 150 }
-    ],
-    Transport: [
-        { category: "Bus", amount: 100 },
-        { category: "Taxi", amount: 60 }
-    ],
-    Beverage: [
-        { category: "Coffee", amount: 150 }
-    ]
-};
+function renderMainPieChart(type) {
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    if (transactions.length === 0) return;
 
-const mainColors = ["#FF6384", "#36A2EB", "#FFCE56", "#66BB6A"];
+    const mainTotals = calculateCategoryTotals(transactions, type);
+    const sortedMain = mainTotals.sort((a, b) => b.amount - a.amount);
+    const mainColors = generateColorPalette(sortedMain.length);
 
-// draw pie chart
-const canvas = document.getElementById("pie-chart");
-const ctx = canvas.getContext("2d");
-const sortedMainData = [...mainCategoryData].sort((a, b) => b.amount - a.amount);
+    // draw pie chart
+    const container = document.getElementById("pie-chart-area");
+    container.innerHTML = `<canvas id="pie-chart" width="400" height="400"></canvas>`;
+    const ctx = document.getElementById("pie-chart").getContext("2d");
 
-const pieData = {
-    labels: sortedMainData.map(item => item.category),
-    datasets: [{
-      data: sortedMainData.map(item => item.amount),
-      backgroundColor: mainColors,
-      borderWidth: 1
-    }]
-};
+    const chartData = {
+        labels: sortedMain.map(d => d.category),
+        datasets: [{
+            data: sortedMain.map(d => d.amount),
+            backgroundColor: mainColors,
+            borderWidth: 1
+        }]
+    };
 
-const pieOptions = {
-    responsive: false,
-    plugins: {
-        legend: {
-          display: false 
-        },
-        tooltip: {
-            callbacks: {
-              label: function(context) {
-                const value = context.parsed;
-                return ` $${value.toFixed(2)}`;
-              }
+    pieChart = new Chart(ctx, {
+        type: "pie",
+        data: chartData,
+        options: {
+            responsive: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` $${ctx.parsed.toFixed(2)}`
+                    },
+                    titleFont: { size: 22 },
+                    bodyFont: { size: 22 }
+                }
             },
-            titleFont: {
-                size: 22
-            },
-            bodyFont: {
-                size: 22
+            onClick: (event, elements) => {
+                if (elements.length === 0) return;
+                const index = elements[0].index;
+                const category = chartData.labels[index];
+                updateToSubPieChart(category); 
             }
-        }
-    },
-    onClick: (event, elements) => {
-        if (elements.length === 0) {
-            return;
-        }
-    
-        const index = elements[0].index;
-        const selectedCategory = pieChart.data.labels[index];
-    
-        if (subcategoryData[selectedCategory]) {
-            updateToSubPieChart(selectedCategory);
-        }
-    }
-};
-  
-const pieChart = new Chart(ctx, {
-    type: 'pie',
-    data: pieData,
-    options: pieOptions
-});
+        },
+        plugins: []
+    });
 
-/**
- * render ranked table (for both main and sub)
- */
+    renderRankedTable(sortedMain, mainColors);
+    document.getElementById("back-to-main").style.display = "none";
+}
+
+
+// pie chart
+let pieChart = null;
+function updatePieChart(data, colors, onClickCategory = null) {
+    const canvas = document.getElementById("pie-chart");
+    const ctx = canvas.getContext("2d");
+
+    const chartData = {
+        labels: data.map(d => d.category),
+        datasets: [{
+            data: data.map(d => d.amount),
+            backgroundColor: colors,
+            borderWidth: 1
+        }]
+    };
+
+    const options = {
+        responsive: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: ctx => ` $${ctx.parsed.toFixed(2)}`
+                },
+                titleFont: { size: 22 },
+                bodyFont: { size: 22 }
+          }
+        },
+        onClick: (event, elements) => {
+            if (elements.length === 0) {
+                return;
+            }
+            const index = elements[0].index;
+            const category = chartData.labels[index];
+        
+            updateToSubPieChart(category);
+        }
+    };
+
+    if (pieChart) {
+        pieChart.destroy();
+    }
+
+    pieChart = new Chart(ctx, {
+        type: "pie",
+        data: chartData,
+        options: options,
+        plugins: []
+    });
+}
+
+//
+function updateToSubPieChart(category) {
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    const subData = calculateSubcategoryTotals(transactions, getCurrentType(), category);
+
+    const baseColor = sortedColorMap[category] || "#999";
+    const gradientColors = getGradientColors(baseColor, subData.length);
+
+    // update chart
+    pieChart.data.labels = subData.map(item => item.category);
+    pieChart.data.datasets[0].data = subData.map(item => item.amount);
+    pieChart.data.datasets[0].backgroundColor = gradientColors;
+    pieChart.update();
+
+    renderRankedTable(subData, gradientColors);
+    document.getElementById("back-to-main").style.display = "block";
+}
+
+//
+function getCurrentType() {
+    return document.getElementById("show-income").classList.contains("active") ? "INCOME" : "EXPENSE";
+}
+
+
+// render ranked table (for both main and sub)
 let sortedRankMap = {};
 let sortedColorMap = {};
 
@@ -120,7 +184,6 @@ function renderRankedTable(categoryData, colors, order = "desc") {
         sortedCategoryData.forEach((item, idx) => {
             sortedRankMap[item.category] = sortedCategoryData.length - idx; 
         });
-
         sortedCategoryData.forEach((item, idx) => {
             sortedColorMap[item.category] = colors[sortedCategoryData.length - idx - 1];
         });
@@ -128,7 +191,6 @@ function renderRankedTable(categoryData, colors, order = "desc") {
         sortedCategoryData.forEach((item, idx) => {
             sortedRankMap[item.category] = idx + 1; 
         });
-
         sortedCategoryData.forEach((item, idx) => {
             sortedColorMap[item.category] = colors[idx];
         });
@@ -163,52 +225,8 @@ function renderRankedTable(categoryData, colors, order = "desc") {
     });
 }
 
-// initially render the page
-renderRankedTable(sortedMainData, mainColors);
-
-// update from main pie chart to sub pie chart
-function updateToSubPieChart(category) {
-    const subData = subcategoryData[category];
-    const subLabels = subData.map(item => item.category);
-    const subAmounts = subData.map(item => item.amount);
-
-    const baseColor = getBaseColorForCategory(category); // main 카테고리 존재하지 않는 경우도 있나?
-    const gradientColors = getGradientColors(baseColor, subData.length);
-
-    pieChart.data.labels = subLabels;
-    pieChart.data.datasets[0].data = subAmounts;
-    pieChart.data.datasets[0].backgroundColor = gradientColors;
-    pieChart.update();
-
-    renderRankedTable(subData, gradientColors);
-
-    document.getElementById("back-to-main").style.display = "block";
-}
-
-/**
- * back to main pie chart
- */
-const backButton = document.getElementById("back-to-main");
-backButton.addEventListener("click", () => {
-    const mainLabels = mainCategoryData.map(item => item.category);
-    const mainAmounts = mainCategoryData.map(item => item.amount);
-
-    pieChart.data.labels = mainLabels;
-    pieChart.data.datasets[0].data = mainAmounts;
-    pieChart.data.datasets[0].backgroundColor = mainColors;
-
-    pieChart.update();
-
-    document.getElementById("back-to-main").style.display = "none";
-    renderRankedTable(mainCategoryData, mainColors); 
-});
-
-
-
 /**** util functions ****/
-/*
-    sort the table
- */
+// sort the table
 function sortRankedTable(categoryData, order = "desc") {
     const copy = [...categoryData];
     if (order === "desc") {
@@ -218,13 +236,54 @@ function sortRankedTable(categoryData, order = "desc") {
     }
 }
 
-function getBaseColorForCategory(category) {
-    return sortedColorMap[category];
+function calculateCategoryTotals(transactions, targetType) {
+    const map = {};
+
+    transactions.forEach(log => {
+        if (log.type !== targetType) return;
+
+        const main = log.category.main;
+        if (!map[main]) map[main] = 0;
+        map[main] += Math.abs(log.amount);
+    });
+
+    return Object.entries(map).map(([category, amount]) => ({ category, amount }));
 }
 
-/*
- * get gradient colors for sub categories pie chart
- */
+function calculateSubcategoryTotals(transactions, type, mainCategory) {
+    const map = {};
+
+    const allSubcategories = getAllSubcategories(mainCategory);
+    allSubcategories.forEach(sub => {
+        map[sub] = 0;
+    });
+
+    transactions.forEach(log => {
+        if (log.type !== type) return;
+        if (log.category.main !== mainCategory) return;
+
+        const sub = log.category.sub || "(Uncategorized)";
+        if (!map[sub]) map[sub] = 0;
+        map[sub] += Math.abs(log.amount);
+    });
+
+    return Object.entries(map).map(([category, amount]) => ({ category, amount }));
+}
+
+function getAllSubcategories(mainCategory) {
+    const subCategories = JSON.parse(localStorage.getItem("subCategories"));
+    return subCategories[mainCategory] || [];
+}
+
+function generateColorPalette(count) {
+    const baseColors = ["#FF6384", "#36A2EB", "#FFCE56", "#66BB6A", "#BA68C8", "#FF7043"];
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      result.push(baseColors[i % baseColors.length]);
+    }
+    return result;
+  }
+
 function getGradientColors(baseColor, count) {
     const rgb = hexToRgb(baseColor); 
     const result = [];
@@ -245,9 +304,7 @@ function getGradientColors(baseColor, count) {
     return result;
 }
 
-/*
- * convert hex to rgb
- */
+// convert hex to rgb
 function hexToRgb(hex) {
     if (hex.charAt(0) === '#') {
         hex = hex.slice(1);
