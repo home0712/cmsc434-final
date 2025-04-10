@@ -60,7 +60,6 @@ function activeDeletePopup() {
         selectedLog = localLogs.find(log => (log.id).toString() == logId);
         localLogs = localLogs.filter(log => (log.id).toString() !== logId);
 
-        // 세션에서 selectedTransactionId 삭제하기 -> 삭제하고도 이전 날짜로 돌아가려면 없애면 안될 듯...
         // 디테일로 들어오기 전에 보던 month view
         sessionStorage.setItem("prevMonthView", selectedLog.date);
         

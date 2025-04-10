@@ -1,9 +1,19 @@
+/* MAIN - CATEGORY REPORT */
+
+// global variables
+let pieChart = null;
+let isSubChart = false;
+let sortedRankMap = {};
+let sortedColorMap = {};
+
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     setupToggle();
     renderMainPieChart("EXPENSE");
 });
 
+// collection of buttons
+// 버튼 모음
 function bindButtons() {
     const settingButton = document.getElementById("header-button");
     const backButton = document.getElementById("back-to-main");
@@ -14,11 +24,15 @@ function bindButtons() {
     });
 
     backButton.addEventListener("click", () => {
+        if (pieChart) {
+            pieChart.destroy();
+        }
         renderMainPieChart(getCurrentType());
     });
 }
 
-// setup toggle
+// Expense/Income setup toggle
+// Expense/Income 토글 버튼
 function setupToggle() {
     const expenseButton = document.getElementById("show-expense");
     const incomeButton = document.getElementById("show-income");
@@ -36,18 +50,30 @@ function setupToggle() {
     });
 }
 
+// render pie chart
+// 파이차트 렌더링
 function renderMainPieChart(type) {
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    if (transactions.length === 0) return;
+    isSubChart = false;
+    // localLogs 갖고와서 각 카테고리의 총합 계산
+    const localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
+    if (localLogs.length === 0) {
+        const container = document.getElementById("pie-chart-area");
+        container.innerHTML = "<div>No Data Found</div>";
+        return
+    }; // 로그 아무것도 없을 경우 -> 파이차트 안 그림 -> no data found 보여줘야 할 듯
 
-    const mainTotals = calculateCategoryTotals(transactions, type);
+    const mainTotals = calculateCategoryTotals(localLogs, type);
     const sortedMain = mainTotals.sort((a, b) => b.amount - a.amount);
     const mainColors = generateColorPalette(sortedMain.length);
 
     // draw pie chart
-    const container = document.getElementById("pie-chart-area");
-    container.innerHTML = `<canvas id="pie-chart" width="400" height="400"></canvas>`;
-    const ctx = document.getElementById("pie-chart").getContext("2d");
+    // 파이 차트 그리기 시작
+    const canvas = document.getElementById("pie-chart");
+    const ctx = canvas.getContext("2d");
+
+    if (pieChart) {
+        pieChart.destroy();
+    }
 
     const chartData = {
         labels: sortedMain.map(d => d.category),
@@ -67,84 +93,41 @@ function renderMainPieChart(type) {
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
-                        label: ctx => ` $${ctx.parsed.toFixed(2)}`
+                        label: function(context) {
+                            const value = context.parsed;
+                            return ` $${value.toFixed(2)}`;
+                        }
                     },
                     titleFont: { size: 22 },
                     bodyFont: { size: 22 }
                 }
             },
             onClick: (event, elements) => {
+                if (isSubChart) return;
                 if (elements.length === 0) return;
                 const index = elements[0].index;
                 const category = chartData.labels[index];
+
                 updateToSubPieChart(category); 
             }
         },
-        plugins: []
     });
 
     renderRankedTable(sortedMain, mainColors);
     document.getElementById("back-to-main").style.display = "none";
 }
 
+//
+function updateToSubPieChart(mainCategory) {
+    isSubChart = true;
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    const subData = calculateSubcategoryTotals(transactions, getCurrentType(), mainCategory);
 
-// pie chart
-let pieChart = null;
-function updatePieChart(data, colors, onClickCategory = null) {
+    const baseColor = sortedColorMap[mainCategory] || "#999";
+    const gradientColors = getGradientColors(baseColor, subData.length);
+    
     const canvas = document.getElementById("pie-chart");
     const ctx = canvas.getContext("2d");
-
-    const chartData = {
-        labels: data.map(d => d.category),
-        datasets: [{
-            data: data.map(d => d.amount),
-            backgroundColor: colors,
-            borderWidth: 1
-        }]
-    };
-
-    const options = {
-        responsive: false,
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                callbacks: {
-                    label: ctx => ` $${ctx.parsed.toFixed(2)}`
-                },
-                titleFont: { size: 22 },
-                bodyFont: { size: 22 }
-          }
-        },
-        onClick: (event, elements) => {
-            if (elements.length === 0) {
-                return;
-            }
-            const index = elements[0].index;
-            const category = chartData.labels[index];
-        
-            updateToSubPieChart(category);
-        }
-    };
-
-    if (pieChart) {
-        pieChart.destroy();
-    }
-
-    pieChart = new Chart(ctx, {
-        type: "pie",
-        data: chartData,
-        options: options,
-        plugins: []
-    });
-}
-
-//
-function updateToSubPieChart(category) {
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    const subData = calculateSubcategoryTotals(transactions, getCurrentType(), category);
-
-    const baseColor = sortedColorMap[category] || "#999";
-    const gradientColors = getGradientColors(baseColor, subData.length);
 
     // update chart
     pieChart.data.labels = subData.map(item => item.category);
@@ -163,8 +146,7 @@ function getCurrentType() {
 
 
 // render ranked table (for both main and sub)
-let sortedRankMap = {};
-let sortedColorMap = {};
+
 
 function renderRankedTable(categoryData, colors, order = "desc") {
     const tableContainer = document.getElementById("category-rank-body");
@@ -243,7 +225,9 @@ function calculateCategoryTotals(transactions, targetType) {
         if (log.type !== targetType) return;
 
         const main = log.category.main;
-        if (!map[main]) map[main] = 0;
+        if (!map[main]) {
+            map[main] = 0;
+        }
         map[main] += Math.abs(log.amount);
     });
 
@@ -262,8 +246,10 @@ function calculateSubcategoryTotals(transactions, type, mainCategory) {
         if (log.type !== type) return;
         if (log.category.main !== mainCategory) return;
 
-        const sub = log.category.sub || "(Uncategorized)";
-        if (!map[sub]) map[sub] = 0;
+        const sub = log.category.sub || "Uncategorized";
+        if (!map[sub]) {
+            map[sub] = 0;
+        }
         map[sub] += Math.abs(log.amount);
     });
 
