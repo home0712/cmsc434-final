@@ -19,44 +19,6 @@
     margin: 40px auto;
 }
 
-/* keyword input window */
-.filter-bar {
-    display: flex;
-    position: relative;
-    width: 100%;
-    justify-content: right;
-    align-items: center;
-}
-
-.filter-bar input {
-    background-color: #444;
-    border: 2px solid white;
-    width: 100%;
-    padding: 10px 15px;
-    color: white;
-    font-size: 25px;
-    box-sizing: border-box;
-}
-
-.filter-buttons {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    z-index: 1;
-    gap: 10px;
-}
-
-.filter-buttons #toggle-button {
-    width: 20px;
-    height: 20px;
-}
-
-.filter-buttons #filter-button {
-    width: 35px;
-    height: 35px;
-    margin-right: 15px;
-}
-
 /* amount range field */
 #goal-filter-container .field-label {
     display: flex;
@@ -153,4 +115,31 @@ select {
     color: #ff5c5c;
     font-size: 17px;
     margin-top: 0;
+}
+
+/* buttons */
+.filter-footer {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filter-footer button {
+    padding: 8px 20px;
+    font-size: 24px;
+    border-radius: 8px;
+    border: none;
+    width: 130px;
+}
+  
+#save-filter {
+    background-color: #689E80;
+    color: black;
+}
+  
+#clear-filter {
+    background-color: #aaa;
+    color: black;
 }
