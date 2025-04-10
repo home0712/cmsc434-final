@@ -151,7 +151,7 @@ function setupFilterPopup() {
     });
 
     cancelButton.addEventListener("click", () => {
-        apopup.classList.add("hidden");
+        popup.classList.add("hidden");
     });
 }
 
@@ -167,7 +167,6 @@ function renderTransactionLogs() {
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
     let filteredLocal = filterLogs(localLogs, year, month);
     filteredLocal = applyFilters(filteredLocal);
-    console.log(filteredLocal);
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // 
