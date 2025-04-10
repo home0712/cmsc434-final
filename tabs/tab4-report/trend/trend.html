@@ -16,44 +16,53 @@
                 <h1>Trend Report</h1>
             </span>
 
+            <div id="trend-toggle-buttons">
+                <button id="toggle-expense" class="selected">Income & Expense</button>
+                <button id="toggle-net">Net Income</button>
+            </div>
+
             <div class="scroll" id="trend-container" >
                 <!-- expense Trend -->
-                <h2>Monthly Expense Trend</h2>
-                <div class="trend-card" id="expense-card">
-                    <div class="trend-header" id="expense-header">
-                        <div class="trend-header-left">
-                            <span class="trend-amount" id="expense-amount"></span>
-                            <span class="trend-header-text" id="expense-header-text"></span>
+                <div class="trend-section" id="expense-section">
+                    <h2>Monthly Expense Trend</h2>
+                    <div class="trend-card" id="expense-card">
+                        <div class="trend-header" id="expense-header">
+                            <div class="trend-header-left">
+                                <span class="trend-amount" id="expense-amount"></span>
+                                <span class="trend-header-text" id="expense-header-text"></span>
+                            </div>
+
+                            <div class="trend-header-right">
+                                <span>Income</span>
+                                <img src="../../../assets/Toggle-left.png" id="income-toggle"/>
+                            </div>
+                        </div>
+                        
+                        <div id="expense-chart-container">
+                            <canvas id="expense-chart" width="500px" height="300px"></canvas>
                         </div>
 
-                        <div class="trend-header-right">
-                            <span>Income</span>
-                            <img src="../../../assets/Toggle-left.png" id="income-toggle"/>
-                        </div>
+                        <div class="trend-footer" id="expense-footer"></div>
                     </div>
-                    
-                    <div id="expense-chart-container">
-                        <canvas id="expense-chart" width="500px" height="300px"></canvas>
-                    </div>
-
-                    <div class="trend-footer" id="expense-footer"></div>
                 </div>
 
                 <!-- Net Income -->
-                <h2>Monthly Net Income</h2>
-                <div class="trend-card">
-                    <div class="trend-header" id="net-income-header">
-                        <div class="trend-header-left">
-                            <span class="trend-amount" id="net-income-amount"></span>
-                            <span class="trend-header-text" id="net-income-header-text"></span>
+                <div class="trend-section" id="net-section">
+                    <h2>Monthly Net Income</h2>
+                    <div class="trend-card">
+                        <div class="trend-header" id="net-income-header">
+                            <div class="trend-header-left">
+                                <span class="trend-amount" id="net-income-amount"></span>
+                                <span class="trend-header-text" id="net-income-header-text"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="net-income-chart-container">
-                        <canvas id="net-income-chart" width="500px" height="300px"></canvas>
+                        <div id="net-income-chart-container">
+                            <canvas id="net-income-chart" width="500px" height="300px"></canvas>
+                        </div>
+                
+                        <div class="trend-footer" id="net-income-footer"></div>
                     </div>
-            
-                    <div class="trend-footer" id="net-income-footer"></div>
                 </div>
             </div>
 
