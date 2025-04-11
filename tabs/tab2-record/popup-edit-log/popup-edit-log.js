@@ -2,8 +2,6 @@
 
 // initially render
 document.addEventListener("DOMContentLoaded", () => {
-    sessionStorage.setItem("returnTo", "transaction");
-
     bindButtons();
     mainCategorySelector();
     subCategorySelector();
