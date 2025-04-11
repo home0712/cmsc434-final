@@ -421,7 +421,7 @@ function applyTypeFilterToToggle() {
         }
     });
   
-    renderGoals(selectedType.toLowerCase());
+    renderGoals(selectedType);
 }
 
 function syncToggleToSelectedType() {
