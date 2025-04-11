@@ -42,7 +42,6 @@ function editGoal(event) {
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
-    console.log(percent);
     // create JSON Object with user inputs
     // 사용자 입력 데이터로 json object 만들기
     const updatedGoal = {
