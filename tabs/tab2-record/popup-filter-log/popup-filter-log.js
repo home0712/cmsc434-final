@@ -126,7 +126,7 @@ function clearFilter() {
     sessionStorage.removeItem("filterTypes");
     sessionStorage.removeItem("filterMethods");
     sessionStorage.removeItem("filterCategories");
-    sessionStorage.removeItem("filterSubcategories");
+    sessionStorage.removeItem("filterSubCategories");
 
     toggleSubCategoryField();
 }

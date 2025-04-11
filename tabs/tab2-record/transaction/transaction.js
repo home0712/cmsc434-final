@@ -133,6 +133,10 @@ function updateFilterUI(isActive) {
 
 function clearFiltersInTransactionPage() {
     sessionStorage.removeItem("logFilters");
+    sessionStorage.removeItem("filterTypes");
+    sessionStorage.removeItem("filterMethods");
+    sessionStorage.removeItem("filterCategories");
+    sessionStorage.removeItem("filterSubCategories");
     sessionStorage.setItem("filterWasCleared", "true");
     isFilterActive = false;
     updateFilterUI(false);
