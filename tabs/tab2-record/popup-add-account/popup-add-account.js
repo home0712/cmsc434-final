@@ -1,28 +1,35 @@
 /* ADD AN ACCOUNT */
 
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+    clearRequiredError();
+});
+
 /* 
     click x button to close 
 */
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", returnToPage);
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    const saveButton = document.getElementById("save-button");
 
-function returnToPage() {
-    window.location.href = "../accounts/accounts.html";
+    closeButton.addEventListener("click", () => {
+        window.location.href = "../accounts/accounts.html";
+    });
+
+    saveButton.addEventListener("click", addAccount);
 }
 
 // click save button & add an account
-const saveButton = document.getElementById("save-button");
 const accountForm = document.getElementById("account-add-form");
-
-saveButton.addEventListener("click", addAccount);
-
 function addAccount(event) {
     event.preventDefault();
 
     if (!accountForm.checkValidity()) {
-        alert("Please fill in all required fields.");
+        showRequiredError();
         return;
     }
+
+    clearRequiredError();
 
     // 사용자가 입력한 데이터 가져오기
     const accountName = document.getElementById("account-name-field").value;
@@ -65,4 +72,26 @@ function createId(type) {
 
     id += Date.now().toString();
     return id;
+}
+
+// required field error
+function showRequiredError() {
+    const invalids = accountForm.querySelectorAll(":invalid");
+    
+    invalids.forEach(item => {
+        item.classList.add("input-error");
+    });
+}
+
+function clearRequiredError() {
+    const inputs = accountForm.querySelectorAll("input, select, textarea");
+    const eventList = ["input", "click", "focus"];
+
+    inputs.forEach(field => {
+        eventList.forEach(eventName => {
+            field.addEventListener(eventName, () => {
+                field.classList.remove("input-error");
+            })
+        });
+    });
 }

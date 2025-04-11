@@ -3,6 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     setupUserAmountByGoalType();
+    clearRequiredError();
 });
 
 function bindButtons() {
@@ -20,9 +21,11 @@ function addGoal(event) {
     event.preventDefault();
 
     if (!goalForm.checkValidity()) {
-        alert("Please fill in all required fields.");
+        showRequiredError();
         return;
     }
+
+    clearRequiredError();
 
     // user inputs (want to add)
     // 사용자가 입력한 데이터 가져오기
@@ -61,8 +64,8 @@ function addGoal(event) {
     localGoals.push(newGoal);
     localStorage.setItem("goals", JSON.stringify(localGoals));
 
-    // back to the account page
-    // 추가 완료 후 accounts 페이지로 돌아가기
+    // back to the goal page
+    // 추가 완료 후 goal 페이지로 돌아가기
     window.location.href = "../goal.html";  
 } 
 
@@ -94,4 +97,26 @@ function createId(type) {
 
     id += Date.now().toString();
     return id;
+}
+
+// required field error
+function showRequiredError() {
+    const invalids = goalForm.querySelectorAll(":invalid");
+    
+    invalids.forEach(item => {
+        item.classList.add("input-error");
+    });
+}
+
+function clearRequiredError() {
+    const inputs = goalForm.querySelectorAll("input, select, textarea");
+    const eventList = ["input", "click", "focus"];
+
+    inputs.forEach(field => {
+        eventList.forEach(eventName => {
+            field.addEventListener(eventName, () => {
+                field.classList.remove("input-error");
+            })
+        });
+    });
 }

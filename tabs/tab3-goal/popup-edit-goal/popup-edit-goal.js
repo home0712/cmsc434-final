@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     renderGoalInfo();
     setupUserAmountByGoalType();
+    clearRequiredError();
 });
 
 function bindButtons() {
@@ -25,9 +26,11 @@ function editGoal(event) {
     event.preventDefault();
 
     if (!goalForm.checkValidity()) {
-        alert("Please fill in all required fields.");
+        showRequiredError();
         return;
     }
+
+    clearRequiredError();
 
     // get "editingGoal" from the goal tab
     // 클릭한 editingGoal 데이터 세션에서 가져옴
@@ -137,3 +140,24 @@ function setupUserAmountByGoalType() {
     });
 }
 
+// required field error
+function showRequiredError() {
+    const invalids = goalForm.querySelectorAll(":invalid");
+    
+    invalids.forEach(item => {
+        item.classList.add("input-error");
+    });
+}
+
+function clearRequiredError() {
+    const inputs = goalForm.querySelectorAll("input, select, textarea");
+    const eventList = ["input", "click", "focus"];
+
+    inputs.forEach(field => {
+        eventList.forEach(eventName => {
+            field.addEventListener(eventName, () => {
+                field.classList.remove("input-error");
+            })
+        });
+    });
+}

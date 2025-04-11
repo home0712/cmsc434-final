@@ -30,8 +30,11 @@
     font-size: 30px;
 }
 
-#goal-edit-form .required-text {
-    font-size: 13px;
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
 }
 
 input[type="text"], input[type="number"], input[type="date"],
@@ -40,7 +43,7 @@ textarea, select {
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
-    height: 42px; 
+    height: 100%; 
     width: 290px;
     font-size: 20px;
     color: white;
@@ -58,6 +61,7 @@ textarea {
 #note.field {
     display: block;
     width: 100%;  
+    height: auto;
 }
 
 #note .field-label {
@@ -80,4 +84,9 @@ textarea {
     background-color: #689e80;
     color: white;
     font-size: 20px;
+}
+
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
 }
