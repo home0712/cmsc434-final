@@ -1,3 +1,8 @@
+/* MAIN - TREND REPORT */
+
+// global variable
+let currentTrendView = "EXPENSE"; 
+
 document.addEventListener("DOMContentLoaded", () => {
     loadDefaultData();
     const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
@@ -9,111 +14,115 @@ document.addEventListener("DOMContentLoaded", () => {
     showExpenseView();
 });
 
-let currentTrendView = "EXPENSE"; 
-
 function updateSelectedTrendText(value, month, type) {
-  const expenseAmount = document.getElementById("expense-amount");
-  const expenseText = document.getElementById("expense-header-text");
-  const netAmount = document.getElementById("net-income-amount");
-  const netText = document.getElementById("net-income-header-text");
+    const expenseAmount = document.getElementById("expense-amount");
+    const expenseText = document.getElementById("expense-header-text");
+    const netAmount = document.getElementById("net-income-amount");
+    const netText = document.getElementById("net-income-header-text");
 
-  if (type === "expense") {
-    expenseAmount.innerHTML = `$ ${value.toLocaleString()}`;
-    expenseText.innerHTML = `Spent in ${month}`;
-  } else {
-    const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
-    const color = value > 0 ? "#4CAF50" : value < 0 ? "#FFA07A" : "white";
+    if (type === "expense") {
+      expenseAmount.innerHTML = `$ ${value.toLocaleString()}`;
+      expenseText.innerHTML = `Spent in ${month}`;
+    } else {
+      const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
+      const color = value > 0 ? "#4CAF50" : value < 0 ? "#FFA07A" : "white";
 
-    netAmount.style.color = color;
-    netAmount.innerHTML = `${prefix}$ ${Math.abs(value).toLocaleString()}`;
-    netText.innerHTML = `in ${month}`;
-  }
+      netAmount.style.color = color;
+      netAmount.innerHTML = `${prefix}$ ${Math.abs(value).toLocaleString()}`;
+      netText.innerHTML = `in ${month}`;
+    }
 }
 
 function renderExpenseFooter(data) {
-  const expenseAvg = computeAverage(data.map(d => d.expense));
-  const incomeAvg = computeAverage(data.map(d => d.income));
+    const expenseAvg = computeAverage(data.map(d => d.expense));
+    const incomeAvg = computeAverage(data.map(d => d.income));
 
-  document.getElementById("expense-footer").innerHTML = `
-    <div id="average-expense">
-      <span>Average <span id="expense-text">Expense</span> in ${data.length} months</span>
-      <span id="expense-amount">-$ ${expenseAvg.toLocaleString()}</span>
-    </div>
-    <div id="average-income">
-      <span>Average <span id="income-text">Income</span> in ${data.length} months</span>
-      <span id="income-amount">+$ ${incomeAvg.toLocaleString()}</span>
-    </div>
-  `;
+    document.getElementById("expense-footer").innerHTML = `
+      <div id="average-expense">
+        <span>Average <span id="expense-text">Expense</span> in ${data.length} months</span>
+        <span id="expense-amount">-$ ${expenseAvg.toLocaleString()}</span>
+      </div>
+      <div id="average-income">
+        <span>Average <span id="income-text">Income</span> in ${data.length} months</span>
+        <span id="income-amount">+$ ${incomeAvg.toLocaleString()}</span>
+      </div>
+    `;
 }
 
 function renderNetFooter(data) {
-  const netList = data.map(d => d.income - d.expense);
-  const netAvg = computeAverage(netList);
-  const prefix = netAvg > 0 ? "+" : netAvg < 0 ? "-" : "";
-  const color = netAvg > 0 ? "#4CAF50" : netAvg < 0 ? "#FFA07A" : "white";
+    const netList = data.map(d => d.income - d.expense);
+    const netAvg = computeAverage(netList);
+    const prefix = netAvg > 0 ? "+" : netAvg < 0 ? "-" : "";
+    const color = netAvg > 0 ? "#4CAF50" : netAvg < 0 ? "#FFA07A" : "white";
 
-  document.getElementById("net-income-footer").innerHTML = `
-    <div id="average-net">
-      <span>Average <span id="net-text">Net</span> in ${data.length} months</span>
-      <span id="net-amount" style="color: ${color}">${prefix}$ ${Math.abs(netAvg).toLocaleString()}</span>
-    </div>
-  `;
+    document.getElementById("net-income-footer").innerHTML = `
+      <div id="average-net">
+        <span>Average <span id="net-text">Net</span> in ${data.length} months</span>
+        <span id="net-amount" style="color: ${color}">${prefix}$ ${Math.abs(netAvg).toLocaleString()}</span>
+      </div>
+    `;
 }
 
 function renderExpenseChart(data) {
-  const ctx = document.getElementById("expense-chart").getContext("2d");
-  const labels = data.map(d => d.month);
-  const expenses = data.map(d => d.expense);
-  const incomes = data.map(d => d.income);
+    const ctx = document.getElementById("expense-chart").getContext("2d");
+    const labels = data.map(d => d.month);
+    const expenses = data.map(d => d.expense);
+    const incomes = data.map(d => d.income);
 
-  const chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Expense",
-        data: expenses,
-        backgroundColor: "rgba(255, 65, 54, 0.7)"
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: { 
-          legend: { display: false },
-          tooltip: { enabled: false }
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [{
+          label: "Expense",
+          data: expenses,
+          backgroundColor: "rgba(255, 65, 54, 0.7)"
+        }]
       },
-      hover: { mode: null },
-      onClick: (e, elements) => {
-        if (elements.length > 0) {
-          const i = elements[0].index;
-          updateSelectedTrendText(data[i].expense, data[i].month, "expense");
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: "white" },
-          grid: { color: "#666" }
+      options: {
+        responsive: false,
+        plugins: { 
+            legend: { display: false },
+            tooltip: { enabled: false }
         },
-        x: { ticks: { color: "white" } }
+        hover: { mode: null },
+        onClick: (e, elements) => {
+          if (elements.length > 0) {
+            const i = elements[0].index;
+            updateSelectedTrendText(data[i].expense, data[i].month, "expense");
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: "white" },
+            grid: { color: "#666" }
+          },
+          x: { ticks: { color: "white" } }
+        }
       }
-    }
-  });
+    });
 
-  document.getElementById("income-toggle").addEventListener("click", () => {
-    const hasIncome = chart.data.datasets.length > 1;
-    chart.data.datasets = hasIncome
-      ? chart.data.datasets.filter(d => d.label !== "Income")
-      : [...chart.data.datasets, {
-          label: "Income",
-          data: incomes,
-          backgroundColor: "rgba(76, 175, 80, 0.7)"
-        }];
-    chart.update();
-  });
+    const incomeToggle = document.getElementById("income-toggle")
 
-  updateSelectedTrendText(data[data.length - 1].expense, data[data.length - 1].month, "expense");
-  renderExpenseFooter(data);
+    incomeToggle.addEventListener("click", () => {
+        const hasIncome = chart.data.datasets.length > 1;
+
+        if (hasIncome) {
+            chart.data.datasets = chart.data.datasets.filter(d => d.label !== "Income");
+            incomeToggle.src = "../../../assets/Toggle-left.png";
+        } else {
+            chart.data.datasets.push({
+              label: "Income",
+              data: incomes,
+              backgroundColor: "rgba(76, 175, 80, 0.7)"
+            });
+            incomeToggle.src = "../../../assets/Toggle-right.png"; 
+        }
+    });
+
+    updateSelectedTrendText(data[data.length - 1].expense, data[data.length - 1].month, "expense");
+    renderExpenseFooter(data);
 }
 
 function renderNetChart(data) {
