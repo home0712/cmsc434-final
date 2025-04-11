@@ -94,7 +94,6 @@ function renderMainPieChart(type) {
                 legend: { display: false },
                 tooltip: { enabled: false }
             },
-            hover: { mode: null },
             onClick: (event, elements) => {
                 if (isSubChart) return;
                 if (elements.length === 0) return;

@@ -85,7 +85,6 @@ function renderExpenseChart(data) {
             legend: { display: false },
             tooltip: { enabled: false }
         },
-        hover: { mode: null },
         onClick: (e, elements) => {
           if (elements.length > 0) {
             const i = elements[0].index;
