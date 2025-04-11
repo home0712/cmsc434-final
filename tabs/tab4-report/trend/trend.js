@@ -1,19 +1,16 @@
-/* MAIN - TREND REPORT */
-
-// global variable
-let currentTrendView = "EXPENSE"; 
+/* MAIN - TREND */
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadDefaultData();
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    const monthlyData = mergeWithActualTransactions(transactions);
-  
-    renderExpenseChart(monthlyData);
-    renderNetChart(monthlyData);
+    const monthlyData = getMonthlyTransactionData();
+
+    initexpenseChart(monthlyData);
+    initNetChart(monthlyData);
     setupTrendToggle();
     showExpenseView();
 });
 
+// expense/income Bar Chart
+// 선택된 월의 텍스트를 업데이트하는 함수
 function updateSelectedTrendText(value, month, type) {
     const expenseAmount = document.getElementById("expense-amount");
     const expenseText = document.getElementById("expense-header-text");
@@ -21,149 +18,315 @@ function updateSelectedTrendText(value, month, type) {
     const netText = document.getElementById("net-income-header-text");
 
     if (type === "expense") {
-      expenseAmount.innerHTML = `$ ${value.toLocaleString()}`;
-      expenseText.innerHTML = `Spent in ${month}`;
-    } else {
-      const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
-      const color = value > 0 ? "#4CAF50" : value < 0 ? "#FFA07A" : "white";
+        expenseAmount.innerHTML = `$ ${value.toLocaleString()}`;
+        expenseText.innerHTML = `Spent in ${month}`;
+    } else if (type === "net") {
+        let prefix = "";
+        if (value > 0) {
+            netAmount.style = "color: #4CAF50;";
+            prefix = "+";
+        } else if (value < 0) {
+            netAmount.style = "color: #FFA07A;";
+            prefix = "-";
+        } else {
+            netAmount.style = "color: #4CAF50;";
+        }
 
-      netAmount.style.color = color;
-      netAmount.innerHTML = `${prefix}$ ${Math.abs(value).toLocaleString()}`;
-      netText.innerHTML = `in ${month}`;
+        netAmount.innerHTML = `${prefix}$ ${Math.abs(value).toLocaleString()}`;
+        netText.innerHTML = `in ${month}`;      
     }
+    
 }
 
+// compute average expense & income
+function computeAverageExpenseIncome(data) {
+    const expenseTotal = data.reduce((sum, d) => sum + d.expense, 0);
+    const incomeTotal = data.reduce((sum, d) => sum + d.income, 0);
+    const averageExpense = Math.round(expenseTotal / data.length);
+    const averageIncome = Math.round(incomeTotal / data.length);
+
+    return [ averageExpense, averageIncome ];
+}
+
+// redner expense footer
 function renderExpenseFooter(data) {
-    const expenseAvg = computeAverage(data.map(d => d.expense));
-    const incomeAvg = computeAverage(data.map(d => d.income));
+    const footer = document.getElementById("expense-footer");
+    const [averageExpense, averageIncome]= computeAverageExpenseIncome(data);
 
-    document.getElementById("expense-footer").innerHTML = `
-      <div id="average-expense">
-        <span>Average <span id="expense-text">Expense</span> in ${data.length} months</span>
-        <span id="expense-amount">-$ ${expenseAvg.toLocaleString()}</span>
-      </div>
-      <div id="average-income">
-        <span>Average <span id="income-text">Income</span> in ${data.length} months</span>
-        <span id="income-amount">+$ ${incomeAvg.toLocaleString()}</span>
-      </div>
+    footer.innerHTML = `
+        <div id="average-expense">
+            <span>
+                Average
+                <span id="expense-text">Expense</span>
+                in 6 months
+            </span>
+            <span id="expense-amount">-$ ${averageExpense.toLocaleString()}</span>
+        </div>
+
+        <div id="average-income">
+            <span>
+                Average 
+                <span id="income-text">Income</span>
+                in 6 months
+            </span>
+            <span id="income-amount">+$ ${averageIncome.toLocaleString()}</span>
+        </div>
     `;
 }
 
-function renderNetFooter(data) {
-    const netList = data.map(d => d.income - d.expense);
-    const netAvg = computeAverage(netList);
-    const prefix = netAvg > 0 ? "+" : netAvg < 0 ? "-" : "";
-    const color = netAvg > 0 ? "#4CAF50" : netAvg < 0 ? "#FFA07A" : "white";
-
-    document.getElementById("net-income-footer").innerHTML = `
-      <div id="average-net">
-        <span>Average <span id="net-text">Net</span> in ${data.length} months</span>
-        <span id="net-amount" style="color: ${color}">${prefix}$ ${Math.abs(netAvg).toLocaleString()}</span>
-      </div>
-    `;
+// get month abbr
+function getMonthAbbr(data) {
+    const labels = data.map(d => {
+        const [month, year] = d.month.split(" ");
+        const monthAbbr = month.slice(0, 3).toUpperCase();
+        return year === new Date().getFullYear().toString() ? monthAbbr : [monthAbbr, year];
+    });
+    
+    return labels;
 }
 
-function renderExpenseChart(data) {
+// expense Bar Chart 
+function initexpenseChart(data) {
+    const labels = getMonthAbbr(data);
+    const expenseData = data.map(d => d.expense);
+    const incomeData = data.map(d => d.income);
+    const currentMonth = data.at(-1).month;
+
     const ctx = document.getElementById("expense-chart").getContext("2d");
-    const labels = data.map(d => d.month);
-    const expenses = data.map(d => d.expense);
-    const incomes = data.map(d => d.income);
 
-    const chart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels,
+    const expenseMax = Math.max(...expenseData);
+    const incomeMax = Math.max(...incomeData);
+
+    const expenseBarData = {
+        labels: labels,
         datasets: [{
-          label: "Expense",
-          data: expenses,
-          backgroundColor: "rgba(255, 65, 54, 0.7)"
+          data: expenseData,
+          backgroundColor: "rgb(255, 65, 54, 0.7)",
+          borderWidth: 1
         }]
-      },
-      options: {
+    };
+
+    const incomeBarData = {
+        label: "Income",
+        data: incomeData,
+        backgroundColor: "rgb(76, 175, 80, 0.7)",
+        borderWidth: 1
+    }
+
+    const expenseBarOptions = {
         responsive: false,
-        plugins: { 
+        plugins: {
             legend: { display: false },
             tooltip: { enabled: false }
         },
-        onClick: (e, elements) => {
-          if (elements.length > 0) {
-            const i = elements[0].index;
-            updateSelectedTrendText(data[i].expense, data[i].month, "expense");
-          }
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                const index = elements[0].index;
+                const selected = data[index];
+                updateSelectedTrendText(selected.expense, selected.month, "expense");
+            }
         },
         scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: "white" },
-            grid: { color: "#666" }
-          },
-          x: { ticks: { color: "white" } }
-        }
-      }
-    });
-
-    const incomeToggle = document.getElementById("income-toggle")
-
-    incomeToggle.addEventListener("click", () => {
-        const hasIncome = chart.data.datasets.length > 1;
-
-        if (hasIncome) {
-            chart.data.datasets = chart.data.datasets.filter(d => d.label !== "Income");
-            incomeToggle.src = "../../../assets/Toggle-left.png";
-        } else {
-            chart.data.datasets.push({
-              label: "Income",
-              data: incomes,
-              backgroundColor: "rgba(76, 175, 80, 0.7)"
-            });
-            incomeToggle.src = "../../../assets/Toggle-right.png";
-        }
-        chart.update();
-    });
-
-    updateSelectedTrendText(data[data.length - 1].expense, data[data.length - 1].month, "expense");
-    renderExpenseFooter(data);
-}
-
-function renderNetChart(data) {
-  const ctx = document.getElementById("net-income-chart").getContext("2d");
-  const labels = data.map(d => d.month);
-  const netData = data.map(d => d.income - d.expense);
-  const colors = netData.map(v => v >= 0 ? "#4CAF50" : "#FFA07A");
-
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        data: netData,
-        backgroundColor: colors
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: { legend: { display: false }, tooltip: { enabled: false }},
-      onClick: (e, elements) => {
-        if (elements.length > 0) {
-          const i = elements[0].index;
-          updateSelectedTrendText(netData[i], data[i].month, "net");
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: "white" },
-          grid: { color: "#666" }
+            y: {
+                beginAtZero: true,
+                min: 0,
+                max: expenseMax,
+                grid: { color: "#666" },
+                ticks: {
+                    color: "white",
+                    font:  {
+                        size: 15
+                    }
+                }
+            },
+            x: {
+                ticks: { 
+                    color: "white",
+                    font:  {
+                        size: 15
+                    }
+                }
+            }
         },
-        x: { ticks: { color: "white" } }
-      }
-    }
-  });
+    };
 
-  updateSelectedTrendText(netData[netData.length - 1], data[data.length - 1].month, "net");
-  renderNetFooter(data);
+    const expenseIncomeChart = new Chart(ctx, {
+        type: "bar",
+        data: expenseBarData,
+        options: expenseBarOptions
+    });
+
+    updateSelectedTrendText(data.at(-1).expense, currentMonth, "expense");
+    renderExpenseFooter(data);
+
+    let isIncomeVisible = false;
+    const incomeToggleButton = document.getElementById("income-toggle");
+    incomeToggleButton.addEventListener("click", () => {
+        if (!isIncomeVisible) {
+            incomeToggleButton.src = "../../../assets/Toggle-right.png";
+            expenseIncomeChart.data.datasets.push(incomeBarData);
+
+            const newMax = Math.max(expenseMax, incomeMax);
+            expenseIncomeChart.options.scales.y.max = newMax;
+        } else {
+            incomeToggleButton.src = "../../../assets/Toggle-left.png";
+            expenseIncomeChart.data.datasets = expenseIncomeChart.data.datasets.filter(ds => ds.label !== "Income");
+            expenseIncomeChart.options.scales.y.max = expenseMax;
+        }
+        isIncomeVisible = !isIncomeVisible;
+        expenseIncomeChart.update();
+    });
 }
 
+/**
+ * Net Worth Chart
+ */
+// compute net 
+function computeNet(selectedMonth) {
+    return selectedMonth.income - selectedMonth.expense;
+}
+
+// 
+// redner net footer
+function renderNetFooter(data) {
+    const footer = document.getElementById("net-income-footer");
+    const netData = data.map(d => d.income - d.expense);
+
+    const totalNet = netData.reduce((sum, d) => sum + d, 0);
+    const averageNet = Math.round(totalNet / data.length);
+    const prefix = averageNet > 0 ? '+' : averageNet < 0 ? '-' : '';
+    const color = averageNet > 0 ? '#4CAF50' : averageNet < 0 ? '#FFA07A' : 'white';
+
+    footer.innerHTML = `
+        <div id="average-net">
+            <span>
+                Average
+                <span id="net-text">Net</span>
+                in 6 months
+            </span>
+            <span id="net-amount" style="color: ${color}">${prefix}$ ${Math.abs(averageNet).toLocaleString()}</span>
+        </div>
+    `;
+}
+
+// Net Bar Chart 
+function initNetChart(data) {
+    const labels = getMonthAbbr(data);
+    const netData = data.map(d => d.income - d.expense);
+    const currentMonth = data.at(-1).month;
+    const bgColors = netData.map(d=> d >= 0 ? '#4CAF50' : '#FFA07A');
+
+    const min = Math.min(...netData);
+    const max = Math.max(...netData);
+
+    const ctx = document.getElementById("net-income-chart").getContext("2d");
+
+    const netBarData = {
+        labels: labels,
+        datasets: [{
+          data: netData,
+          backgroundColor: bgColors,
+          borderWidth: 1
+        }]
+    };
+
+    const netOptions = {
+        responsive: false,
+        plugins: {
+            legend: {
+              display: false 
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const value = context.raw;
+                        const prefix = value < 0 ? '⬇' : '⬆';
+                        return `${prefix} $${value.toLocaleString()}`;
+                    }
+                },
+                titleFont: {
+                    size: 22
+                },
+                bodyFont: {
+                    size: 22
+                }
+            }
+        },
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                const index = elements[0].index;
+                const selected = data[index];
+                updateSelectedTrendText(computeNet(selected), selected.month, "net");
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                min: min,
+                max: max,
+                ticks: {
+                    callback: function(value) {
+                        return `$${value.toLocaleString()}`;
+                    },
+                    maxTicksLimit: 5,
+                    color: 'white',
+                },
+                grid: { color: "#666" },
+            },
+            x: {
+                ticks: { 
+                    color: "white",
+                    font:  {
+                        size: 15
+                    }
+                }
+            }
+        },
+    };
+
+    const netChart = new Chart(ctx, {
+        type: "bar",
+        data: netBarData,
+        options: netOptions
+    });
+
+    updateSelectedTrendText(computeNet(data.at(-1)), currentMonth, "net");
+    renderNetFooter(data);
+}
+
+//
+function getMonthlyTransactionData() {
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+    // 최근 6개월 기준으로 정리
+    const now = new Date();
+    const monthMap = new Map();
+
+    for (let i = 5; i >= 0; i--) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        monthMap.set(key, {
+            month: date.toLocaleString('default', { month: 'long' }) + ' ' + date.getFullYear(),
+            expense: 0,
+            income: 0
+        });
+    }
+
+    transactions.forEach(log => {
+        const [year, month] = log.date.split("-");
+        const key = `${year}-${month}`;
+        if (monthMap.has(key)) {
+            const data = monthMap.get(key);
+            if (log.type === "EXPENSE") {
+                data.expense += Math.abs(log.amount);
+            } else if (log.type === "INCOME") {
+                data.income += log.amount;
+            }
+        }
+    });
+
+    return Array.from(monthMap.values());
+}
 
 function showExpenseView() {
     document.getElementById("expense-section").style.display = "block";
@@ -189,89 +352,5 @@ function setupTrendToggle() {
         netButton.classList.add("selected");
         expensebutton.classList.remove("selected");
         showNetView();
-    });
-}
-
-/* util functions */
-function getMonthKey(dateStr) {
-    const date = new Date(dateStr);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    return `${year}-${month + 1}`;
-}
-  
-function getMonthLabel(dateStr) {
-    const date = new Date(dateStr);
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    return `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-}
-  
-function computeNet(log) {
-    return log.income - log.expense;
-}
-  
-function computeAverage(values) {
-    const sum = values.reduce((a, b) => a + b, 0);
-    return Math.round(sum / values.length);
-}
-  
-function groupTransactionsByMonth(transactions) {
-    const map = {};
-    transactions.forEach(tx => {
-      const key = getMonthKey(tx.date);
-      if (!map[key]) map[key] = { expense: 0, income: 0, date: tx.date };
-  
-      if (tx.type === "EXPENSE") {
-        map[key].expense += Math.abs(tx.amount);
-      } else if (tx.type === "INCOME") {
-        map[key].income += tx.amount;
-      }
-    });
-  
-    return Object.entries(map)
-      .sort((a, b) => new Date(a[1].date) - new Date(b[1].date))
-      .map(([_, v]) => ({ ...v, month: getMonthLabel(v.date) }));
-}
-
-function getRecentSixMonthsLabels() {
-    const result = [];
-    const now = new Date();
-    const currentYear = now.getFullYear();
-  
-    for (let i = 5; i >= 0; i--) {
-      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const year = d.getFullYear();
-      const monthAbbr = d.toLocaleString('default', { month: 'short' }).toUpperCase(); 
-  
-      const key = `${year}-${d.getMonth() + 1}`;
-      const label = (year === currentYear) ? `${monthAbbr}` : `${monthAbbr} ${year}`;
-  
-      result.push({ key, month: label, income: 0, expense: 0 });
-    }
-  
-    return result;
-}
-
-function mergeWithActualTransactions(transactions) {
-    const base = getRecentSixMonthsLabels();
-    const grouped = {};
-  
-    transactions.forEach(tx => {
-      const key = getMonthKey(tx.date);
-      if (!grouped[key]) grouped[key] = { income: 0, expense: 0 };
-      if (tx.type === "EXPENSE") grouped[key].expense += Math.abs(tx.amount);
-      else if (tx.type === "INCOME") grouped[key].income += tx.amount;
-    });
-  
-    return base.map(monthObj => {
-      const real = grouped[monthObj.key] || {};
-      return {
-        month: monthObj.month,
-        income: real.income || 0,
-        expense: real.expense || 0
-      };
     });
 }
