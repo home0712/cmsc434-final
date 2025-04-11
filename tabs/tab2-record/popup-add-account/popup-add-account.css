@@ -30,6 +30,12 @@
     font-size: 27px;
 }
 
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 input[type="text"], input[type="number"],
 textarea, select {
     background-color: #444;
