@@ -65,7 +65,7 @@ function saveFilter() {
     const types = JSON.parse(sessionStorage.getItem("filterTypes")) || [];
     const methods = JSON.parse(sessionStorage.getItem("filterMethods")) || [];
     const categories = JSON.parse(sessionStorage.getItem("filterCategories")) || [];
-    const subCategories = JSON.parse(sessionStorage.getItem("filterSubcategories")) || [];
+    const subCategories = JSON.parse(sessionStorage.getItem("filterSubCategories")) || [];
 
     const filterData = {
         minAmount: minAmount ? parseFloat(minAmount) : null,
