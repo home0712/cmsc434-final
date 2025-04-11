@@ -65,7 +65,8 @@ function keywordSearch() {
       return keywordMatch && amountMatch && dateMatch;
     });
 
-    document.getElementById("optional-search").style.display = "none";
+    document.getElementById("optional-search").classList.remove("open");
+    document.getElementById("toggle-button").src = "../../../assets/Arrow-down.png";
 
     // show the results
     renderSearchResults(result);

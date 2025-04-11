@@ -29,31 +29,29 @@
             <div id="keyword-error"></div>
           </div>
 
-          <div class="scroll">
-            <form id="search-form">
-                <div id="optional-search" class="optional-fields">
-                  <!-- Amounts -->
-                  <div id="amount">
-                    <label class="field-label">AMOUNT RANGE</label>
-                    <div id="amount-inputs" class="range-inputs">
-                      <input type="number" id="amount-min" placeholder="Min"/>
-                      <span class="dash">–</span>
-                      <input type="number" id="amount-max" placeholder="Max"/>
-                    </div>
-                  </div>
-                
-                  <!-- Period -->
-                  <div id="period">
-                    <label class="field-label">DATE RANGE</label>
-                    <div id="period-inputs" class="range-inputs">
-                      <input type="date" id="date-start"/>
-                      <span class="dash">–</span>
-                      <input type="date" id="date-end"/>
-                    </div>
+          <form id="search-form">
+              <div id="optional-search" class="optional-fields">
+                <!-- Amounts -->
+                <div id="amount">
+                  <label class="field-label">AMOUNT RANGE</label>
+                  <div id="amount-inputs" class="range-inputs">
+                    <input type="number" id="amount-min" placeholder="Min"/>
+                    <span class="dash">–</span>
+                    <input type="number" id="amount-max" placeholder="Max"/>
                   </div>
                 </div>
-            </form>
-          </div>
+              
+                <!-- Period -->
+                <div id="period">
+                  <label class="field-label">DATE RANGE</label>
+                  <div id="period-inputs" class="range-inputs">
+                    <input type="date" id="date-start"/>
+                    <span class="dash">–</span>
+                    <input type="date" id="date-end"/>
+                  </div>
+                </div>
+              </div>
+          </form>
 
           <div id="search-results" class="results-list scroll"></div>
       </div>
