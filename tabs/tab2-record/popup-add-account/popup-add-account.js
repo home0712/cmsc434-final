@@ -70,7 +70,9 @@ function createId(type) {
         id += "ai-";
     }
 
-    id += Date.now().toString();
+    sessionStorage.setItem("test", type);
+
+    id += Math.floor(Math.random() * 101).toString();
     return id;
 }
 
