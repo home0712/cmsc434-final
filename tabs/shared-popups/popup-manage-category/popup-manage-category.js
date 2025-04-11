@@ -49,6 +49,12 @@ function attachEventHandlers() {
 // return to previous page
 function returnToPage() {
     const returnPage = sessionStorage.getItem("returnTo");
+    const secondPage = sessionStorage.getItem("secondReturnTo");
+
+    if (secondPage === "add-log") {
+        window.location.href = "../../tab2-record/popup-add-log/popup-add-log.html";
+        return;
+    }
 
     if (returnPage === "transaction") {
         window.location.href = "../../tab2-record/transaction/transaction.html";
@@ -56,7 +62,7 @@ function returnToPage() {
         window.location.href = "../../tab2-record/calendar/calendar.html";
     } else if (returnPage === "category") {
         window.location.href = "../../tab4-report/category/category.html";
-    }
+    } 
 }
 
 function renderMainCategories() {

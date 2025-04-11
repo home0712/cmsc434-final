@@ -1,6 +1,18 @@
 /* SIDE SCREEN - ADD A LOG */
 
 document.addEventListener("DOMContentLoaded", () => {
+    const saved = JSON.parse(sessionStorage.getItem("pendingLogData"));
+    if (saved) {
+        document.getElementById("amount-field").value = saved.amount;
+        document.getElementById("title-field").value = saved.title;
+        document.getElementById("type-value").value = saved.type;
+        document.getElementById("date-field").value = saved.date;
+        document.getElementById("method-select").value = saved.method;
+        document.getElementById("notes-field").value = saved.notes;
+
+        sessionStorage.removeItem("pendingLogData");
+    }
+
     bindButtons();
     mainCategorySelector();
     subCategorySelector();
@@ -25,6 +37,25 @@ function bindButtons() {
     }
 
     saveButton.addEventListener("click", addTransaction);
+
+    document.getElementById("category-select").addEventListener("change", (event) => {
+        if (event.target.value === "add-edit") {
+            event.target.value = "";
+
+            sessionStorage.setItem("pendingLogData", JSON.stringify({
+                amount: document.getElementById("amount-field").value,
+                title: document.getElementById("title-field").value,
+                type: document.getElementById("type-value").value,
+                date: document.getElementById("date-field").value,
+                method: document.getElementById("method-select").value,
+                notes: document.getElementById("notes-field").value
+            }));
+
+            sessionStorage.setItem("secondReturnTo", "add-log");
+
+            window.location.href = "../../shared-popups/popup-manage-category/popup-manage-category.html";
+        }
+    });
 }
 
 const logAddForm = document.getElementById("add-log-container");
@@ -69,6 +100,7 @@ function addTransaction(event) {
     localLogs.push(newLog);
     localStorage.setItem("transactions", JSON.stringify(localLogs));
 
+    sessionStorage.removeItem("pendingLogData");
     // return to the prev page
     returnToPage();
 }
