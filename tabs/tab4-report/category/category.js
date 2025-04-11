@@ -92,17 +92,9 @@ function renderMainPieChart(type) {
             responsive: false,
             plugins: {
                 legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const value = context.parsed;
-                            return ` $${value.toFixed(2)}`;
-                        }
-                    },
-                    titleFont: { size: 22 },
-                    bodyFont: { size: 22 }
-                }
+                tooltip: { enabled: false }
             },
+            hover: { mode: null },
             onClick: (event, elements) => {
                 if (isSubChart) return;
                 if (elements.length === 0) return;
