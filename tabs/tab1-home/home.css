@@ -46,6 +46,13 @@ hr {
     align-items: center;
 }
 
+.summary-amount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100px;
+}
+
 .summary-amount.income, 
 .summary-amount.net-income {
     color: #4CAF50;
