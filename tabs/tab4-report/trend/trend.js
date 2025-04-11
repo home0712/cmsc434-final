@@ -116,8 +116,9 @@ function renderExpenseChart(data) {
               data: incomes,
               backgroundColor: "rgba(76, 175, 80, 0.7)"
             });
-            incomeToggle.src = "../../../assets/Toggle-right.png"; 
+            incomeToggle.src = "../../../assets/Toggle-right.png";
         }
+        chart.update();
     });
 
     updateSelectedTrendText(data[data.length - 1].expense, data[data.length - 1].month, "expense");
