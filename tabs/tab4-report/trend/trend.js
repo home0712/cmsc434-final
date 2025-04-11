@@ -233,24 +233,8 @@ function initNetChart(data) {
     const netOptions = {
         responsive: false,
         plugins: {
-            legend: {
-              display: false 
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        const value = context.raw;
-                        const prefix = value < 0 ? '⬇' : '⬆';
-                        return `${prefix} $${value.toLocaleString()}`;
-                    }
-                },
-                titleFont: {
-                    size: 22
-                },
-                bodyFont: {
-                    size: 22
-                }
-            }
+            legend: { display: false },
+            tooltip: { enabled: false },
         },
         onClick: (event, elements) => {
             if (elements.length > 0) {
