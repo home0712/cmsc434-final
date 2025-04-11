@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     bindButtons();
     renderGoalInfo();
+    setupUserAmountByGoalType();
 });
 
 function bindButtons() {
@@ -111,4 +112,28 @@ function renderGoalInfo() {
     }
 }
 
+function setupUserAmountByGoalType() {
+    const goalTypeSelect = document.getElementById("type-select");
+    const label = document.querySelector("label[for='current-amount-field']");
+
+    const type = goalTypeSelect.value;
+    if (type === "Budget") {
+        label.textContent = "USED AMOUNT";
+    } else if (type === "Saving") {
+        label.textContent = "SAVED AMOUNT";
+    } else {
+        label.textContent = "AMOUNT NOW";
+    }
+
+    goalTypeSelect.addEventListener("change", () => {
+        const type = goalTypeSelect.value;
+        if (type === "Budget") {
+            label.textContent = "USED AMOUNT";
+        } else if (type === "Saving") {
+            label.textContent = "SAVED AMOUNT";
+        } else {
+            label.textContent = "AMOUNT NOW";
+        }
+    });
+}
 
