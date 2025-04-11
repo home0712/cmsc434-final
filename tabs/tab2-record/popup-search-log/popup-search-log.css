@@ -116,3 +116,30 @@
 .no-result {
     text-align: center;
 }
+
+.search-block {
+    margin-top: 40px;
+}
+
+#optional-search {
+    display: none;
+}
+
+#optional-search.open {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 10px;
+}
+
+/* error */
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
+}
+  
+.error-message {
+    color: #ff5c5c;
+    font-size: 17px;
+    margin-top: 0;
+}

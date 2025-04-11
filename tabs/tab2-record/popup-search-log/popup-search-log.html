@@ -17,38 +17,43 @@
               <img src="../../../assets/X.png" id="header-button">
           </span>
 
-          <form id="search-form">
-              <!-- Keyword Search -->
-              <div class="search-bar">
-                <input type="text" id="keyword-input" placeholder="Keyword"/>
-                <div class="search-buttons">
-                  <img src="../../../assets/Arrow-down.png" id="toggle-button">
-                  <img src="../../../assets/Search.png" id="search-button">
-                </div>
+          <!-- Keyword Search -->
+          <div class="search-block">
+            <div class="search-bar" id="search-bar">
+              <input type="text" id="keyword-input" placeholder="Keyword"/>
+              <div class="search-buttons">
+                <img src="../../../assets/Arrow-down.png" id="toggle-button">
+                <img src="../../../assets/Search.png" id="search-button">
               </div>
-            
-              <div id="optional-search" class="optional-fields">
-                <!-- Amounts -->
-                <div id="amount">
-                  <label class="field-label">AMOUNT RANGE</label>
-                  <div id="amount-inputs" class="range-inputs">
-                    <input type="number" id="amount-min" placeholder="Min"/>
-                    <span class="dash">–</span>
-                    <input type="number" id="amount-max" placeholder="Max"/>
+            </div>
+            <div id="keyword-error"></div>
+          </div>
+
+          <div class="scroll">
+            <form id="search-form">
+                <div id="optional-search" class="optional-fields">
+                  <!-- Amounts -->
+                  <div id="amount">
+                    <label class="field-label">AMOUNT RANGE</label>
+                    <div id="amount-inputs" class="range-inputs">
+                      <input type="number" id="amount-min" placeholder="Min"/>
+                      <span class="dash">–</span>
+                      <input type="number" id="amount-max" placeholder="Max"/>
+                    </div>
+                  </div>
+                
+                  <!-- Period -->
+                  <div id="period">
+                    <label class="field-label">DATE RANGE</label>
+                    <div id="period-inputs" class="range-inputs">
+                      <input type="date" id="date-start"/>
+                      <span class="dash">–</span>
+                      <input type="date" id="date-end"/>
+                    </div>
                   </div>
                 </div>
-              
-                <!-- Period -->
-                <div id="period">
-                  <label class="field-label">DATE RANGE</label>
-                  <div id="period-inputs" class="range-inputs">
-                    <input type="date" id="date-start"/>
-                    <span class="dash">–</span>
-                    <input type="date" id="date-end"/>
-                  </div>
-                </div>
-              </div>
-          </form>
+            </form>
+          </div>
 
           <div id="search-results" class="results-list scroll"></div>
       </div>
