@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     importNavBar();
+    loadDefaultData();
 });
 
 function importNavBar() {
@@ -46,12 +47,29 @@ function importNavBar() {
     }
 }
 
-// main-category data -> localStorage
-if (!localStorage.getItem("mainCategories")) {
-    localStorage.setItem("mainCategories", JSON.stringify(mainCategories));
-}
+function loadDefaultData() {
+    // transaction logs data -> localStorage
+    if (!localStorage.getItem("transactions")) {
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+    }
 
-// sub-category data -> localStorage 
-if (!localStorage.getItem("subCategories")) {
-    localStorage.setItem("subCategories", JSON.stringify(subCategories));
+    // goals data -> localStorage
+    if (!localStorage.getItem("goals")) {
+        localStorage.setItem("goals", JSON.stringify(defaultGoals));
+    }
+
+    // accounts data -> localStorage
+    if (!localStorage.getItem("accounts")) {
+        localStorage.setItem("accounts", JSON.stringify(defaultAccounts));
+    }
+
+    // main-category data -> localStorage
+    if (!localStorage.getItem("mainCategories")) {
+        localStorage.setItem("mainCategories", JSON.stringify(mainCategories));
+    }
+
+    // sub-category data -> localStorage 
+    if (!localStorage.getItem("subCategories")) {
+        localStorage.setItem("subCategories", JSON.stringify(subCategories));
+    }
 }

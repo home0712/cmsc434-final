@@ -1,4 +1,8 @@
 /* MAIN - HOME TAB */
+document.addEventListener("DOMContentLoaded", () => {
+    loadDefaultData();
+});
+
 
 /* 
     click the icons to navigate to dedicated screens 
@@ -47,3 +51,4 @@ function renderCurrentMonth() {
 }
 
 renderCurrentMonth();
+

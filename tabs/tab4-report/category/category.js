@@ -7,6 +7,7 @@ let sortedRankMap = {};
 let sortedColorMap = {};
 
 document.addEventListener("DOMContentLoaded", () => {
+    loadDefaultData();
     bindButtons();
     setupToggle();
     renderMainPieChart("EXPENSE");
@@ -146,8 +147,6 @@ function getCurrentType() {
 
 
 // render ranked table (for both main and sub)
-
-
 function renderRankedTable(categoryData, colors, order = "desc") {
     const tableContainer = document.getElementById("category-rank-body");
     tableContainer.innerHTML = `

@@ -8,6 +8,7 @@ let currentTypeFilter = "All";
 // 초기화
 document.addEventListener("DOMContentLoaded", () => {
     const selectedType = sessionStorage.getItem("selectedType") || "All";
+    loadDefaultData();
     bindButtons();
     setupToggle();
     setupFilterPopup();

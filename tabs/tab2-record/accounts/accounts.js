@@ -5,6 +5,7 @@ let currentSearchTerm = "";
 // initially render the account tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "account");
+    loadDefaultData();
     bindButtons();
     setupToggle();
     renderAccounts();

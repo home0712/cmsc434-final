@@ -3,6 +3,7 @@
 // initially render the calendar tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "calendar");
+    loadDefaultData();
 
     bindButtons();
     setupToggle();

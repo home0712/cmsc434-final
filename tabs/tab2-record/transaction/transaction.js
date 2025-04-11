@@ -9,7 +9,8 @@ let isFilterActive = !!sessionStorage.getItem("logFilters");
 // initially render the transaction tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "transaction");
-    
+    loadDefaultData();
+
     renderTransactionLogs();
     bindButtons();
     setupFilterPopup();
@@ -168,8 +169,6 @@ function renderTransactionLogs() {
         currentDate = new Date(year, month - 1, day);
         sessionStorage.removeItem("prevMonthView");
     }
-
-    console.log(currentDate);
 
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();

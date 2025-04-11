@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    loadDefaultData();
     const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
     const monthlyData = mergeWithActualTransactions(transactions);
   

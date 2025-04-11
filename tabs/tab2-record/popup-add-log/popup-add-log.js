@@ -27,8 +27,6 @@ function bindButtons() {
     saveButton.addEventListener("click", addTransaction);
 }
 
-
-
 const logAddForm = document.getElementById("add-log-container");
 function addTransaction(event) {
     event.preventDefault();
