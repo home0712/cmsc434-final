@@ -8,9 +8,16 @@ body {
     font-size: 25px;
     margin: auto;
     display: flex;
-    justify-content: space-between; /* 좌우 정렬 */
+    justify-content: space-between;
     align-items: center;
     margin-top: 8px;
+}
+
+.action-bar-icon {
+   display: flex;
+   align-items: center;
+   justify-content: right;
+   gap: 7px;
 }
 
 .action-bar-icon img {
@@ -18,6 +25,11 @@ body {
     height: 30px;
     background-color: transparent;
     border: none;
+}
+
+#type-toggle {
+    align-items: center;
+    gap: 8px;
 }
 
 #type-toggle img {

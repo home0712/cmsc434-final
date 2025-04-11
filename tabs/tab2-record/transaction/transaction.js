@@ -10,7 +10,6 @@ let isFilterActive = !!sessionStorage.getItem("logFilters");
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "transaction");
     loadDefaultData();
-
     renderTransactionLogs();
     bindButtons();
     setupFilterPopup();
@@ -20,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     isFilterActive = !!sessionStorage.getItem("logFilters"); 
     updateFilterUI(isFilterActive);
+    updateToggleVisibility();
 });
 
 // collection of buttons
@@ -78,6 +78,11 @@ function setupToggle() {
     });
 }
 
+function updateToggleVisibility() {
+    const toggleArea = document.getElementById("type-toggle");
+    toggleArea.style.visibility = isFilterActive ? "hidden" : "visible";
+}
+
 // apply the filters
 function applyFilters(logs) {
     const filters = JSON.parse(sessionStorage.getItem("logFilters"));
@@ -131,6 +136,7 @@ function clearFiltersInTransactionPage() {
     sessionStorage.setItem("filterWasCleared", "true");
     isFilterActive = false;
     updateFilterUI(false);
+    updateToggleVisibility();
     renderTransactionLogs();
 }
 
