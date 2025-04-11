@@ -142,7 +142,7 @@ function renderNetChart(data) {
     },
     options: {
       responsive: false,
-      plugins: { legend: { display: false } },
+      plugins: { legend: { display: false }, tooltip: { enabled: false }},
       onClick: (e, elements) => {
         if (elements.length > 0) {
           const i = elements[0].index;
