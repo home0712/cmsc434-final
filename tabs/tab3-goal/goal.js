@@ -378,7 +378,7 @@ function clearGoalFilters() {
     sessionStorage.removeItem("goalFilters");
     isFilterActive = false;
     updateFilterUI(false);
-    renderGoals(currentTypeFilter.toLowerCase());
+    renderGoals(currentTypeFilter);
 }
 
 function setupFilterPopup() {

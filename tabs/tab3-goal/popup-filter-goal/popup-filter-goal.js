@@ -40,6 +40,8 @@ function saveFilter() {
     if (!allNull) {
         sessionStorage.setItem("goalFilters", JSON.stringify(filterData));
         window.location.href = "../goal.html";
+    } else {
+        window.location.href = "../goal.html";
     }
 }
 
