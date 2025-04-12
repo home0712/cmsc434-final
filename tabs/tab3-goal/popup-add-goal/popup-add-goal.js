@@ -37,6 +37,13 @@ function addGoal(event) {
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
+    // 날짜 유효성 계산
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+        document.getElementById("start-date-field").classList.add("input-error");
+        document.getElementById("end-date-field").classList.add("input-error");
+        return;
+    }
+
     // compute percentage
     // 퍼센트 계산
     const percent = goalAmount === 0 ? 0 : Math.floor(currentAmount / goalAmount * 100);
