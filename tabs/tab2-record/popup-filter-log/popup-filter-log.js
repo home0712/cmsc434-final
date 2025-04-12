@@ -25,20 +25,36 @@ function bindButtons() {
     document.getElementById("clear-filter").addEventListener("click", clearFilter);
 
     document.getElementById("select-type-button").addEventListener("click", () => {
+        saveTemp();
         window.location.href = "../popup-select/popup-select-type/popup-select-type.html";
     });
 
     document.getElementById("select-method-button").addEventListener("click", () => {
+        saveTemp();
         window.location.href = "../popup-select/popup-select-method/popup-select-method.html";
     });
       
     document.getElementById("select-category-button").addEventListener("click", () => {
+        saveTemp();
         window.location.href = "../popup-select/popup-select-category/popup-select-category.html";
     });
 
     document.getElementById("select-subcategory-button").addEventListener("click", () => {
+        saveTemp();
         window.location.href = "../popup-select/popup-select-sub-category/popup-select-sub-category.html";
     });
+}
+
+function saveTemp() {
+    const selectedBtn = document.querySelector(".preset-button.selected");
+
+    sessionStorage.setItem("pendingFilterData", JSON.stringify({
+        minAmount:  document.getElementById("min-amount").value,
+        maxAmount: document.getElementById("max-amount").value,
+        startDate: document.getElementById("start-date").value,
+        endDate: document.getElementById("end-date").value,
+        selectedPresetButton: selectedBtn ? selectedBtn.dataset.range : null,
+    }));
 }
 
 // save filter
@@ -145,6 +161,9 @@ function setupDateInputOverride() {
 
 //
 function updateFilterUIFromSession() {
+    const saved = JSON.parse(sessionStorage.getItem("pendingFilterData"));
+    if (!saved) return;
+
     const types = JSON.parse(sessionStorage.getItem("filterTypes")) || [];
     const methods = JSON.parse(sessionStorage.getItem("filterMethods")) || [];
     const mainCategories = JSON.parse(sessionStorage.getItem("filterCategories")) || [];
@@ -155,6 +174,16 @@ function updateFilterUIFromSession() {
     document.getElementById("category-count").textContent = mainCategories.length > 0 ? `${mainCategories.length}` : "All";
     document.getElementById("subcategory-count").textContent = subCategories.length > 0 ? `${subCategories.length}` : "All";
 
+    if (saved.selectedPresetButton) {
+        const presetButtons = document.querySelectorAll(".preset-button");
+        presetButtons.forEach(btn => {
+            if (btn.dataset.range === saved.selectedPresetButton) {
+                btn.classList.add("selected");
+            }
+        });
+    }
+
+    sessionStorage.removeItem("pendingFilterData");
     toggleSubCategoryField();
 }
 
