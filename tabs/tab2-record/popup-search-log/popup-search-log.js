@@ -55,8 +55,8 @@ function keywordSearch() {
         (log.notes?.toLowerCase().includes(keyword));
 
       const amountMatch =
-        (isNaN(minAmount) || log.amount >= minAmount) &&
-        (isNaN(maxAmount) || log.amount <= maxAmount);
+        (isNaN(minAmount) || Math.abs(log.amount) >= minAmount) &&
+        (isNaN(maxAmount) || Math.abs(log.amount) <= maxAmount);
 
       const dateMatch =
         (startDate === "" || log.date >= startDate) &&
