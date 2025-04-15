@@ -104,14 +104,13 @@ function applyFilters(logs) {
         } = filters;
 
         const amount = Math.abs(log.amount);
-        const date = log.date;
-
+        const logDate = new Date(log.date);
         const logType = log.type === "EXPENSE" ? "Expense" : "Income";
 
         if (minAmount != null && amount < minAmount) return false;
-        if (maxAmount != null && amount > maxAmount) return false;
-        if (startDate && date < startDate) return false;
-        if (endDate && date > endDate) return false;
+        if (maxAmount != null && amount > maxAmount) return false;   
+        if (startDate && logDate < new Date(startDate)) return false;
+        if (endDate && logDate > new Date(endDate)) return false;
         if (types && types.length > 0 && !types.includes(logType)) return false;
         if (methods && methods.length > 0 && !methods.includes(log.method)) return false;
         if (categories && categories.length > 0 && !categories.includes(log.category.main)) return false;

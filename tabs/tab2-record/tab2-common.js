@@ -81,7 +81,7 @@ const weekdayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 function filterLogs(logs, year, month) {
     const filtered = logs.filter(log => {
         const logDate = new Date(log.date);
-        return logDate.getFullYear() === year && logDate.getMonth() === month;
+        return logDate.getFullYear() === year && logDate.getMonth() === month
     });
 
     return filtered;
