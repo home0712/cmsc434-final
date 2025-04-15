@@ -56,8 +56,8 @@ function keywordSearch() {
           (goal.notes?.toLowerCase().includes(keyword));
 
         const amountMatch =
-          (isNaN(minAmount) || goal.amount >= minAmount) &&
-          (isNaN(maxAmount) || goal.amount <= maxAmount);
+          (isNaN(minAmount) || Math.abs(goal.amount) >= minAmount) &&
+          (isNaN(maxAmount) || Math.abs(goal.amount) <= maxAmount);
 
         const dateMatch =
           (startDate === "" || goal.date >= startDate) &&
