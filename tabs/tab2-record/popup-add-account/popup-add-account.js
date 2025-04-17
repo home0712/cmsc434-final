@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     clearRequiredError();
 });
 
-/* 
-    click x button to close 
-*/
 function bindButtons() {
     const closeButton = document.getElementById("header-button");
     const saveButton = document.getElementById("save-button");
@@ -19,7 +16,6 @@ function bindButtons() {
     saveButton.addEventListener("click", addAccount);
 }
 
-// click save button & add an account
 const accountForm = document.getElementById("account-add-form");
 function addAccount(event) {
     event.preventDefault();
@@ -56,6 +52,7 @@ function addAccount(event) {
     localStorage.setItem("accounts", JSON.stringify(localAccounts));
 
     // 추가하고 나면 다시 accounts 페이지로 돌아가기
+    sessionStorage.setItem("resultFor", type);
     window.location.href = "../accounts/accounts.html"; 
 }
 
@@ -69,8 +66,6 @@ function createId(type) {
     } else if (type.toLowerCase() === "investment") {
         id += "ai-";
     }
-
-    sessionStorage.setItem("test", type);
 
     id += Math.floor(Math.random() * 101).toString();
     return id;

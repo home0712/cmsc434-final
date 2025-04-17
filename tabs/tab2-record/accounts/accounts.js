@@ -5,9 +5,14 @@ let currentSearchTerm = "";
 // initially render the account tab
 document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("returnTo", "account");
+    sessionStorage.setItem("returnAccountTo", "All");
     loadDefaultData();
     bindButtons();
     setupToggle();
+
+    if (sessionStorage.getItem("resultFor")) {
+        currentTypeFilter = sessionStorage.getItem("resultFor");
+    }
     renderAccounts();
 });
 
@@ -50,6 +55,7 @@ function setupToggle() {
             selectedText.textContent = currentTypeFilter;
             dropdown.classList.add("hidden");
             toggleIcon.src = "../../../assets/Arrow-down.png";
+            sessionStorage.setItem("returnAccountTo", currentTypeFilter);
 
             options.forEach(option => {
                 option.classList.remove("selected");
@@ -109,6 +115,19 @@ function renderAccounts() {
     addAccountCard(checkingAccounts, checkingDiv, "Checking");
     addAccountCard(savingAccounts, savingDiv, "Saving");
     addAccountCard(investAccounts, investmentDiv, "Investment");
+
+    const selectedText = document.getElementById("dropdown-selected");
+    const options = document.querySelectorAll(".dropdown-option");
+    selectedText.textContent = currentTypeFilter;
+    options.forEach(option => {
+        option.classList.remove("selected");
+
+        if (option.dataset.id === currentTypeFilter) {
+            option.classList.add("selected");
+        }
+    });
+    
+
 
     const editButtons = document.querySelectorAll(".edit-button");
     for (const button of editButtons) {
