@@ -26,26 +26,6 @@ function bindButtons() {
     keywordInput.addEventListener("focus", () => {
         clearKeywordError();
     });
-
-    accountsContainer.addEventListener("click", (event) => {
-      const card = event.target.closest(".account-card");
-      const popup = card.querySelector(".adjust-popup");
-      const input = popup.querySelector(".adjust-input");
-      const value = parseFloat(input.value);
-      const mode = popup.dataset.mode;
-    
-      if (event.target.classList.contains("confirm-adjust")) {
-          if (isNaN(value)) {
-              alert("Invalid amount"); // 
-              return;
-          }
-          adjustBalance(card, mode, value);
-      }
-    
-      if (event.target.classList.contains("cancel-adjust")) {
-          popup.classList.add("hidden");
-      }
-    });
 }
 
 function keywordSearch() {
@@ -70,9 +50,15 @@ function keywordSearch() {
         (account.notes?.toLowerCase().includes(keyword)) ||
         (account.bank?.toLowerCase().includes(keyword));
 
-      const amountMatch =
-        (isNaN(minAmount) || account.balance >= minAmount) &&
-        (isNaN(maxAmount) || account.balance <= maxAmount);
+      let amountMatch = true;
+
+      if (!isNaN(minAmount) && !isNaN(maxAmount)) {
+        amountMatch = account.balance >= minAmount && account.balance <= maxAmount;
+      } else if (isNaN(maxAmount) && !isNaN(minAmount)) {
+        amountMatch = account.balance >= minAmount;
+      } else if (isNaN(minAmount) && !isNaN(maxAmount)) {
+        amountMatch = account.balance <= maxAmount;
+      } 
 
       const typeMatch = type === "All" || account.type === type;
 
@@ -119,6 +105,8 @@ function renderSearchResults(accounts) {
       groupDiv.className = "account-card";
       groupDiv.dataset.id = `${account.id}`;
 
+      const balance = account.balance < 0 ? Math.abs(account.balance) : account.balance;
+
       const accountCard = `
           <div class="account-header">
                 <span class="account-title">
@@ -133,7 +121,8 @@ function renderSearchResults(accounts) {
             <div class="balance-row">
                 <img src="../../../assets/Subtract.png" class="balance-button decrease">
                 <div class="account-balance">
-                    $${account.balance.toLocaleString(undefined, {
+                    ${account.balance < 0 ? "-" : ""}
+                    $${balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                     })}
