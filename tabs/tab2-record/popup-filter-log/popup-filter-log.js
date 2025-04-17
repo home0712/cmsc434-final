@@ -43,6 +43,16 @@ function bindButtons() {
         saveTemp();
         window.location.href = "../popup-select/popup-select-sub-category/popup-select-sub-category.html";
     });
+
+    const minAmount = document.getElementById("min-amount");
+    const maxAmount = document.getElementById("max-amount");
+    clearError(minAmount);
+    clearError(maxAmount);
+
+    const startDate = document.getElementById("start-date");
+    const endDate = document.getElementById("end-date");
+    clearError(startDate);
+    clearError(endDate);
 }
 
 function saveTemp() {
@@ -63,6 +73,17 @@ function saveFilter() {
     const maxAmount = document.getElementById("max-amount").value;
     const startDate = document.getElementById("start-date").value;
     const endDate = document.getElementById("end-date").value;
+
+    if (minAmount > maxAmount) {
+        showAmountError();
+        return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+        showDateError();
+        return;
+    }
+
     const selectedPresetButton = document.querySelector(".preset-button.selected");
     
     let calculatedStartDate = null;
@@ -197,4 +218,31 @@ function toggleSubCategoryField() {
     } else {
       subField.classList.remove("hidden");
     }
+}
+
+// input value error
+function showAmountError() {
+    const minAmount = document.getElementById("min-amount");
+    const maxAmount = document.getElementById("max-amount");
+    
+    minAmount.classList.add("input-error");
+    maxAmount.classList.add("input-error");
+}
+
+function showDateError() {
+    const startDate = document.getElementById("start-date");
+    const endDate = document.getElementById("end-date");
+    
+    startDate.classList.add("input-error");
+    endDate.classList.add("input-error");
+}
+
+function clearError(element) {
+    const eventList = ["input", "click", "focus"];
+
+    eventList.forEach(eventName => {
+        element.addEventListener(eventName, () => {
+            element.classList.remove("input-error");
+        });
+    });
 }

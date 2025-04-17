@@ -182,3 +182,9 @@
     background-color: #aaa;
     color: black;
 }
+
+/* input error */
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
+}
