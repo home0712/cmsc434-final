@@ -54,13 +54,25 @@ function keywordSearch() {
         (log.title?.toLowerCase().includes(keyword)) || 
         (log.notes?.toLowerCase().includes(keyword));
 
-      const amountMatch =
-        (isNaN(minAmount) || Math.abs(log.amount) >= minAmount) &&
-        (isNaN(maxAmount) || Math.abs(log.amount) <= maxAmount);
+      let amountMatch = true;
 
-      const dateMatch =
-        (startDate === "" || log.date >= startDate) &&
-        (endDate === "" || log.date <= endDate);
+      if (!isNaN(minAmount) && !isNaN(maxAmount)) {
+        amountMatch = Math.abs(log.amount) >= minAmount && Math.abs(log.amount) <= maxAmount;
+      } else if (isNaN(maxAmount) && !isNaN(minAmount)) {
+        amountMatch = Math.abs(log.amount) >= minAmount;
+      } else if (isNaN(minAmount) && !isNaN(maxAmount)) {
+        amountMatch = Math.abs(log.amount) <= maxAmount;
+      }   
+
+      let dateMatch = true;
+
+      if (startDate && endDate) {
+        dateMatch = (new Date(log.date) >= new Date(startDate)) && (new Date(log.date) <= new Date(endDate));
+      } else if (!endDate && startDate) {
+        dateMatch = (new Date(log.date) >= new Date(startDate));
+      } else if (endDate && !startDate) {
+        dateMatch = (new Date(log.date) <= new Date(endDate));
+      }
 
       return keywordMatch && amountMatch && dateMatch;
     });
