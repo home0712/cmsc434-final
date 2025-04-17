@@ -149,6 +149,8 @@ function addAccountCard(accountLists, parentDiv, type) {
         const groupDiv = document.createElement("div");
         groupDiv.className = "account-card";
         groupDiv.dataset.id = `${acc.id}`;
+
+        const balance = account.balance < 0 ? Math.abs(account.balance) : account.balance;
         
         const accountCard = `
             <div class="account-header">
@@ -164,7 +166,8 @@ function addAccountCard(accountLists, parentDiv, type) {
             <div class="balance-row">
                 <img src="../../../assets/Subtract.png" class="balance-button decrease">
                 <div class="account-balance">
-                    $${acc.balance.toLocaleString(undefined, {
+                    ${account.balance < 0 ? "-" : ""}
+                    $${balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                     })}
@@ -252,21 +255,25 @@ function adjustBalance(card, mode, value) {
 const accountsContainer = document.getElementById("account-container");
 accountsContainer.addEventListener("click", (event) => {
     const card = event.target.closest(".account-card");
-    const popup = card.querySelector(".adjust-popup");
-    const input = popup.querySelector(".adjust-input");
-    const value = parseFloat(input.value);
-    const mode = popup.dataset.mode;
+    if (card) {
+      const popup = card.querySelector(".adjust-popup");
+      const input = popup.querySelector(".adjust-input");
+      const value = parseFloat(input.value);
+      const mode = popup.dataset.mode;
 
-    if (event.target.classList.contains("confirm-adjust")) {
-        if (isNaN(value)) {
-            alert("Invalid amount"); // 
+      input.classList.remove("input-error");
+
+      if (event.target.classList.contains("confirm-adjust")) {
+          if (isNaN(value)) {
+            input.classList.add("input-error"); 
             return;
-        }
-        adjustBalance(card, mode, value);
-    }
+          }
+          adjustBalance(card, mode, value);
+      }
 
-    if (event.target.classList.contains("cancel-adjust")) {
-        popup.classList.add("hidden");
+      if (event.target.classList.contains("cancel-adjust")) {
+          popup.classList.add("hidden");
+      }
     }
 });
 

@@ -9,7 +9,6 @@ function bindButtons() {
     const closeButton = document.getElementById("header-button");
     const searchButton = document.getElementById("search-button");
     const keywordInput = document.getElementById("keyword-input");
-    const accountsContainer = document.getElementById("account-container");
 
     closeButton.addEventListener("click", () => {
       window.location.href = "../accounts/accounts.html";
@@ -246,6 +245,31 @@ function adjustBalance(card, mode, value) {
   localStorage.setItem("accounts", JSON.stringify(accounts));
   keywordSearch();
 }
+
+const accountsContainer = document.getElementById("account-container");
+accountsContainer.addEventListener("click", (event) => {
+    const card = event.target.closest(".account-card");
+    if (card) {
+      const popup = card.querySelector(".adjust-popup");
+      const input = popup.querySelector(".adjust-input");
+      const value = parseFloat(input.value);
+      const mode = popup.dataset.mode;
+
+      input.classList.remove("input-error");
+
+      if (event.target.classList.contains("confirm-adjust")) {
+          if (isNaN(value)) {
+              input.classList.add("input-error"); 
+              return;
+          }
+          adjustBalance(card, mode, value);
+      }
+
+      if (event.target.classList.contains("cancel-adjust")) {
+          popup.classList.add("hidden");
+      }
+    }
+});
 
 // active a popup to delete
 function activeDeletePopup(event) {
