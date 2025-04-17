@@ -1,27 +1,30 @@
 /* EDIT AN ACCOUNT */
 
+document.addEventListener("DOMContentLoaded", () => {
+    bindButtons();
+    clearRequiredError();
+});
 
-const closeButton = document.getElementById("header-button");
-closeButton.addEventListener("click", returnToPage);
+function bindButtons() {
+    const closeButton = document.getElementById("header-button");
+    closeButton.addEventListener("click", () => {
+        window.location.href = "../accounts/accounts.html";
+    });
 
-function returnToPage() {
-    window.location.href = "../accounts/accounts.html";
+    const saveButton = document.getElementById("save-button");
+    saveButton.addEventListener("click", editAccount);
 }
 
-/*
-    click save button & edit an account
-*/
-const saveButton = document.getElementById("save-button");
 const accountForm = document.getElementById("account-edit-form");
-saveButton.addEventListener("click", editAccount);
-
 function editAccount(event) {
     event.preventDefault();
 
     if (!accountForm.checkValidity()) {
-        alert("Please fill in all required fields.");
+        showRequiredError();
         return;
     }
+
+    clearRequiredError();
 
     // 수정할 데이터 가져오기 (sessionStorage)
     const account = JSON.parse(sessionStorage.getItem("editingAccount")) || null;
@@ -57,6 +60,7 @@ function editAccount(event) {
     localStorage.setItem("accounts", JSON.stringify(localAccounts));
 
     // 추가하고 나면 다시 accounts 페이지로 돌아가기
+    sessionStorage.setItem("resultFor", type);
     window.location.href = "../accounts/accounts.html"; 
 }
 
@@ -79,3 +83,24 @@ function renderAccountInfo() {
 }
 
 renderAccountInfo();
+
+function showRequiredError() {
+    const invalids = accountForm.querySelectorAll(":invalid");
+    
+    invalids.forEach(item => {
+        item.classList.add("input-error");
+    });
+}
+
+function clearRequiredError() {
+    const inputs = accountForm.querySelectorAll("input, select, textarea");
+    const eventList = ["input", "click", "focus"];
+
+    inputs.forEach(field => {
+        eventList.forEach(eventName => {
+            field.addEventListener(eventName, () => {
+                field.classList.remove("input-error");
+            })
+        });
+    });
+}

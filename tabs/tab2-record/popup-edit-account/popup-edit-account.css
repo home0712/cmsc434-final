@@ -49,3 +49,9 @@
     margin-bottom: 10px;
     font-size: 27px;
 }
+
+/* input error */
+.input-error {
+    border: 2px solid #ff5c5c !important;
+    outline: none;
+}
