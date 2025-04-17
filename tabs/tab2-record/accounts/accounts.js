@@ -150,7 +150,7 @@ function addAccountCard(accountLists, parentDiv, type) {
         groupDiv.className = "account-card";
         groupDiv.dataset.id = `${acc.id}`;
 
-        const balance = account.balance < 0 ? Math.abs(account.balance) : account.balance;
+        const balance = acc.balance < 0 ? Math.abs(acc.balance) : acc.balance;
         
         const accountCard = `
             <div class="account-header">
@@ -166,7 +166,7 @@ function addAccountCard(accountLists, parentDiv, type) {
             <div class="balance-row">
                 <img src="../../../assets/Subtract.png" class="balance-button decrease">
                 <div class="account-balance">
-                    ${account.balance < 0 ? "-" : ""}
+                    ${acc.balance < 0 ? "-" : ""}
                     $${balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
