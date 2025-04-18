@@ -13,6 +13,21 @@ function bindButtons() {
 
     document.getElementById("save-filter").addEventListener("click", saveFilter);
     document.getElementById("clear-filter").addEventListener("click", clearFilter);
+
+    const minGoalAmount = document.getElementById("amount-min");
+    const maxGoalAmount = document.getElementById("amount-max");
+    clearError(minGoalAmount);
+    clearError(maxGoalAmount);
+    
+    const minCurrAmount = document.getElementById("min-progress");
+    const maxCurrAmount = document.getElementById("max-progress");
+    clearError(minCurrAmount);
+    clearError(maxCurrAmount);
+
+    const startDate = document.getElementById("date-start");
+    const endDate = document.getElementById("date-end");
+    clearError(startDate);
+    clearError(endDate);
 }
 
 function saveFilter() {
@@ -24,6 +39,21 @@ function saveFilter() {
     const maxProgress = parseFloat(document.getElementById("max-progress").value);
     const startDate = document.getElementById("date-start").value;
     const endDate = document.getElementById("date-end").value;
+
+    if (minGoalAmount > maxGoalAmount) {
+        showGoalAmountError();
+        return;
+    }
+
+    if (minProgress > maxProgress) {
+        showCurrentAmountError();
+        return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+        showDateError();
+        return;
+    }
 
     const filterData = {
         type: type || null,
@@ -91,5 +121,40 @@ function setupStatusOptionsByGoalType() {
             `;
             label.textContent = "CURRENT AMOUNT";
         }
+    });
+}
+
+// input value error
+function showGoalAmountError() {
+    const minAmount = document.getElementById("amount-min");
+    const maxAmount = document.getElementById("amount-max");
+    
+    minAmount.classList.add("input-error");
+    maxAmount.classList.add("input-error");
+}
+
+function showCurrentAmountError() {
+    const minAmount = document.getElementById("min-progress");
+    const maxAmount = document.getElementById("max-progress");
+    
+    minAmount.classList.add("input-error");
+    maxAmount.classList.add("input-error");
+}
+
+function showDateError() {
+    const startDate = document.getElementById("date-start");
+    const endDate = document.getElementById("date-end");
+    
+    startDate.classList.add("input-error");
+    endDate.classList.add("input-error");
+}
+
+function clearError(element) {
+    const eventList = ["input", "click", "focus"];
+
+    eventList.forEach(eventName => {
+        element.addEventListener(eventName, () => {
+            element.classList.remove("input-error");
+        });
     });
 }

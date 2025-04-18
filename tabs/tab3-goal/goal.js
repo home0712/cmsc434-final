@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
     isFilterActive = !!sessionStorage.getItem("goalFilters"); 
     updateFilterUI(isFilterActive);
     if (isFilterActive) {
-        applyTypeFilterToToggle(); 
+        renderGoals();
+        updateTypeToggleVisibility(); 
     } else {
         if (addedType) {
             renderGoals(addedType);
@@ -127,7 +128,6 @@ function renderGoals(selectedType = "All") {
     } else if (selectedType === "Saving") {
         addSavingCard(savingGoals, savingDiv);
         sessionStorage.setItem("selectedType", "Saving");
-        console.log("여기예요");
     }
 
     // edit buttons for each card
@@ -387,7 +387,8 @@ function clearGoalFilters() {
     sessionStorage.removeItem("goalFilters");
     isFilterActive = false;
     updateFilterUI(false);
-    renderGoals(currentTypeFilter);
+    renderGoals();
+    syncToggleToSelectedType();
 }
 
 function setupFilterPopup() {
@@ -414,23 +415,9 @@ function setupFilterPopup() {
     });
 }
 
-function applyTypeFilterToToggle() {
-    const filters = JSON.parse(sessionStorage.getItem("goalFilters"));
-    if (!filters || !filters.type) return;
-  
-    const selectedType = filters.type; 
-    const toggleOptions = document.querySelectorAll(".dropdown-option");
-    const selectedText = document.getElementById("dropdown-selected");
-  
-    toggleOptions.forEach(option => {
-        option.classList.remove("selected");
-        if (option.dataset.id === selectedType) {
-            option.classList.add("selected");
-            selectedText.textContent = option.dataset.id;
-        }
-    });
-  
-    renderGoals(selectedType);
+function updateTypeToggleVisibility() {
+    const toggleArea = document.getElementById("dropdown-toggle");
+    toggleArea.style.visibility = isFilterActive ? "hidden" : "visible";
 }
 
 function syncToggleToSelectedType() {
