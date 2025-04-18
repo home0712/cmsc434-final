@@ -28,6 +28,16 @@ function bindButtons() {
     keywordInput.addEventListener("focus", () => {
         clearKeywordError();
     });
+
+    const minAmount = document.getElementById("amount-min");
+    const maxAmount = document.getElementById("amount-max");
+    clearError(minAmount);
+    clearError(maxAmount);
+
+    const startDate = document.getElementById("date-start");
+    const endDate = document.getElementById("date-end");
+    clearError(startDate);
+    clearError(endDate);
 }
 
 // search logs based on the search fields used entered
@@ -46,6 +56,17 @@ function keywordSearch() {
     }
 
     clearKeywordError();
+
+    if (minAmount > maxAmount) {
+      showAmountError();
+      return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+      showDateError();
+      return
+    }
+
     let localLogs = JSON.parse(localStorage.getItem("transactions")) || [];
 
     const result = localLogs.filter(log => {
@@ -149,5 +170,32 @@ function toggleOption() {
       toggleButton.src = isOpen
         ? "../../../assets/Arrow-up.png"
         : "../../../assets/Arrow-down.png";
+  });
+}
+
+// input value error
+function showAmountError() {
+  const minAmount = document.getElementById("amount-min");
+  const maxAmount = document.getElementById("amount-max");
+  
+  minAmount.classList.add("input-error");
+  maxAmount.classList.add("input-error");
+}
+
+function showDateError() {
+  const startDate = document.getElementById("date-start");
+  const endDate = document.getElementById("date-end");
+  
+  startDate.classList.add("input-error");
+  endDate.classList.add("input-error");
+}
+
+function clearError(element) {
+  const eventList = ["input", "click", "focus"];
+
+  eventList.forEach(eventName => {
+      element.addEventListener(eventName, () => {
+          element.classList.remove("input-error");
+      });
   });
 }
