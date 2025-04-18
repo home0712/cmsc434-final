@@ -1,17 +1,19 @@
 # CMSC434 Final Project: Budget App
 
-## Links
-- [Figma](https://www.figma.com/design/G4Ue7GHzKpG33kMUtMb6oE/CMSC434?t=Fl1C3oC3uJou6rqK-1)
-    - for sharing & finalizing design ideas
-- [Notion](https://www.notion.so/CMSC434-Team-Project-1ae65885153880a1a5efd043fae533e2?pvs=4)
-    - for keeping track of scrum & sprint
-    - notion account needed
+## Instructions
+This project was developed using HTML, CSS, and JavaScript, and is designed to fit a mini tablet screen (640×960px).
 
-## In Progress
-- N/A
+## How to Run
+To run and test the app, please follow the steps below:
+    1. Unzip the provided .zip file.
+    2. Open the index.html file in Google Chrome.
+    3. If the navigation bar is not fully visible at 100% scaling, adjust the zoom level.
 
-## Verification
-- N/A
+Since users' devices and Chrome settings may vary, the navigation bar might not be fully visible when opening the file. If this happens, click the settings button in the top right corner of Chrome and adjust the Zoom In/Out setting.
 
-## Done
-- N/A
+Alternatively, to match the 640x960px resolution manually, 
+    1. open Chrome Developer Tools (Windows: F12 or Ctrl + Shift + I / Mac: Command + Option + I).
+    2. Enable the Device Toolbar (Windows: Ctrl + Shift + M / Mac: Shift + Command + M)
+    3. Set the resolution to 640×960px.
+
+
