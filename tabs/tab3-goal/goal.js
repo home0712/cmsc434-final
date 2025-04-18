@@ -106,6 +106,10 @@ function renderGoals(selectedType = "All") {
     if (sessionStorage.getItem("goalFilters")) {
         localGoals = applyFilters(localGoals);
     }
+
+    if (localGoals.length === 0) {
+        budgetDiv.innerHTML = `<div class="no-data-found">No Data Found</div>`;
+    }
     
     const budgetGoals = [];
     const savingGoals = [];

@@ -191,6 +191,10 @@ function renderTransactionLogs() {
     }
     filteredLocal.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+    if (filteredLocal.length === 0) {
+        container.innerHTML = `<div class="no-data-found">No Data Found</div>`;
+    }
+
     // unset advanced filter (no filterLog) -> apply the simple filter (toggle buttons) only
     // 심화 filter 설정되지 않은 경우 (filterLog 없음) -> 심플 필터 (토글 버튼)만 처리
     if (!isFilterActive) {

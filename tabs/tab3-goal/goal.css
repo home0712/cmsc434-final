@@ -306,3 +306,8 @@ body {
 #filter.active {
     filter: invert(58%) sepia(18%) saturate(657%) hue-rotate(94deg) brightness(95%) contrast(84%);
 }
+
+.no-data-found {
+    text-align: center;
+    font-size: 24px;
+}
