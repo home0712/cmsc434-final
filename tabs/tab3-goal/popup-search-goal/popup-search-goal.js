@@ -27,6 +27,21 @@ function bindButtons() {
     keywordInput.addEventListener("focus", () => {
         clearKeywordError();
     });
+
+    const minAmount = document.getElementById("amount-min");
+    const maxAmount = document.getElementById("amount-max");
+    clearError(minAmount);
+    clearError(maxAmount);
+
+    const startDate = document.getElementById("date-start");
+    const endDate = document.getElementById("date-end");
+    clearError(startDate);
+    clearError(endDate);
+
+    const minProgress = document.getElementById("min-progress");
+    const maxProgress = document.getElementById("max-progress");
+    clearError(minProgress);
+    clearError(maxProgress);
 }
 
 function keywordSearch() {
@@ -47,6 +62,22 @@ function keywordSearch() {
     }
 
     clearKeywordError();
+
+    if (minAmount > maxAmount) {
+        showGoalAmountError();
+        return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+        showDateError();
+        return;
+    }
+
+    if (minProgress > maxProgress) {
+        showCurrentAmountError();
+        return;
+    }
+
     let localGoals = JSON.parse(localStorage.getItem("goals")) || [];
 
     const result = localGoals.filter(goal => {
@@ -55,20 +86,8 @@ function keywordSearch() {
           (goal.title?.toLowerCase().includes(keyword)) || 
           (goal.notes?.toLowerCase().includes(keyword));
 
-        const amountMatch =
-          (isNaN(minAmount) || Math.abs(goal.amount) >= minAmount) &&
-          (isNaN(maxAmount) || Math.abs(goal.amount) <= maxAmount);
-
-        const dateMatch =
-          (startDate === "" || goal.date >= startDate) &&
-          (endDate === "" || goal.date <= endDate);
-
         const typeMatch = type === "All" || goal.type === type;
         const progressAmount = goal.type === "Budget" ? goal.usedAmount : goal.savedAmount;
-
-        const progressMatch =
-          (isNaN(minProgress) || progressAmount >= minProgress) &&
-          (isNaN(maxProgress) || progressAmount <= maxProgress);
 
         let statusMatch = true;
         if (status === "Completed") {
@@ -88,13 +107,41 @@ function keywordSearch() {
             }
         }
 
-      return (
-          keywordMatch &&
-          amountMatch &&
-          dateMatch &&
-          typeMatch &&
-          progressMatch &&
-          statusMatch);
+        let amountMatch = true;
+        if (!isNaN(minAmount) && !isNaN(maxAmount)) {
+            amountMatch = Math.abs(goal.goalAmount) >= minAmount && Math.abs(goal.goalAmount) <= maxAmount;
+        } else if (!isNaN(minAmount) && isNaN(maxAmount)) {
+            amountMatch = Math.abs(goal.goalAmount) >= minAmount;
+        } else if (isNaN(minAmount) && !isNaN(maxAmount)) {
+            amountMatch = Math.abs(goal.goalAmount) <= maxAmount;
+        }
+
+        let dateMatch = true;
+        if (startDate && endDate) {
+            dateMatch = (new Date(goal.startDate) >= new Date(startDate)) &&
+                        (new Date(goal.endDate) <= new Date(endDate));
+        } else if (startDate && !endDate) {
+            dateMatch = new Date(goal.startDate) >= new Date(startDate);
+        } else if (!startDate && endDate) {
+            dateMatch = new Date(goal.endDate) <= new Date(endDate);
+        }
+
+        let progressMatch = true;
+        if (minProgress && maxProgress) {
+            progressMatch = progressAmount >= minProgress && progressAmount <= maxProgress;
+        } else if (minProgress && !maxProgress) {
+            progressMatch = progressAmount >= minProgress;
+        } else if (!minProgress && maxProgress) {
+            progressMatch = progressAmount <= maxProgress;
+        }
+
+        return (
+            keywordMatch &&
+            amountMatch &&
+            dateMatch &&
+            typeMatch &&
+            progressMatch &&
+            statusMatch);
     });
 
     document.getElementById("optional-search").classList.remove("open");
@@ -293,3 +340,38 @@ function getOrdinal(day) {
     default: return "th";
   }
 };
+
+// input value error
+function showGoalAmountError() {
+    const minAmount = document.getElementById("amount-min");
+    const maxAmount = document.getElementById("amount-max");
+    
+    minAmount.classList.add("input-error");
+    maxAmount.classList.add("input-error");
+}
+
+function showDateError() {
+    const startDate = document.getElementById("date-start");
+    const endDate = document.getElementById("date-end");
+    
+    startDate.classList.add("input-error");
+    endDate.classList.add("input-error");
+}
+
+function showCurrentAmountError() {
+    const minProgress = document.getElementById("min-progress");
+    const maxProgress = document.getElementById("max-progress");
+    
+    minProgress.classList.add("input-error");
+    maxProgress.classList.add("input-error");
+}
+
+function clearError(element) {
+    const eventList = ["input", "click", "focus"];
+
+    eventList.forEach(eventName => {
+        element.addEventListener(eventName, () => {
+            element.classList.remove("input-error");
+        });
+    });
+}
