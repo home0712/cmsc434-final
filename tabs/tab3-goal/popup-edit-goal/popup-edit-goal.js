@@ -46,6 +46,13 @@ function editGoal(event) {
     const endDate = document.getElementById("end-date-field").value;
     const notes = document.getElementById("notes-field").value;
 
+    // 날짜 유효성 계산
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+        document.getElementById("start-date-field").classList.add("input-error");
+        document.getElementById("end-date-field").classList.add("input-error");
+        return;
+    }
+
     // create JSON Object with user inputs
     // 사용자 입력 데이터로 json object 만들기
     const updatedGoal = {

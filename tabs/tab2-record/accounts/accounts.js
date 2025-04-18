@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentTypeFilter = sessionStorage.getItem("resultFor");
     }
     renderAccounts();
+    sessionStorage.removeItem("resultFor");
 });
 
 function bindButtons() {
