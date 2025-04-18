@@ -8,6 +8,8 @@ let currentTypeFilter = "All";
 // 초기화
 document.addEventListener("DOMContentLoaded", () => {
     const selectedType = sessionStorage.getItem("selectedType") || "All";
+    const addedType = sessionStorage.getItem("goalResultFor");
+
     loadDefaultData();
     bindButtons();
     setupToggle();
@@ -18,8 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isFilterActive) {
         applyTypeFilterToToggle(); 
     } else {
-        syncToggleToSelectedType();
-        renderGoals(selectedType);
+        if (addedType) {
+            renderGoals(addedType);
+            syncToggleToAddedType();
+            sessionStorage.removeItem("goalResultFor");
+        } else {
+            renderGoals(selectedType);
+            syncToggleToSelectedType();
+        }
     }
 });
 
@@ -119,6 +127,7 @@ function renderGoals(selectedType = "All") {
     } else if (selectedType === "Saving") {
         addSavingCard(savingGoals, savingDiv);
         sessionStorage.setItem("selectedType", "Saving");
+        console.log("여기예요");
     }
 
     // edit buttons for each card
@@ -425,11 +434,11 @@ function applyTypeFilterToToggle() {
 }
 
 function syncToggleToSelectedType() {
-    const selectedType = sessionStorage.getItem("selectedType") || "all";
+    const selectedType = sessionStorage.getItem("selectedType") || "All";
     const toggleOptions = document.querySelectorAll(".dropdown-option");
     const selectedText = document.getElementById("dropdown-selected");
   
-    selectedText.textContent = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
+    selectedText.textContent = selectedType;
   
     toggleOptions.forEach(option => {
         option.classList.remove("selected");
@@ -439,6 +448,23 @@ function syncToggleToSelectedType() {
     });
   
     currentTypeFilter = selectedType;
+}
+
+function syncToggleToAddedType() {
+    const addedType = sessionStorage.getItem("goalResultFor");
+    const toggleOptions = document.querySelectorAll(".dropdown-option");
+    const selectedText = document.getElementById("dropdown-selected");
+
+    selectedText.textContent = addedType;
+
+    toggleOptions.forEach(option => {
+        option.classList.remove("selected");
+        if (option.dataset.id === selectedText.textContent) {
+            option.classList.add("selected");
+        }
+    });
+
+    currentTypeFilter = addedType;
 }
 
 /* util variables & functions */

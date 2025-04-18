@@ -73,6 +73,7 @@ function addGoal(event) {
 
     // back to the goal page
     // 추가 완료 후 goal 페이지로 돌아가기
+    sessionStorage.setItem("goalResultFor", type);
     window.location.href = "../goal.html";  
 } 
 
